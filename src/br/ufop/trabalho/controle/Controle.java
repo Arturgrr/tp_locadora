@@ -17,10 +17,8 @@ import br.ufop.trabalho.entities.Cliente;
  *
  */
 public class Controle {
-	//Array de clientes
-	private ArrayList <Cliente> clientes;
-	
-//	private ArrayList <Filmes> filmes;
+	private final ArrayList <Cliente> clientes;
+	// private final ArrayList <Filmes> filmes;
 	
 	public Controle(){
 		clientes = new ArrayList<Cliente>();
@@ -30,6 +28,7 @@ public class Controle {
 	}
 	
 	public int addCliente(String nome, String end, int codigo){
+
 		/**
 		 * Para cada uma das verificações abaixo o método irá retornar um inteiro indicando um erro
 		 * caso ele aconteça. Caso nenhum dado inválido seja digitado o cadastro será realizado
@@ -45,12 +44,14 @@ public class Controle {
 		
 		return Constantes.RESULT_OK;
 	}
+
 	/**
 	 * Método que retornar a quantidade de clientes cadastrados
 	 */
 	public int getQtdClientes(){
 		return clientes.size();
 	}
+
 	/**
 	 * Método para retornar um cliente em uma determinada posição. É importante que as classes de interface gráfica não tenham
 	 * acesso a uma referncia do array utilizado para armazenar todos os clientes

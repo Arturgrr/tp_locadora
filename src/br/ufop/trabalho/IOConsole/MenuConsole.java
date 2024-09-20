@@ -6,28 +6,30 @@ import br.ufop.trabalho.Util;
 import br.ufop.trabalho.controle.Controle;
 
 public class MenuConsole {
-	
+
 	/**
-	 * Controle - Objeto que será utilizado para acesso aos dados do sistema (classes Entidade que armazenam os dados)  
+	 * Controle - Objeto que será utilizado para acesso aos dados do sistema (classes Entidade que armazenam os dados)
 	 */
 	private Controle controle;
+
 	/**
 	 * Objetos responsáveis por exibir menus de cada um dos acessos
 	 */
 	private MenuClienteConsole menuCliente;
-//	private MenuFilmesConsole menuFilmes;
+
+	//private MenuFilmesConsole menuFilmes;
 	//pode-se criar outras classes para a exibição dos outros submenus
 	/**
 	 * Objeto responsável por fazer a leitura dos dados (Scanner). Deverá ser instanciado apenas uma vez e passado como parâmetro
 	 * para as demais classes.
 	 */
 	private Scanner input;
-	
+
 	public MenuConsole(){
 		/**
-		 * Inicialização do objeto de controle. Esta variável deve ser inicializada apenas uma vez pois haverá apenas uma objeto controle  
+		 * Inicialização do objeto de controle. Esta variável deve ser inicializada apenas uma vez pois haverá apenas uma objeto controle
 		 * responsável por acessar os dados (filmes, clientes, movimentações).
-		 * As demais classes de exibição de menus deverão ser criadas e inicializadas  
+		 * As demais classes de exibição de menus deverão ser criadas e inicializadas
 		 */
 		controle = new Controle();
 		input = new Scanner(System.in);
@@ -46,9 +48,9 @@ public class MenuConsole {
 	
 	private boolean exibeMenuPrincipal(){
 		System.out.println("Digite a opção de Aceso:\n\t1 - Filme:\n\t2 - Clientes\n\t3 - Relatórios\n\t4 - Sair ");
-//		int op = input.nextInt();
-		//Toda a vez que for ler um inteiro devo chamar o método leInteiroConsole que é estático da classe Util.
-		//Dessa forma, a entrada inválida será sempre tratada e não irá quebrar a aplicação
+		// int op = input.nextInt();
+		// Toda a vez que for ler um inteiro devo chamar o método leInteiroConsole que é estático da classe Util.
+		// Dessa forma, a entrada inválida será sempre tratada e não irá quebrar a aplicação
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
 		case 1:
