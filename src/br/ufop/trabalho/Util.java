@@ -48,6 +48,11 @@ public class Util {
         return true;
     }
 
+    /**
+     * Inicia um scanner que somente aceita números
+     * @param in Scanner a ser usado
+     * @return number
+     */
     public static int leInteiroConsole(Scanner in) {
         int r = 0;
         boolean continua = false;
