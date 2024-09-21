@@ -8,7 +8,10 @@ package br.ufop.trabalho.entities;
  */
 public class Pessoa {
 	
-	private String nome, endereco;
+	private String nome;
+	private String endereco;
+	private String cpf;
+	private Data dataNascimento;
 
 	public Pessoa(String nome, String endereco) {
 		setNome(nome);
@@ -29,6 +32,35 @@ public class Pessoa {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public Boolean setCpf(String cpf) {
+		if(validarCpf(limparCpf(cpf))){
+			this.cpf = cpf;
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validarCpf(String cpf) {
+		return cpf != null && cpf.length() == 11;
+    }
+
+	public static String limparCpf(String cpf) {
+		return cpf.replaceAll("\\D", "");
+	}
+
+	public Data getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Data dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 }
