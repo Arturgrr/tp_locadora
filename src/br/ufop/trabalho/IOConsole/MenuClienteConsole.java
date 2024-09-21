@@ -40,11 +40,9 @@ public class MenuClienteConsole {
     }
 
     /**
-     * Este método permitirá a entrada dos dados de um cliente.
      * MÉTODO INCOMPLETO. NÃO CADASTRA TODOS OS DADOS.
      */
     private void leDadosCliente() {
-        //Limpa o buffer já que leu um inteiro
         input.nextLine();
         String nome, end;
         int codigo;

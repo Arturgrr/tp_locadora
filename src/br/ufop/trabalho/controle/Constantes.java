@@ -2,8 +2,7 @@ package br.ufop.trabalho.controle;
 
 /**
  * Esta interface será utilizada apenas para armazenar constantes. Cada constante deverá ser estática e final e para seguirmos a convenção
- * elas também deverão ter todas as letras maiúsculas. 
- * 
+ * elas também deverão ter todas as letras maiúsculas.
  * As constantes inteiras servem para representar alguma informação importante de forma mais simples. Por exemplo: 
  * se considerarmos a chamada a um método para cadastro de Cliente passando todos os dados referentes ao cadastro do cliente. 
  * O método deverá fazer várias verificações com o objetivo de garantir que os dados passados estão corretos. Caso haja algum erro o 
@@ -13,21 +12,17 @@ package br.ufop.trabalho.controle;
  * Uma alternativa mais simples é criar um inteiro para retorno e atribuir um identificador (nome da variavel) que pode diretamente indicar 
  * qual erro ocorreu. Para retornar o erro de cadastro de cliente com nome vazio deverá ser executado o código
  * abaixo:
- * 
  *  				Constantes. ERRO_CAMPO_VAZIO
- *  
  *  No retorno bastará fazer uma verificação para qual tipo de retorno ocorreu erro ou RESULT_OK.
- *  
  *  IMPORTANTE: OS NúMEROS QUE SERÃO RETORNADOS EM UM MESMO MÉTODO DEVEM OBRIGATORIAMENTE SER DIFERENTES.
  * 
  * @author Filipe
- *
  */
 public interface Constantes {
 	
-	public static final int RESULT_OK = 1;
+	int RESULT_OK = 1;
 	
-	public static final int ERRO_CAMPO_VAZIO = 2;
+	int ERRO_CAMPO_VAZIO = 2;
 	
 	
 }

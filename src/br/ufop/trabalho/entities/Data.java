@@ -1,13 +1,10 @@
 package br.ufop.trabalho.entities;
-// Fig. 8.7: Date.java -- Adaptado
-// Declaração da classe Date.
-public class Data {
-	private int mes; // 1-12
-	private int dia; // 1-31 conforme o mês
-	private int ano; // qualquer ano
 
-	// construtor: chama checarMes para confirmar o valor adequado para mes;
-	// chama checarDia para confirmar o valor adequado para dia
+public class Data {
+	private int mes;
+	private int dia;
+	private int ano;
+
 	public Data(int d, int m, int a) {
 		setDia(d);
 		setAno(a);
@@ -15,35 +12,33 @@ public class Data {
 	}	
 	/**
 	 * Método para validar o mês
-	 * @param mesTeste
-	 * @return
+	 * @param mesTeste Inteiro do mês a ser verificado.
+	 * @return Inteiro com o mês validado ou corrigido para janeiro.
 	 */
 	private int checarMes(int mesTeste) {
 		if (mesTeste > 0 && mesTeste <= 12)
 			return mesTeste;
 		else {
-			System.out.printf("Mes invalido (%d) alterado para 1.", mesTeste);
+			System.out.printf("Mes invalido (%d) alterado para Janeiro.", mesTeste);
 			return 1; 
 		} 
 	}
 	/**
 	 * Método para validar o dia
-	 * @param diaTeste
-	 * @return
+	 * @param diaTeste Inteiro do dia a ser verificado.
+	 * @return Inteiro com o mês validado ou corrigido para dia primeiro.
 	 */
 	private int checarDia(int diaTeste) {
-		int diasNoMes[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-		// verifica se dia está no intervalo para o mes
+		int[] diasNoMes = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		if (diaTeste > 0 && diaTeste <= diasNoMes[mes])
 			return diaTeste;
-		// verifica ano bissexto
 		if (mes == 2 && diaTeste == 29
 				&& (ano % 400 == 0 || (ano % 4 == 0 && ano % 100 != 0)))
 			return diaTeste;
-		System.out.printf("Dia invalido (%d) alterado para 1.", diaTeste);
+		System.out.printf("Dia invalido (%d) alterado para dia primeiro.", diaTeste);
 		return 1; 
 	}
-	// retorna uma String no formato mês/dia/ano
+
 	public String toString() {
 		return String.format("%d/%d/%d", mes, dia, ano);
 	}
