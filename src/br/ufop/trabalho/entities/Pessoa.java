@@ -13,9 +13,11 @@ public class Pessoa {
 	private String cpf;
 	private Data dataNascimento;
 
-	public Pessoa(String nome, String endereco) {
+	public Pessoa(String nome, String endereco, String cpf, Data dataNascimento) {
 		setNome(nome);
 		setEndereco(endereco);
+		setCpf(cpf);
+		setDataNascimento(dataNascimento);
 	}
 
 	public String getNome() {
@@ -38,13 +40,8 @@ public class Pessoa {
 		return cpf;
 	}
 
-	public Boolean setCpf(String cpf) {
-		if(validarCpf(limparCpf(cpf))){
-			this.cpf = cpf;
-		} else {
-			return false;
-		}
-		return true;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public static boolean validarCpf(String cpf) {

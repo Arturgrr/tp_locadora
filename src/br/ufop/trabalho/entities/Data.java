@@ -9,9 +9,11 @@ public class Data {
 		setDia(d);
 		setAno(a);
 		setMes(m);
-	}	
+	}
+
 	/**
 	 * Método para validar o mês
+	 *
 	 * @param mesTeste Inteiro do mês a ser verificado.
 	 * @return Inteiro com o mês validado ou corrigido para janeiro.
 	 */
@@ -23,8 +25,10 @@ public class Data {
 			return 1; 
 		} 
 	}
+
 	/**
 	 * Método para validar o dia
+	 *
 	 * @param diaTeste Inteiro do dia a ser verificado.
 	 * @return Inteiro com o mês validado ou corrigido para dia primeiro.
 	 */
@@ -46,19 +50,25 @@ public class Data {
 	public int getMes() {
 		return mes;
 	}
+
 	public void setMes(int mes) {
 		this.mes = checarMes(mes);
 	}
+
 	public int getDia() {
 		return dia;
 	}
+
 	public void setDia(int dia) {
 		this.dia = checarDia(dia);
 	}
+
 	public int getAno() {
 		return ano;
 	}
+
 	public void setAno(int ano) {
 		this.ano = ano;
-	} 
+	}
+
 } 

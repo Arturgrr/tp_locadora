@@ -7,7 +7,6 @@ public class Cliente extends Pessoa {
     private int codigo;
     private ArrayList<Filme> filmes;
 
-    //Um cliente também terá um array de dependentes
 
     /**
      * Construtor
@@ -16,8 +15,8 @@ public class Cliente extends Pessoa {
      * @param endereco String com o Endereço do usuário
      * @param codigo Inteiro com o código do usuário
      */
-    public Cliente(String nome, String endereco, int codigo) {
-        super(nome, endereco);
+    public Cliente(String nome, String endereco, String cpf, Data dataDeNascimento, int codigo) {
+        super(nome, endereco, cpf, dataDeNascimento);
         this.codigo = codigo;
         filmes = new ArrayList<Filme>();
     }

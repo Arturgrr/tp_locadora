@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.entities.Cliente;
+import br.ufop.trabalho.entities.Data;
 
 
 /***
@@ -22,7 +23,7 @@ public class Controle {
 		clientes = new ArrayList<Cliente>();
 	}
 	
-	public int addCliente(String nome, String end, int codigo){
+	public int addCliente(String nome, String end, String cpf, Data dataDN, int codigo){
 		/*
 		  Para cada uma das verificações abaixo o método irá retornar um inteiro indicando um erro
 		  caso ele aconteça. Caso nenhum dado inválido seja digitado o cadastro será realizado
@@ -33,9 +34,8 @@ public class Controle {
 			return Constantes.ERRO_CAMPO_VAZIO;
 		}
 
-		Cliente cliente = new Cliente(nome, end, codigo);
+		Cliente cliente = new Cliente(nome, end, cpf, dataDN, codigo);
 		this.clientes.add(cliente);
-		
 		return Constantes.RESULT_OK;
 	}
 
@@ -48,7 +48,7 @@ public class Controle {
 
 	/**
 	 * Método para retornar um cliente em uma determinada posição. É importante que as classes de interface gráfica não tenham
-	 * acesso a uma referencia do array utilizado para armazenar todos os clientes
+	 * acesso a uma referência do array utilizado para armazenar todos os clientes
 	 * @param pos Inteiro que indica qual posição deseja retornar o cliente
 	 * @return Dados do cliente ou null caso não exista
 	 */

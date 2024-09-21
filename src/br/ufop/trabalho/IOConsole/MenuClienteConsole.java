@@ -5,6 +5,7 @@ import java.util.Scanner;
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
+import br.ufop.trabalho.entities.Data;
 
 public class MenuClienteConsole {
     private Controle controle;
@@ -19,7 +20,19 @@ public class MenuClienteConsole {
         boolean continua = true;
         int op = 0;
         do {
-            System.out.println("Digite a opção:\n\t1 - Cadastrar Cliente\n\t2 - Buscar clientes\n\t5 - imprime Lista de Clientes\n\t10 - Voltar\n");
+            System.out.println(
+                    """
+                    Digite a opcao:\
+                    
+                    \t1 - Cadastrar Cliente\
+                    
+                    \t2 - Buscar clientes\
+                    
+                    \t5 - imprime Lista de Clientes\
+                    
+                    \t10 - Voltar
+                    """
+            );
             op = Util.leInteiroConsole(input);
             switch (op) {
                 case 1:
@@ -36,42 +49,37 @@ public class MenuClienteConsole {
                 default:
                     System.out.println("Op��o Inv�lida!");
             }
-        } while (continua == true);
+        } while(continua);
     }
 
-    /**
-     * MÉTODO INCOMPLETO. NÃO CADASTRA TODOS OS DADOS.
-     */
     private void leDadosCliente() {
         input.nextLine();
-        String nome, end;
+        String nome, end, cpf;
+        Data dataDN;
         int codigo;
         System.out.println("Digite o nome do cliente");
         nome = input.nextLine();
         System.out.println("Digite o endereco do cliente");
         end = input.nextLine();
+        System.out.println("Digite o cpf do cliente");
+        cpf = Util.lerCpfValido(input);
+        System.out.println("Digite a data de nascimento do cliente no padrão dd/mm/aaaa");
+        dataDN = Util.lerDataValida(input);
         System.out.println("Digite o codigo do cliente");
         codigo = Util.leInteiroConsole(input);
         input.nextLine();
-        int retorno = controle.addCliente(nome, end, codigo);
-        String msg = "";
-        switch (retorno) {
-            //Verificação do retorno do método de adição de cliente
-            case Constantes.ERRO_CAMPO_VAZIO:
-                msg = "Todos os campos devem ser preenchidos!";
-                break;
-            case Constantes.RESULT_OK:
-                msg = "Cliente cadastrado com sucesso!";
-                break;
-        }
+        int retorno = controle.addCliente(nome, end, cpf, dataDN, codigo);
+        String msg = switch (retorno) {
+            case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem ser preenchidos!";
+            case Constantes.RESULT_OK -> "Cliente cadastrado com sucesso!";
+            default -> "";
+        };
         System.out.println(msg);
-
     }
 
     private void imprimeListaClientes() {
         System.out.println("******** LISTA DE CLIENTES CADASTRADOS *********");
         for (int i = 0; i < controle.getQtdClientes(); i++) {
-            //É preciso implementar o toString corretamente.
             System.out.println(controle.getClienteNaPosicao(i).toString());
         }
         System.out.println("******** FIM DA LISTA DE CLIENTES  *********");

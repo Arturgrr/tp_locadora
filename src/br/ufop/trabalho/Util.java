@@ -1,5 +1,8 @@
 package br.ufop.trabalho;
 
+import br.ufop.trabalho.entities.Data;
+import br.ufop.trabalho.entities.Pessoa;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,7 +52,8 @@ public class Util {
     }
 
     /**
-     * Inicia um scanner que somente aceita números
+     * Inicia um scanner que só aceita Inteiros
+     *
      * @param in Scanner a ser usado
      * @return number
      */
@@ -67,6 +71,66 @@ public class Util {
             }
         } while (continua);
         return r;
+    }
+
+    /**
+     * Inicia um scanner que só aceita String com um cpf valido
+     *
+     * @param in Scanner a ser usado
+     * @return String
+     * @author Artur Guerra
+     */
+    public static String lerCpfValido(Scanner in) {
+        String cpf = "";
+        boolean valido = false;
+        do {
+            try{
+                cpf = in.nextLine();
+                valido = Pessoa.validarCpf(Pessoa.limparCpf(cpf));
+                if(!valido){
+                    System.out.println("CPF inválido. Digite novamente.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Erro ao ler CPF! Digite novamente:");
+            }
+        } while (valido);
+        return Pessoa.limparCpf(cpf);
+    }
+
+    /**
+     * Inicia um scanner que só aceita uma Data válida
+     *
+     * @param in Scanner a ser usado
+     * @return Data
+     * @author Artur Guerra
+     */
+    public static Data lerDataValida(Scanner in) {
+        Data data = null;
+        boolean valido = false;
+
+        do {
+            String info = in.nextLine();
+            String[] partes = info.split("/");
+
+            if (partes.length != 3) {
+                System.out.println("Formato inválido! Certifique-se de usar dd/mm/aaaa.");
+            } else {
+                try {
+                    int dia = Integer.parseInt(partes[0]);
+                    int mes = Integer.parseInt(partes[1]);
+                    int ano = Integer.parseInt(partes[2]);
+
+                    data = new Data(dia, mes, ano);
+                    valido = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("Erro: a data deve conter apenas números válidos.");
+                } catch (Exception e) {
+                    System.out.println("Erro ao criar a data. Verifique se os valores são válidos.");
+                }
+            }
+        } while (!valido);
+
+        return data;
     }
 
 }

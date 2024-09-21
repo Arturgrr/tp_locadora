@@ -39,7 +39,7 @@ public class MenuConsole {
 	}
 	
 	private boolean exibeMenuPrincipal(){
-		System.out.println("Digite a opção de Aceso:\n\t1 - Filme:\n\t2 - Clientes\n\t3 - Relatórios\n\t4 - Sair ");
+		System.out.println("Digite a opção de Aceso:\n\t1 - Filme:\n\t2 - Clientes\n\t3 - Relatorios\n\t4 - Sair ");
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
 		case 1:
@@ -54,7 +54,7 @@ public class MenuConsole {
 		case 4:
 			return false;		
 		default:
-				System.out.println("Opção Inválida");
+				System.out.println("Opção Invalida");
 		}
 		return true;
 	}
