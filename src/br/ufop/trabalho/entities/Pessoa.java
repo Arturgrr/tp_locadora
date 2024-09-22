@@ -1,5 +1,7 @@
 package br.ufop.trabalho.entities;
 
+import br.ufop.trabalho.Util;
+
 /**
  * Classe para armazenar os dados de uma Pessoa. Como o sistema deverá controlar clientes e funcionários os dados comuns serão
  * armazenadona superClassePessoa.
@@ -25,14 +27,19 @@ public class Pessoa {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
-	}
+		if (!Util.verificaStringPreenchida(nome)) {
+			throw new IllegalArgumentException("Nome não pode ser vazio ou nulo.");
+		}
+		this.nome = nome;	}
 
 	public String getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(String endereco) {
+		if (!Util.verificaStringPreenchida(endereco)) {
+			throw new IllegalArgumentException("Endereço não pode ser vazio ou nulo.");
+		}
 		this.endereco = endereco;
 	}
 
@@ -41,15 +48,10 @@ public class Pessoa {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public static boolean validarCpf(String cpf) {
-		return cpf != null && cpf.length() == 11;
-    }
-
-	public static String limparCpf(String cpf) {
-		return cpf.replaceAll("\\D", "");
+		if (!Util.validarCpf(Util.limparCpf(cpf))) {
+			throw new IllegalArgumentException("O CPF informado é inválido.");
+		}
+		this.cpf = Util.limparCpf(cpf);
 	}
 
 	public Data getDataNascimento() {

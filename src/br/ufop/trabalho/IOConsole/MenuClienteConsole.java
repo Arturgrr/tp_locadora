@@ -8,8 +8,9 @@ import br.ufop.trabalho.controle.Controle;
 import br.ufop.trabalho.entities.Data;
 
 public class MenuClienteConsole {
-    private Controle controle;
-    private Scanner input;
+
+    private final Controle controle;
+    private final Scanner input;
 
     public MenuClienteConsole(Controle controle, Scanner input) {
         this.controle = controle;
@@ -18,7 +19,6 @@ public class MenuClienteConsole {
 
     public void exibeMenuClientes() {
         boolean continua = true;
-        int op = 0;
         do {
             System.out.println("""
                     Digite a opcao:\
@@ -31,42 +31,38 @@ public class MenuClienteConsole {
                     
                     \t10 - Voltar
                     """);
-            op = Util.leInteiroConsole(input);
+            int op = Util.leInteiroConsole(input);
             switch (op) {
-                case 1:
-                    leDadosCliente();
-                    break;
-                case 2:
-                    System.out.println("Falta implementar!");
-                    break;
-                case 5:
-                    imprimeListaClientes();
-                    break;
-                case 10:
+                case 1 -> leDadosCliente();
+                case 2 -> System.out.println("Falta implementar!");
+                case 5 -> imprimeListaClientes();
+                case 10 -> {
                     return;
-                default:
-                    System.out.println("Op��o Inv�lida!");
+                }
+                default -> System.out.println("Opcao Invalida!");
             }
         } while(continua);
     }
 
     private void leDadosCliente() {
         input.nextLine();
-        String nome, end, cpf;
-        Data dataDN;
-        int codigo;
         System.out.println("Digite o nome do cliente");
-        nome = input.nextLine();
+        String nome = input.nextLine();
+
         System.out.println("Digite o endereco do cliente");
-        end = input.nextLine();
+        String endereco = input.nextLine();
+
         System.out.println("Digite o cpf do cliente");
-        cpf = Util.lerCpfValido(input);
+        String cpf = Util.lerCpfValido(input);
+
         System.out.println("Digite a data de nascimento do cliente no padrão dd/mm/aaaa");
-        dataDN = Util.lerDataValida(input);
+        Data dataDN = Util.lerDataValida(input);
+
         System.out.println("Digite o codigo do cliente");
-        codigo = Util.leInteiroConsole(input);
+        int codigo = Util.leInteiroConsole(input);
+
         input.nextLine();
-        int retorno = controle.addCliente(nome, end, cpf, dataDN, codigo);
+        int retorno = controle.addCliente(nome, endereco, cpf, dataDN, codigo);
         String msg = switch (retorno) {
             case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem ser preenchidos!";
             case Constantes.RESULT_OK -> "Cliente cadastrado com sucesso!";

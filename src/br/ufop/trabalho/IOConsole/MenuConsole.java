@@ -10,12 +10,7 @@ public class MenuConsole {
 	/**
 	 * Controle - Objeto que será utilizado para acesso aos dados do sistema (classes Entidade que armazenam os dados)
 	 */
-	private Controle controle;
-
-	/**
-	 * Objetos responsáveis por exibir menus de cada um dos acessos
-	 */
-	private final MenuClienteConsole menuCliente;
+	private final Controle controle;
 
 	/**
 	 * Objeto responsável por fazer a leitura dos dados (Scanner). Deverá ser instanciado apenas uma vez e passado como parâmetro
@@ -23,11 +18,15 @@ public class MenuConsole {
 	 */
 	private final Scanner input;
 
+	private final MenuClienteConsole menuCliente;
+	private final MenuFilmeConsole menuFilme;
+
 	public MenuConsole(){
 		controle = new Controle();
 		input = new Scanner(System.in);
 
-		menuCliente = new MenuClienteConsole(controle, input);	
+		menuCliente = new MenuClienteConsole(controle, input);
+		menuFilme = new MenuFilmeConsole(controle, input);
 	}
 	
 	public void inicioExecucao() {
@@ -40,31 +39,24 @@ public class MenuConsole {
 	
 	private boolean exibeMenuPrincipal(){
 		System.out.println("""
-				Digite a opcao de Aceso:\
+				Digite a opcao de Acesso:
 				
-				\t1 - Filme\
-				
-				\t2 - Clientes\
-				
-				\t3 - Relatorios\
-				
-				\t4 - Sair
+				\t1 - Filme
+				\t2 - Clientes
+				\t3 - Relatorios
+				\t4- Configuracoes
+				\t5 - Sair
 				""");
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
-		case 1:
-			System.out.println("Falta implementar!");
-			break;	
-		case 2:
-			menuCliente.exibeMenuClientes();		
-			break;
-		case 3:	
-			System.out.println("Falta implementar!");
-			break;		
-		case 4:
-			return false;		
-		default:
-				System.out.println("Opção Invalida");
+			case 1 -> menuFilme.exibeMenuFilmes();
+			case 2 -> menuCliente.exibeMenuClientes();
+			case 3 -> System.out.println("Falta implementar!");
+			case 4 -> System.out.println("Falta implementar!");
+			case 5 -> {
+				return false;
+			}
+			default -> System.out.println("Opção Invalida");
 		}
 		return true;
 	}

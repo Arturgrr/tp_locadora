@@ -16,20 +16,20 @@ public class Util {
      * Este método verifica se uma String recebida como parâmetro está preenchida com algum valor. Caso tenha pelo menos um caractere
      * retornará true, caso contrário retornará false.
      *
-     * @param texto String a ser verificada, se ela for preenchida apenas com espaços, ele retorna false
-     * @return boolean Retorna se a string está oou não preenchida
+     * @param texto String a ser verificada
+     * @return boolean Retorna se a string está ou não preenchida
      */
     public static boolean verificaStringPreenchida(String texto) {
-        return texto == null || !texto.trim().isEmpty();
+        return texto != null && !texto.trim().isEmpty();
     }
 
     /**
-     * Este método verifica se uma lista de Strings está preenchida. Veja que o parâmetro recebe um número variável de Strings
-     * que automaticamente é convertido em um array de Strings.
+     * Verifica se todas as strings de uma lista estão preenchidas.
      *
-     * @param strings Lista com as strings a serem verificadas, se alguma delas estiver preenchida apenas com espaços ele retorna false
-     * @return boolean
+     * @param strings Lista de strings a ser verificada.
+     * @return boolean Retorna true se todas as strings estiverem preenchidas, false se qualquer uma estiver vazia ou nula.
      */
+
     public static boolean verificaListaStringPreenchida(String... strings) {
         for (String s : strings) {
             if (!verificaStringPreenchida(s))
@@ -45,8 +45,12 @@ public class Util {
      * @return boolean
      */
     public static boolean senhaComNumero(String senha) {
-        //FALTA IMPLEMENTAR
-        return true;
+        for (char c : senha.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -57,17 +61,15 @@ public class Util {
      */
     public static int leInteiroConsole(Scanner in) {
         int r = 0;
-        boolean continua = false;
         do {
             try {
                 r = in.nextInt();
-                continua = false;
+                break;
             } catch (InputMismatchException e) {
-                System.out.println("Erro ao ler n�mero! Digite novamente:");
+                System.out.println("Erro ao ler número! Digite novamente:");
                 in.nextLine();
-                continua = true;
             }
-        } while (continua);
+        } while (true);
         return r;
     }
 
@@ -79,20 +81,14 @@ public class Util {
      * @author Artur Guerra
      */
     public static String lerCpfValido(Scanner in) {
-        String cpf = "";
-        boolean valido = false;
+        String cpf;
         do {
-            try{
-                cpf = in.nextLine();
-                valido = Pessoa.validarCpf(Pessoa.limparCpf(cpf));
-                if(!valido){
-                    System.out.println("CPF inválido. Digite novamente.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Erro ao ler CPF! Digite novamente:");
+            cpf = in.nextLine();
+            if (!validarCpf(limparCpf(cpf))) {
+                System.out.println("CPF inválido. Digite novamente.");
             }
-        } while (valido);
-        return Pessoa.limparCpf(cpf);
+        } while (!validarCpf(limparCpf(cpf)));
+        return limparCpf(cpf);
     }
 
     /**
@@ -131,4 +127,11 @@ public class Util {
         return data;
     }
 
+    public static boolean validarCpf(String cpf) {
+        return cpf != null && cpf.length() == 11;
+    }
+
+    public static String limparCpf(String cpf) {
+        return cpf.replaceAll("\\D", "");
+    }
 }

@@ -20,6 +20,9 @@ public class Filme {
     }
 
     public void setNome(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("Nome do filme não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -36,6 +39,9 @@ public class Filme {
     }
 
     public void setGenero(String genero) {
+        if (genero == null || genero.isEmpty()) {
+            throw new IllegalArgumentException("Gênero do filme não pode ser vazio.");
+        }
         this.genero = genero;
     }
 
@@ -43,7 +49,24 @@ public class Filme {
         return quantDvd;
     }
 
+    public void addQuantDvd(int quantDvd) {
+        if (quantDvd < 0) {
+            throw new IllegalArgumentException("A quantidade de DVDs a adicionar não pode ser negativa.");
+        }
+        this.quantDvd += quantDvd;
+    }
+
+    public void removeQuantDvd(int quantDvd) {
+        if (this.quantDvd - quantDvd < 0) {
+            throw new IllegalArgumentException("A quantidade de DVDs a remover é maior que o disponível.");
+        }
+        this.quantDvd -= quantDvd;
+    }
+
     public void setQuantDvd(int quantDvd) {
+        if (quantDvd < 0) {
+            throw new IllegalArgumentException("Quantidade de DVDs não pode ser negativa.");
+        }
         this.quantDvd = quantDvd;
     }
 
@@ -51,8 +74,34 @@ public class Filme {
         return quantBlueRay;
     }
 
+    public void addQuantBlueRay(int quantBlueRay) {
+        if (quantBlueRay < 0) {
+            throw new IllegalArgumentException("A quantidade de Blu-rays a adicionar não pode ser negativa.");
+        }
+        this.quantBlueRay += quantBlueRay;
+    }
+
+    public void removeQuantBlueRay(int quantBlueRay) {
+        if (this.quantBlueRay - quantBlueRay < 0) {
+            throw new IllegalArgumentException("A quantidade de Blu-rays a remover é maior que o disponível.");
+        }
+        this.quantBlueRay -= quantBlueRay;
+    }
+
     public void setQuantBlueRay(int quantBlueRay) {
+        if (quantBlueRay < 0) {
+            throw new IllegalArgumentException("Quantidade de Blu-rays não pode ser negativa.");
+        }
         this.quantBlueRay = quantBlueRay;
     }
 
+    /**
+     * Método para formatar o string
+     *
+     * @author Artur Guerra
+     */
+    @Override
+    public String toString() {
+        return String.format("%s (%d/%d/%d) - DVDs: %d, Blu-rays: %d", nome, anoDeLancamento.getDia(), anoDeLancamento.getMes(), anoDeLancamento.getAno(), quantDvd, quantBlueRay);
+    }
 }

@@ -6,8 +6,8 @@ public class Cliente extends Pessoa {
 
     private int codigo;
     private double multa;
-    private ArrayList<Filme> filmes;
-    private ArrayList<Dependente> dependentes;
+    private final ArrayList<Filme> filmes;
+    private final ArrayList<Dependente> dependentes;
 
     /**
      * Construtor
@@ -36,16 +36,44 @@ public class Cliente extends Pessoa {
         return filmes;
     }
 
-    public void setFilmes(ArrayList<Filme> filmes) {
-        this.filmes = filmes;
-    }
-
     public void addFilme(Filme filme) {
         filmes.add(filme);
     }
 
     public void removeFilme(Filme filme) {
         filmes.remove(filme);
+    }
+
+    public ArrayList<Dependente> getDependentes() {
+        return dependentes;
+    }
+
+    public void addDependentes(Dependente dependente) {
+        if (this.dependentes.size() >= 3) {
+            throw new IllegalArgumentException("O cliente já possui 3 dependentes cadastrados. Não é possível adicionar: " + dependente.getNome());
+        }
+        this.dependentes.add(dependente);
+    }
+
+    public void removeDependentes(Dependente dependente) {
+        if (!this.dependentes.contains(dependente)) {
+            throw new IllegalStateException("Dependente " + dependente.getNome() + " não encontrado para remoção.");
+        }
+        this.dependentes.remove(dependente);
+    }
+
+    public double getMulta() {
+        return multa;
+    }
+
+    public void setMulta(double multa) {
+        if (multa < 0) {
+            throw new IllegalArgumentException("Multa não pode ser negativa.");
+        }
+        this.multa = multa;    }
+
+    public void addMulta(double multa) {
+        this.multa += multa;
     }
 
     /**
@@ -57,33 +85,5 @@ public class Cliente extends Pessoa {
     @Override
     public String toString() {
         return getNome() + " - " + getCodigo();
-    }
-
-    public ArrayList<Dependente> getDependentes() {
-        return dependentes;
-    }
-
-    public void addDependentes(Dependente dependente) {
-        if (this.dependentes.size() < 3) {
-            this.dependentes.add(dependente);
-        } else {
-            System.out.println("Erro: Limite de 3 dependentes atingido, nenhum dependente foi adicionado.");
-        }
-    }
-
-    public void removeDependentes(Dependente dependente) {
-        this.dependentes.remove(dependente);
-    }
-
-    public double getMulta() {
-        return multa;
-    }
-
-    public void setMulta(double multa) {
-        this.multa = multa;
-    }
-
-    public void addMulta(double multa) {
-        this.multa += multa;
     }
 }
