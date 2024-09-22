@@ -164,4 +164,11 @@ public class Controle {
 		}
 		return filmesDisponiveis;
 	}
+
+	/**
+	 * @author Artur Guerra
+	 */
+	public void excluirFilme (Filme filme) {
+		filmes.remove(filme);
+	}
 }

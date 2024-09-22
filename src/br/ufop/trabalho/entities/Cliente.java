@@ -2,6 +2,9 @@ package br.ufop.trabalho.entities;
 
 import java.util.ArrayList;
 
+/**
+ * @author Artur Guerra
+ */
 public class Cliente extends Pessoa {
 
     private int codigo;
@@ -15,6 +18,7 @@ public class Cliente extends Pessoa {
      * @param nome String com o Nome do usuário
      * @param endereco String com o Endereço do usuário
      * @param codigo Inteiro com o código do usuário
+     * @author Artur Guerra
      */
     public Cliente(String nome, String endereco, String cpf, Data dataDeNascimento, int codigo) {
         super(nome, endereco, cpf, dataDeNascimento);
@@ -48,6 +52,9 @@ public class Cliente extends Pessoa {
         return dependentes;
     }
 
+    /**
+     * @author Artur Guerra
+     */
     public void addDependentes(Dependente dependente) {
         if (this.dependentes.size() >= 3) {
             throw new IllegalArgumentException("O cliente já possui 3 dependentes cadastrados. Não é possível adicionar: " + dependente.getNome());
@@ -55,6 +62,9 @@ public class Cliente extends Pessoa {
         this.dependentes.add(dependente);
     }
 
+    /**
+     * @author Artur Guerra
+     */
     public void removeDependentes(Dependente dependente) {
         if (!this.dependentes.contains(dependente)) {
             throw new IllegalStateException("Dependente " + dependente.getNome() + " não encontrado para remoção.");
@@ -66,6 +76,9 @@ public class Cliente extends Pessoa {
         return multa;
     }
 
+    /**
+     * @author Artur Guerra
+     */
     public void setMulta(double multa) {
         if (multa < 0) {
             throw new IllegalArgumentException("Multa não pode ser negativa.");

@@ -14,7 +14,7 @@ package br.ufop.trabalho.controle;
  * abaixo:
  *  				Constantes. ERRO_CAMPO_VAZIO
  *  No retorno bastará fazer uma verificação para qual tipo de retorno ocorreu erro ou RESULT_OK.
- *  IMPORTANTE: OS NúMEROS QUE SERÃO RETORNADOS EM UM MESMO MÉTODO DEVEM OBRIGATORIAMENTE SER DIFERENTES.
+ *  IMPORTANTE: Os números que serão retornados em um mesmo método devem obrigatoriamente ser diferentes.
  * 
  * @author Filipe
  */

@@ -1,7 +1,6 @@
 package br.ufop.trabalho;
 
 import br.ufop.trabalho.entities.Data;
-import br.ufop.trabalho.entities.Pessoa;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -29,7 +28,6 @@ public class Util {
      * @param strings Lista de strings a ser verificada.
      * @return boolean Retorna true se todas as strings estiverem preenchidas, false se qualquer uma estiver vazia ou nula.
      */
-
     public static boolean verificaListaStringPreenchida(String... strings) {
         for (String s : strings) {
             if (!verificaStringPreenchida(s))
@@ -43,6 +41,7 @@ public class Util {
      *
      * @param senha String que contenha todos os números da senha a ser verificada
      * @return boolean
+     * @author Artur Guerra
      */
     public static boolean senhaComNumero(String senha) {
         for (char c : senha.toCharArray()) {
@@ -127,10 +126,16 @@ public class Util {
         return data;
     }
 
+    /**
+     * @author Artur Guerra
+     */
     public static boolean validarCpf(String cpf) {
         return cpf != null && cpf.length() == 11;
     }
 
+    /**
+     * @author Artur Guerra
+     */
     public static String limparCpf(String cpf) {
         return cpf.replaceAll("\\D", "");
     }

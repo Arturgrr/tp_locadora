@@ -26,6 +26,9 @@ public class Pessoa {
 		return nome;
 	}
 
+	/**
+	 * @author Artur Guerra
+	 */
 	public void setNome(String nome) {
 		if (!Util.verificaStringPreenchida(nome)) {
 			throw new IllegalArgumentException("Nome não pode ser vazio ou nulo.");
@@ -36,6 +39,9 @@ public class Pessoa {
 		return endereco;
 	}
 
+	/**
+	 * @author Artur Guerra
+	 */
 	public void setEndereco(String endereco) {
 		if (!Util.verificaStringPreenchida(endereco)) {
 			throw new IllegalArgumentException("Endereço não pode ser vazio ou nulo.");
@@ -47,6 +53,9 @@ public class Pessoa {
 		return cpf;
 	}
 
+	/**
+	 * @author Artur Guerra
+	 */
 	public void setCpf(String cpf) {
 		if (!Util.validarCpf(Util.limparCpf(cpf))) {
 			throw new IllegalArgumentException("O CPF informado é inválido.");

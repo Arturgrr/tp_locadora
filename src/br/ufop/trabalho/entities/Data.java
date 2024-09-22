@@ -6,9 +6,9 @@ public class Data {
 	private int ano;
 
 	public Data(int d, int m, int a) {
-		setDia(d);
 		setAno(a);
 		setMes(m);
+		setDia(d);
 	}
 
 	/**
