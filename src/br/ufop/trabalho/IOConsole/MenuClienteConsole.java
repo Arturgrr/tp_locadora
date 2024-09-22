@@ -20,8 +20,7 @@ public class MenuClienteConsole {
         boolean continua = true;
         int op = 0;
         do {
-            System.out.println(
-                    """
+            System.out.println("""
                     Digite a opcao:\
                     
                     \t1 - Cadastrar Cliente\
@@ -31,8 +30,7 @@ public class MenuClienteConsole {
                     \t5 - imprime Lista de Clientes\
                     
                     \t10 - Voltar
-                    """
-            );
+                    """);
             op = Util.leInteiroConsole(input);
             switch (op) {
                 case 1:

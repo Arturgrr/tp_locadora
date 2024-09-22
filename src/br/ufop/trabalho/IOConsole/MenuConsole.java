@@ -39,7 +39,17 @@ public class MenuConsole {
 	}
 	
 	private boolean exibeMenuPrincipal(){
-		System.out.println("Digite a opção de Aceso:\n\t1 - Filme:\n\t2 - Clientes\n\t3 - Relatorios\n\t4 - Sair ");
+		System.out.println("""
+				Digite a opcao de Aceso:\
+				
+				\t1 - Filme\
+				
+				\t2 - Clientes\
+				
+				\t3 - Relatorios\
+				
+				\t4 - Sair
+				""");
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
 		case 1:

@@ -9,8 +9,6 @@ import java.util.Scanner;
 /**
  * Esta classe tem a função de oferecer métodos úteis que poderão ser utilizados em vários momentos do código. Por isso, os métodos
  * serão estáticos de forma que possam ser acessados sem a necessidade de instanciar um Objeto da classe Util.
- *
- * @author Filipe
  */
 public class Util {
 
