@@ -4,7 +4,9 @@ import br.ufop.trabalho.Util;
 import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
 import br.ufop.trabalho.entities.Data;
+import br.ufop.trabalho.entities.Filme;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuFilmeConsole {
@@ -23,17 +25,56 @@ public class MenuFilmeConsole {
                     Digite a opcao:
                     
                     \t1 - Cadastrar filme
-                    \t 10 - Voltar
+                    \t2 - Buscar filme
+                    \t10 - Voltar
                     """);
-            int op = Util.leInteiroConsole(input);
-            switch (op) {
+            int opcaoEscolhida = Util.leInteiroConsole(input);
+            switch (opcaoEscolhida) {
                 case 1 -> cadastrarFilme();
+                case 2 -> buscarFilme();
                 case 10 -> {
                     return;
                 }
                 default -> System.out.println("Opcao invalida");
             }
         } while (continua);
+    }
+
+    private void buscarFilme() {
+        System.out.println("""
+                Selecione o tipo de busca:
+                
+                \t1 - Buscar por nome
+                \t2 - Buscar por genero
+                \t3 - Buscar por disponibilidade
+                \t4 - Voltar
+                """);
+        int opcaoEscolhida = Util.leInteiroConsole(input);
+        ArrayList<Filme> filmesEncontrados = null;
+        switch (opcaoEscolhida) {
+            case 1 -> {
+                System.out.println("Digite o nome do filme que deseja buscar:");
+                String nome = input.nextLine();
+                filmesEncontrados = controle.buscarFilmesPorNome(nome);
+            }
+            case 2 -> {
+                System.out.println("Digite o nome do genero:");
+                String genero = input.nextLine();
+                filmesEncontrados = controle.buscarFilmesPorGenero(genero);
+            }
+            case 3 -> filmesEncontrados = controle.buscarFilmesDisponiveis();
+            default -> System.out.println("Opcao invalida");
+        }
+
+        if (filmesEncontrados != null && !filmesEncontrados.isEmpty()) {
+            System.out.println("Filmes encontrados:");
+            for (int i = 0; i < filmesEncontrados.size(); i++) {
+                System.out.println((i + 1) + " - " + filmesEncontrados.get(i).toString());
+            }
+        } else {
+            System.out.println("Nenhum filme encontrado.");
+        }
+
     }
 
     private void cadastrarFilme() {

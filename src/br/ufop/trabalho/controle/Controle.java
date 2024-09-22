@@ -78,6 +78,7 @@ public class Controle {
 	 * @param quantDvd Quantidade de dvd disponíveis desse filme
 	 * @param quantBR Quantidade de BlueRay disponíveis desse filme
 	 * @return inteiro referenciado na constantes
+	 * @author Artur Guerra
 	 */
 	public int addFilme(String nome, Data dataDeLancamento, String genero, int quantDvd, int quantBR){
 		if(!Util.verificaListaStringPreenchida(nome, genero)){
@@ -93,6 +94,7 @@ public class Controle {
 	 * Método que retornar a quantidade de filmes cadastrados.
 	 *
 	 * @return Inteiro com o número de filmes
+	 * @author Artur Guerra
 	 */
 	public int getQtdFilmes() {
 		return filmes.size();
@@ -104,11 +106,62 @@ public class Controle {
 	 *
 	 * @param pos Inteiro que indica qual posição deseja retornar o filme
 	 * @return Dados do filme ou null caso não exista
+	 * @author Artur Guerra
 	 */
 	public Filme getFilmeNaPosicao(int pos) {
 		if (pos < 0 || pos >= getQtdFilmes()) {
 			throw new IndexOutOfBoundsException("Posição inválida: " + pos);
 		}
 		return filmes.get(pos);
+	}
+
+	/**
+	 * Método para buscar nome do filme e encontrar dados
+	 *
+	 * @param nome Nome a ser procurado pelo controle
+	 * @return Array com todos os filmes encontrados no controle
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Filme> buscarFilmesPorNome(String nome) {
+		ArrayList<Filme> filmesEncontrados = new ArrayList<>();
+		for (Filme filme : filmes) {
+			if (filme.getNome().equalsIgnoreCase(nome)) {
+				filmesEncontrados.add(filme);
+			}
+		}
+		return filmesEncontrados;
+	}
+
+	/**
+	 * Método para buscar filmes com base no seu gênero
+	 *
+	 * @param genero Genero a ser pesquisado pelo controle
+	 * @return Array com todos os filmes encontrados no controle
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Filme> buscarFilmesPorGenero(String genero) {
+		ArrayList<Filme> filmesEncontrados = new ArrayList<>();
+		for (Filme filme : filmes) {
+			if (filme.getGenero().equalsIgnoreCase(genero)) {
+				filmesEncontrados.add(filme);
+			}
+		}
+		return filmesEncontrados;
+	}
+
+	/**
+	 * Método para buscar filmes através de sua disponibilidade
+	 *
+	 * @return Array com todos os filmes que possuem o genêro
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Filme> buscarFilmesDisponiveis() {
+		ArrayList<Filme> filmesDisponiveis = new ArrayList<>();
+		for (Filme filme : filmes) {
+			if (filme.getQuantDvd() > 0 || filme.getQuantBlueRay() > 0) {
+				filmesDisponiveis.add(filme);
+			}
+		}
+		return filmesDisponiveis;
 	}
 }

@@ -44,7 +44,7 @@ public class MenuConsole {
 				\t1 - Filme
 				\t2 - Clientes
 				\t3 - Relatorios
-				\t4- Configuracoes
+				\t4 - Configuracoes
 				\t5 - Sair
 				""");
 		int op = Util.leInteiroConsole(input);
