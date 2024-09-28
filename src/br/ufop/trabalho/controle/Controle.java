@@ -3,9 +3,7 @@ package br.ufop.trabalho.controle;
 import java.util.ArrayList;
 
 import br.ufop.trabalho.Util;
-import br.ufop.trabalho.entities.Cliente;
-import br.ufop.trabalho.entities.Data;
-import br.ufop.trabalho.entities.Filme;
+import br.ufop.trabalho.entities.*;
 
 
 /***
@@ -171,4 +169,80 @@ public class Controle {
 	public void excluirFilme (Filme filme) {
 		filmes.remove(filme);
 	}
+
+	/**
+	 * Método que busca todos os clientes dentro do controle e retorna o próprio cliente
+	 *
+	 * @param nome String contendo o nome do cliente
+	 * @return Array com todos os clientes encontrados
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Cliente> buscarClientePorNome(String nome) {
+		ArrayList<Cliente> clientesPeloNome = new ArrayList<>();
+		for (Cliente cliente : clientes) {
+			if (cliente.getNome().equalsIgnoreCase(nome)) {
+				clientes.add(cliente);
+			}
+		}
+		return clientesPeloNome;
+	}
+
+	/**
+	 * Método para buscar dependentes dentro do controle pelo nome
+	 *
+	 * @param nome String contendo o nome dos dependentes
+	 * @return Array com todos os dependentes encontrados
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Dependente> buscarDependentePorNome(String nome) {
+		ArrayList<Dependente> dependentes = new ArrayList<>();
+		for (Cliente cliente : clientes) {
+			for (Dependente dep : cliente.getDependentes()) {
+				if (dep.getNome().equalsIgnoreCase(nome)) {
+					dependentes.add(dep);
+				}
+			}
+		}
+		return dependentes;
+	}
+
+	/**
+	 * Método para buscar Clientes e Dependentes pelo seu nome
+	 *
+	 * @param nome String contendo o nome da pessoa
+	 * @return Array com todas as pessoas (Clientes e Dependentes)
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Pessoa> buscarPessoaPorNome(String nome) {
+		ArrayList<Cliente> clientesPeloNome = buscarClientePorNome(nome);
+		ArrayList<Dependente> dependentesPeloNome = buscarDependentePorNome(nome);
+
+		ArrayList<Pessoa> pessoasPeloNome = new ArrayList<>();
+
+		pessoasPeloNome.addAll(clientesPeloNome);
+		pessoasPeloNome.addAll(dependentesPeloNome);
+
+		return pessoasPeloNome;
+	}
+
+	/**
+	 * Método para buscar cliente pelo nome de seu dependente
+	 *
+	 * @param nome Srting contendo o nome do dependente
+	 * @return Array com todos os dependentes encontrados
+	 * @author Artur Guerra
+	 */
+	public ArrayList<Cliente> buscarClientePeloNomeDoDepentende(String nome) {
+		ArrayList<Cliente> clientesEncontrados = new ArrayList<>();
+		for (Cliente cliente : clientes) {
+			for (Dependente dep : cliente.getDependentes()) {
+				if (dep.getNome().equalsIgnoreCase(nome)) {
+					clientesEncontrados.add(cliente);
+				}
+			}
+		}
+
+		return clientesEncontrados;
+	}
+
 }

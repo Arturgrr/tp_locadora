@@ -1,10 +1,12 @@
 package br.ufop.trabalho.IOConsole;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
+import br.ufop.trabalho.entities.Cliente;
 import br.ufop.trabalho.entities.Data;
 
 public class MenuClienteConsole {
@@ -34,14 +36,42 @@ public class MenuClienteConsole {
             int op = Util.leInteiroConsole(input);
             switch (op) {
                 case 1 -> leDadosCliente();
-                case 2 -> System.out.println("Falta implementar!");
+                case 2 -> buscarCliente();
                 case 5 -> imprimeListaClientes();
-                case 10 -> {
-                    return;
-                }
+                case 10 -> continua = false;
                 default -> System.out.println("Opcao Invalida!");
             }
         } while(continua);
+    }
+
+    private void buscarCliente() {
+        System.out.println("""
+                Selecione o tipo de busca:
+                
+                \t1 - Buscar pelo nome
+                \t2 - Buscar pelo código
+                \t3 - Buscar pelo nome do dependente
+                \t10 - Voltar
+                """);
+        int op = Util.leInteiroConsole(input);
+        ArrayList<Cliente> clientesEncontrados;
+        switch (op) {
+            case 1 -> {
+                System.out.println("Digite o nome do cliente que deseja buscar");
+                String nome = input.nextLine();
+                clientesEncontrados = controle.buscarClientePorNome(nome);
+            }
+            case 2 -> System.out.println("Falta implementar");
+            case 3 -> {
+                System.out.println("Digite o nome do dependente que deseja buscar");
+                String nome = input.nextLine();
+                clientesEncontrados = controle.buscarClientePeloNomeDoDepentende(nome);
+            }
+            case 4 -> System.out.println("Voltando...");
+            default -> System.out.println("Opcao Invalida!");
+        }
+
+        //TODO: Implementar isso aqui melhor
     }
 
     private void leDadosCliente() {

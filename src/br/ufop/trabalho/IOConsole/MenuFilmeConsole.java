@@ -5,6 +5,7 @@ import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
 import br.ufop.trabalho.entities.Data;
 import br.ufop.trabalho.entities.Filme;
+import br.ufop.trabalho.entities.Pessoa;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class MenuFilmeConsole {
                 case 1 -> cadastrarFilme();
                 case 2 -> buscarFilme();
                 case 10 -> {
-                    return;
+                    continua = false;
                 }
                 default -> System.out.println("Opcao invalida");
             }
@@ -177,8 +178,14 @@ public class MenuFilmeConsole {
     /**
      * @author Artur Guerra
      */
-    private void locarFilme(Filme filme) {
-        //TODO: Implementar aqui
+    private void locarFilme(Filme filme, Pessoa pessoa) {
+        // TODO: Implementar aqui depois
+        // TODO: Devo alternar para o caso de ser um depentende?
+
+        System.out.println("Digite o nome do cliente que irá locar o filme");
+        String nome = input.nextLine();
+
+
     }
 
     /**
