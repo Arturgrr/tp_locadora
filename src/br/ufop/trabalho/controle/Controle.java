@@ -211,7 +211,7 @@ public class Controle {
 		return dependentes;
 	}
 
-	/**
+	/**sei não 
 	 * Método para buscar Clientes e Dependentes pelo seu nome
 	 *
 	 * @param nome String contendo o nome da pessoa
@@ -260,7 +260,7 @@ public void cadastrarEntrada(){
 
 
 }
-
+ 
 
 
 }
