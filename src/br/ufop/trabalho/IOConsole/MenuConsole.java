@@ -45,7 +45,8 @@ public class MenuConsole {
 				\t2 - Clientes
 				\t3 - Relatorios
 				\t4 - Configuracoes
-				\t5 - Sair
+				\t5 - Balancete
+				\t0 - Sair
 				""");
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
@@ -53,7 +54,8 @@ public class MenuConsole {
 			case 2 -> menuCliente.exibeMenuClientes();
 			case 3 -> System.out.println("Falta implementar!");
 			case 4 -> System.out.println("Falta implementar!");
-			case 5 -> {
+			case 5 ->
+			case 0 -> {
 				return false;
 			}
 			default -> System.out.println("Opção Invalida");

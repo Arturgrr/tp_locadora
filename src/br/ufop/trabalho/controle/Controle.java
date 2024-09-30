@@ -17,10 +17,14 @@ public class Controle {
 
 	private final ArrayList <Cliente> clientes;
 	private final ArrayList <Filme> filmes;
+	private final ArrayList <Entrada> entradas;
+	private final ArrayList <Saida> saidas;
 
 	public Controle(){
 		clientes = new ArrayList<Cliente>();
 		filmes = new ArrayList<Filme>();
+		entradas = new ArrayList<Entrada>()	
+		saidas = new ArrayList<Saida>()
 	}
 
 	/**
@@ -244,5 +248,21 @@ public class Controle {
 
 		return clientesEncontrados;
 	}
+
+
+
+
+/**
+ 	*  PARTE 2
+	 * Métodos balancete
+	 * @author João Teixeira
+	 */
+
+public void cadastrarEntrada(){
+
+
+}
+
+
 
 }
