@@ -191,10 +191,10 @@ public class Controle {
 		return clientesPeloNome;
 	}
 
-		public ArrayList<Cliente> buscarClientePorCodigo(int codigo) {
+	public ArrayList<Cliente> buscarClientePorCodigo(int codigo) {
 		ArrayList<Cliente> clientesPeloCodigo = new ArrayList<>();
 		for (Cliente cliente : clientes) {
-			if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
+			if (cliente.getCodigo()==codigo) {
 				clientesPeloCodigo.add(cliente);
 			}
 		}
@@ -259,6 +259,9 @@ public class Controle {
 		return clientesEncontrados;
 	}
 
+
+
+
 /**
  	*  PARTE 2
 	 * Métodos balancete
@@ -273,7 +276,51 @@ public void cadastrarEntrada(String nome,String descricao,Double valor, Data dat
 	
 
 }
- 
 
+public void cadastrarSaida(String nome,String descricao,Double valor, Data data){
+	
+	Saida saida = new Saida(nome, descricao, valor, data);
+	this.movimentacoes.add(saida);
+
+	
+
+}
+
+public ArrayList<Movimentacao> buscarMovimentacoes(String nome){
+	ArrayList<Movimentacao> movimentacoesPeloNome = new ArrayList<>();
+	for (Movimentacao movimentacao : movimentacoes) {
+		if (movimentacao.getNome().equalsIgnoreCase(nome)) {
+			movimentacoesPeloNome.add(movimentacao);
+		}
+	}
+	return movimentacoesPeloNome;
+
+
+}
+
+public ArrayList<Movimentacao> buscarMovimentacoesPorMes(int mes){
+	ArrayList<Movimentacao> movimentacoesPeloMes = new ArrayList<>();
+	for (Movimentacao movimentacao : movimentacoes) {
+	
+		if ((movimentacao.getDataDaMovimentacao().getMes())== mes) {
+			movimentacoesPeloMes.add(movimentacao);
+		}
+	}
+	return movimentacoesPeloMes;
+
+
+}
+public ArrayList<Movimentacao> buscarMovimentacoesPorAno(int ano){
+	ArrayList<Movimentacao> movimentacoesPeloAno = new ArrayList<>();
+	for (Movimentacao movimentacao : movimentacoes) {
+	
+		if ((movimentacao.getDataDaMovimentacao().getAno())== ano) {
+			movimentacoesPeloAno.add(movimentacao);
+		}
+	}
+	return movimentacoesPeloAno;
+
+
+}
 
 }

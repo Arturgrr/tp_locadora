@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.ufop.trabalho.Util;
-import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
-import br.ufop.trabalho.entities.Cliente;
 import br.ufop.trabalho.entities.Data;
+import br.ufop.trabalho.entities.Movimentacao;
 
 /**
  * @author João Teixeira
@@ -42,12 +41,28 @@ public class MenuBalanceteConsole {
                     \t0 - Voltar
                     """);
             int op = Util.leInteiroConsole(input);
+            ArrayList<Movimentacao> movimentacoesEncontradas;
+            ArrayList<Movimentacao> balancetePorMesEscolhido;
+            ArrayList<Movimentacao> balancetePorAnoEscolhido;
             switch (op) {
                 case 1 -> cadastrarEntrada();
                 case 2 -> cadastrarSaida();
-                case 3 -> buscarMovimentacao(); 
-                case 4 -> balanceteMes(); // implementar
-                case 5 -> balanceteAno(); // implementar
+                case 3 ->  {
+                System.out.println("Digite o nome para buscar alguma movimentacao:");
+                String nomeMovimentacao = input.nextLine();
+                movimentacoesEncontradas = controle.buscarMovimentacoes(nomeMovimentacao);
+                }
+                case 4 -> {
+                    System.out.println("Digite o numero do Mes (1 a 12) para exibir Balancete:");
+                    int mesBusca = input.nextInt();
+                    balancetePorMesEscolhido = controle.buscarMovimentacoesPorMes (mesBusca);
+                }
+                case 5 -> {
+                    System.out.println("Digite o ano para exibir Balancete:");
+                    int anoBusca = input.nextInt();
+                    balancetePorAnoEscolhido = controle.buscarMovimentacoesPorAno (anoBusca);
+
+                }
                 case 0 -> continua = false;
                 default -> System.out.println("Opcao Invalida!");
             }
@@ -98,19 +113,9 @@ public class MenuBalanceteConsole {
 
     }
 
-public void buscarMovimentacao(){
-    System.out.println("Digite o nome para buscar alguma movimentacao:");
-    String nomeMovimentacao = input.nextLine();
+   
 
-    public ArrayList<Movimentacao> buscarMovimentacao(String nomeMovimentacao) {
-		ArrayList<Cliente> clientesPeloNome = new ArrayList<>();
-		for (Cliente cliente : clientes) {
-			if (cliente.getNome().equalsIgnoreCase(nome)) {
-				clientesPeloNome.add(cliente);
-			}
-		}
-		return clientesPeloNome;
-	}
+	
     
 
 
