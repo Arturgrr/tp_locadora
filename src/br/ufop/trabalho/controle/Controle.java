@@ -17,14 +17,13 @@ public class Controle {
 
 	private final ArrayList <Cliente> clientes;
 	private final ArrayList <Filme> filmes;
-	private final ArrayList <Entrada> entradas;
-	private final ArrayList <Saida> saidas;
+	private final ArrayList <Movimentacao> movimentacoes;
 
 	public Controle(){
 		clientes = new ArrayList<Cliente>();
 		filmes = new ArrayList<Filme>();
-		entradas = new ArrayList<Entrada>()	
-		saidas = new ArrayList<Saida>()
+		movimentacoes = new ArrayList<Movimentacao>();
+		
 	}
 
 	/**
@@ -266,8 +265,12 @@ public class Controle {
 	 * @author João Teixeira
 	 */
 
-public void cadastrarEntrada(){
+public void cadastrarEntrada(String nome,String descricao,Double valor, Data data){
+	
+	Entrada entrada = new Entrada(nome, descricao, valor, data);
+	this.movimentacoes.add(entrada);
 
+	
 
 }
  

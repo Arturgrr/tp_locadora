@@ -1,13 +1,18 @@
 package br.ufop.trabalho.entities;
 
-import java.util.Calendar;
-
 /**
  * @author João Teixeira
  */
-public class Saida {
-    private String nome;
-    private String descricao;
-    double valor;
-    Calendar dataDaSaida = Calendar.getInstance();
+public class Saida extends Movimentacao {
+   
+
+
+
+    public Saida(String nome, String descricao, Double valor, Data dataDaMovimentacao) {
+        super(nome,descricao,valor,dataDaMovimentacao); 
+
+    }
+
+   
+
 }

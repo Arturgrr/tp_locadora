@@ -20,6 +20,7 @@ public class MenuConsole {
 
 	private final MenuClienteConsole menuCliente;
 	private final MenuFilmeConsole menuFilme;
+	private final MenuBalanceteConsole menuBalancete;
 
 	public MenuConsole(){
 		controle = new Controle();
@@ -27,6 +28,7 @@ public class MenuConsole {
 
 		menuCliente = new MenuClienteConsole(controle, input);
 		menuFilme = new MenuFilmeConsole(controle, input);
+		menuBalancete = new MenuBalanceteConsole (controle, input);
 	}
 	
 	public void inicioExecucao() {
@@ -54,7 +56,7 @@ public class MenuConsole {
 			case 2 -> menuCliente.exibeMenuClientes();
 			case 3 -> System.out.println("Falta implementar!");
 			case 4 -> System.out.println("Falta implementar!");
-			case 5 ->
+			case 5 -> System.out.println("Falta implementar!");
 			case 0 -> {
 				return false;
 			}
