@@ -192,6 +192,16 @@ public class Controle {
 		return clientesPeloNome;
 	}
 
+		public ArrayList<Cliente> buscarClientePorCodigo(int codigo) {
+		ArrayList<Cliente> clientesPeloCodigo = new ArrayList<>();
+		for (Cliente cliente : clientes) {
+			if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
+				clientesPeloCodigo.add(cliente);
+			}
+		}
+		return clientesPeloCodigo;
+	}
+
 	/**
 	 * Método para buscar dependentes dentro do controle pelo nome
 	 *

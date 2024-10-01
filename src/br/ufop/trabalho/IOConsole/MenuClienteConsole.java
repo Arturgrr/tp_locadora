@@ -65,7 +65,7 @@ public class MenuClienteConsole {
             case 2 ->{
                 System.out.println("Digite o codigo do cliente que deseja buscar"); 
                 String nome1 = input.nextLine();
-                clientesEncontrados = controle.buscarClientePorCodigo(nome);
+                clientesEncontrados = controle.buscarClientePorCodigo(nome); //feito não testado
             }
             case 3 -> {
                 System.out.println("Digite o nome do dependente que deseja buscar");
@@ -75,11 +75,9 @@ public class MenuClienteConsole {
             case 0 -> System.out.println("Voltando...");
             default -> System.out.println("Opcao Invalida!");
         }
-
-        //TODO: Implementar isso aqui melhor
     }
 
-    private void leDadosCliente() {
+    private void leDadosCliente() { 
         input.nextLine();
         System.out.println("Digite o nome do cliente");
         String nome = input.nextLine();
