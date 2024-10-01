@@ -31,14 +31,14 @@ public class MenuClienteConsole {
                     
                     \t5 - imprime Lista de Clientes\
                     
-                    \t10 - Voltar
+                    \t0 - Voltar
                     """);
             int op = Util.leInteiroConsole(input);
             switch (op) {
                 case 1 -> leDadosCliente();
                 case 2 -> buscarCliente();
                 case 5 -> imprimeListaClientes();
-                case 10 -> continua = false;
+                case 0 -> continua = false;
                 default -> System.out.println("Opcao Invalida!");
             }
         } while(continua);
