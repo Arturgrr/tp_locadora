@@ -82,7 +82,7 @@ public class MenuBalanceteConsole {
      * @author João Teixeira
      */
     public void cadastrarSaida() {
-        input.nextLine(); // Consome o '\n' pendente
+        input.nextLine(); 
         System.out.println("Digite o nome da Saida:");
         String nomeDaSaida = input.nextLine();
 
@@ -105,21 +105,21 @@ public class MenuBalanceteConsole {
      * @author João Teixeira
      */
     public void buscarMovimentacao() {
-        input.nextLine(); 
+        input.nextLine();
         System.out.println("Digite o nome para buscar alguma movimentacao:");
         String nomeMovimentacao = input.nextLine();
         ArrayList<Movimentacao> movimentacoesEncontradas = controle.buscarMovimentacoes(nomeMovimentacao);
-        int i=1;
+        int i = 1;
         for (Movimentacao elemento : movimentacoesEncontradas) {
-            
-            System.out.println("movimentacao:  "+ i);
-       
+
+            System.out.println("movimentacao:  " + i);
+
             System.out.println(elemento.toString());
             i++;
         }
         boolean continua2 = true;
-        do{
-        System.out.println("""
+        do {
+            System.out.println("""
                     Voce deseja editar ou excluir alguma movimentacao encontrada?:
 
                     \t1 - Editar
@@ -128,62 +128,87 @@ public class MenuBalanceteConsole {
 
                     \t0 - Voltar
                     """);
-                    int op2 = Util.leInteiroConsole(input);
-                    switch (op2) {
-                        case 1 -> {
-                            System.out.println("Digite o numero da movimentacao que deseja editar:");
-                            int indice=Util.leInteiroConsole(input);
-                            if (indice < 1 || indice > movimentacoesEncontradas.size()) {
-                                System.out.println("ERRO! Indice invalido");
-                                break;
-                            }
-                            input.nextLine(); 
-                            System.out.println("Digite o novo nome da movimentação:");
-                            String novoNome = input.nextLine();
+            int op2 = Util.leInteiroConsole(input);
+            switch (op2) {
+                case 1 -> {
+                    System.out.println("Digite o numero da movimentacao que deseja editar:");
+                    int indice = Util.leInteiroConsole(input);
+                    if (indice < 1 || indice > movimentacoesEncontradas.size()) {
+                        System.out.println("ERRO! Indice invalido");
+                        break;
+                    }
+                    input.nextLine();
+                    System.out.println("Digite o novo nome da movimentacao:");
+                    String novoNome = input.nextLine();
 
-                            System.out.println("Digite a nova descrição da movimentação:");
-                            String novaDescricao = input.nextLine();
+                    System.out.println("Digite a nova descrição da movimentacao:");
+                    String novaDescricao = input.nextLine();
 
-                            System.out.println("Digite o novo valor da movimentação:");
-                            Double novoValor = input.nextDouble();
-                            input.nextLine();
+                    System.out.println("Digite o novo valor da movimentacao:");
+                    Double novoValor = input.nextDouble();
+                    input.nextLine();
 
-                            System.out.println("Digite a nova data da movimentação no formato dd/mm/aaaa:");
-                            Data novaData = Util.lerDataValida(input);
+                    System.out.println("Digite a nova data da movimentação no formato dd/mm/aaaa:");
+                    Data novaData = Util.lerDataValida(input);
 
-                            controle.editarMovimentacao(movimentacoesEncontradas, indice, novoNome, novaDescricao, novoValor, novaData);
-                        }
-                        case 2 -> {
-                            System.out.println("Digite o numero da movimentacao que deseja excluir:");
-                            int indice=Util.leInteiroConsole(input);
-                            if (indice < 1 || indice > movimentacoesEncontradas.size()) {
-                                System.out.println("ERRO! Indice invalido");
-                                break;
-                            }
+                    int flag=controle.editarMovimentacao(movimentacoesEncontradas, indice, novoNome, novaDescricao, novoValor,
+                            novaData);
+                    if (flag==1){
+                        System.out.println("Movimentacao editada com sucesso!");
+                    }else{
+                        System.out.println("ERRO! Movimentacao nao encontrada na lista original.");
 
-                            controle.excluirMovimentacao(movimentacoesEncontradas, indice);
-
-                        }
-                        case 0 -> continua2 = false;
-                        default -> System.out.println("Opcao Invalida!");
+                    }
+                    
+                }
+                case 2 -> {
+                    System.out.println("Digite o numero da movimentacao que deseja excluir:");
+                    int indice = Util.leInteiroConsole(input);
+                    if (indice < 1 || indice > movimentacoesEncontradas.size()) {
+                        System.out.println("ERRO! Indice invalido");
+                        break;
                     }
 
-     } while (continua2);
+                    int flag = controle.excluirMovimentacao(movimentacoesEncontradas, indice);
+                    if (flag==1){
+                        System.out.println("Movimentacao excluida com sucesso!");
+                    }else{
+                        System.out.println("ERRO! Movimentação nao encontrada na lista original.");
+
+                    }
+                }
+                case 0 -> continua2 = false;
+                default -> System.out.println("Opcao Invalida!");
+            }
+
+        } while (continua2);
     }
+
     /**
      * Método para buscar balancete por mês
      * 
      * @author João Teixeira
      */
     public void balancetePorMes() {
-        System.out.println("Digite o numero do Mes (1 a 12) para exibir Balancete:");
+        System.out.println("Digite o numero do Mes (dois digitos, exemplo: 01 a 12) para exibir Balancete:");
         int mesBusca = input.nextInt();
-        input.nextLine(); // Consome o '\n' pendente
+        input.nextLine(); 
 
         ArrayList<Movimentacao> balancetePorMesEscolhido = controle.buscarMovimentacoesPorMes(mesBusca);
+        
+        double saldoPeriodo=0.0;
+        
         for (Movimentacao elemento : balancetePorMesEscolhido) {
+          
             System.out.println(elemento.toString());
+            if(elemento.getTipoDaMovimentacao()==1){ // verifica se é entrada e saida e soma/subtrai no saldo do periodo pesquisado
+                saldoPeriodo += elemento.getValor();
+            }else{
+                saldoPeriodo -= elemento.getValor();
+            }
+
         }
+        System.out.println("Salda do periodo pesquisado: R$" + saldoPeriodo +" reais");
     }
 
     /**
@@ -194,11 +219,20 @@ public class MenuBalanceteConsole {
     public void balancetePorAno() {
         System.out.println("Digite o ano para exibir Balancete:");
         int anoBusca = input.nextInt();
-        input.nextLine(); // Consome o '\n' pendente
+        input.nextLine(); 
 
         ArrayList<Movimentacao> balancetePorAnoEscolhido = controle.buscarMovimentacoesPorAno(anoBusca);
+
+        double saldoPeriodo=0.0;
+
         for (Movimentacao elemento : balancetePorAnoEscolhido) {
             System.out.println(elemento.toString());
+            if(elemento.getTipoDaMovimentacao()==1){ // verifica se é entrada e saida e soma/subtrai no saldo do periodo pesquisado
+                saldoPeriodo += elemento.getValor();
+            }else{
+                saldoPeriodo -= elemento.getValor();
+            }
         }
+        System.out.println("Salda do periodo pesquisado: R$" + saldoPeriodo +" reais");
     }
 }

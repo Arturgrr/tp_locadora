@@ -1,21 +1,27 @@
 package br.ufop.trabalho.entities;
 
-public class Movimentacao {
+public abstract class Movimentacao {
     private String nome;
     private String descricao;
     double valor;
     Data dataDaMovimentacao = null;
+    int tipoDeMovimentacao;
 
-    public Movimentacao(String nome, String descricao, Double valor, Data dataDaMovimentacao) {
+    public Movimentacao(String nome, String descricao, Double valor, Data dataDaMovimentacao, int tipoDeMovimentacao) {
         setNome(nome);
         setDescricao(descricao);
         setValor(valor);
         setDataDaMovimentacao(dataDaMovimentacao);
+        setTipoDaMovimentacao(tipoDeMovimentacao);
     }
     
 
 
 // sets
+public void setTipoDaMovimentacao(int tipoDeMovimentacao){
+    this.tipoDeMovimentacao = tipoDeMovimentacao;
+}
+
 public void setNome(String nome) {
     this.nome = nome;
 }
@@ -33,6 +39,10 @@ public void setDataDaMovimentacao(Data dataDaMovimentacao) {
 }
 
 // gets
+public int getTipoDaMovimentacao() {
+    return tipoDeMovimentacao;
+}
+
 public String getNome() {
     return nome;
 }
@@ -50,12 +60,15 @@ public Data getDataDaMovimentacao() {
 }
 
 public String toString() {
+    
     return "Movimentacao{\t" +
            "\tnome='" + nome + '\'' +
            ", \tdescricao='" + descricao + '\'' +
            ", \tvalor=" + valor +
            ", \tdata=" + dataDaMovimentacao +
            '}';
+    
+    
 }
 
 }

@@ -5,39 +5,42 @@ import java.util.ArrayList;
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.entities.*;
 
-
 /***
- * Classe de regra de negócios da aplicação. Esta classe deverá controlar todos os dados que serão armazenados no sistema (clientes, filmes e a parte financeira).
- *  Ela é a porta de entrada para acesso a todos os dados e deverá também fazer as verificações necessárias no momento dos cadastros. 
- * É necessário perceber a importância dessa classe que implementa todas as regras de negócio da aplicação. A classe Controle poderá
+ * Classe de regra de negócios da aplicação. Esta classe deverá controlar todos
+ * os dados que serão armazenados no sistema (clientes, filmes e a parte
+ * financeira).
+ * Ela é a porta de entrada para acesso a todos os dados e deverá também fazer
+ * as verificações necessárias no momento dos cadastros.
+ * É necessário perceber a importância dessa classe que implementa todas as
+ * regras de negócio da aplicação. A classe Controle poderá
  * ser utilizada para qualquer tipo de interface gráfica inclusive com janelas.
  * IMPORTANTE: ESTA CLASSE NAO DEVE TER ENTRADA E SAÍDA DE DADOS PARA O USUÁRIO
  */
 public class Controle {
 
-	private final ArrayList <Cliente> clientes;
-	private final ArrayList <Filme> filmes;
-	private final ArrayList <Movimentacao> movimentacoes;
+	private final ArrayList<Cliente> clientes;
+	private final ArrayList<Filme> filmes;
+	private final ArrayList<Movimentacao> movimentacoes;
 
-	public Controle(){
+	public Controle() {
 		clientes = new ArrayList<Cliente>();
 		filmes = new ArrayList<Filme>();
 		movimentacoes = new ArrayList<Movimentacao>();
-		
+
 	}
 
 	/**
 	 * Função que adiciona clientes no controle.
 	 *
-	 * @param nome Nome do cliente a ser adicionado
-	 * @param end Endereço do cliente
-	 * @param cpf String contendo apenas números do cpf do cliente
+	 * @param nome   Nome do cliente a ser adicionado
+	 * @param end    Endereço do cliente
+	 * @param cpf    String contendo apenas números do cpf do cliente
 	 * @param dataDN Data de nascimento do cliente
 	 * @param codigo codigo do cliente
 	 * @return inteiro referenciado na constantes
 	 */
-	public int addCliente(String nome, String end, String cpf, Data dataDN, int codigo){
-		if(!Util.verificaListaStringPreenchida(nome, end, cpf)){
+	public int addCliente(String nome, String end, String cpf, Data dataDN, int codigo) {
+		if (!Util.verificaListaStringPreenchida(nome, end, cpf)) {
 			return Constantes.ERRO_CAMPO_VAZIO;
 		}
 
@@ -52,12 +55,13 @@ public class Controle {
 	 *
 	 * @return Inteiro com o número de clientes
 	 */
-	public int getQtdClientes(){
+	public int getQtdClientes() {
 		return clientes.size();
 	}
 
 	/**
-	 * Método para retornar um cliente em uma determinada posição. É importante que as classes de interface gráfica não tenham
+	 * Método para retornar um cliente em uma determinada posição. É importante que
+	 * as classes de interface gráfica não tenham
 	 * acesso a uma referência do array utilizado para armazenar todos os clientes.
 	 *
 	 * @param pos Inteiro que indica qual posição deseja retornar o cliente
@@ -73,16 +77,16 @@ public class Controle {
 	/**
 	 * Função que adiciona filme no controle.
 	 *
-	 * @param nome Nome do filme a ser adicionado
+	 * @param nome             Nome do filme a ser adicionado
 	 * @param dataDeLancamento Data de lançamento do filme
-	 * @param genero Gênero do filme
-	 * @param quantDvd Quantidade de dvd disponíveis desse filme
-	 * @param quantBR Quantidade de BlueRay disponíveis desse filme
+	 * @param genero           Gênero do filme
+	 * @param quantDvd         Quantidade de dvd disponíveis desse filme
+	 * @param quantBR          Quantidade de BlueRay disponíveis desse filme
 	 * @return inteiro referenciado na constantes
 	 * @author Artur Guerra
 	 */
-	public int addFilme(String nome, Data dataDeLancamento, String genero, int quantDvd, int quantBR){
-		if(!Util.verificaListaStringPreenchida(nome, genero)){
+	public int addFilme(String nome, Data dataDeLancamento, String genero, int quantDvd, int quantBR) {
+		if (!Util.verificaListaStringPreenchida(nome, genero)) {
 			return Constantes.ERRO_CAMPO_VAZIO;
 		}
 
@@ -102,7 +106,8 @@ public class Controle {
 	}
 
 	/**
-	 * Método para retornar um filme em uma determinada posição. É importante que as classes de interface gráfica não tenham
+	 * Método para retornar um filme em uma determinada posição. É importante que as
+	 * classes de interface gráfica não tenham
 	 * acesso a uma referência do array utilizado para armazenar todos os clientes.
 	 *
 	 * @param pos Inteiro que indica qual posição deseja retornar o filme
@@ -169,12 +174,13 @@ public class Controle {
 	/**
 	 * @author Artur Guerra
 	 */
-	public void excluirFilme (Filme filme) {
+	public void excluirFilme(Filme filme) {
 		filmes.remove(filme);
 	}
 
 	/**
-	 * Método que busca todos os clientes dentro do controle e retorna o próprio cliente
+	 * Método que busca todos os clientes dentro do controle e retorna o próprio
+	 * cliente
 	 *
 	 * @param nome String contendo o nome do cliente
 	 * @return Array com todos os clientes encontrados
@@ -194,7 +200,7 @@ public class Controle {
 	public ArrayList<Cliente> buscarClientePorCodigo(int codigo) {
 		ArrayList<Cliente> clientesPeloCodigo = new ArrayList<>();
 		for (Cliente cliente : clientes) {
-			if (cliente.getCodigo()==codigo) {
+			if (cliente.getCodigo() == codigo) {
 				clientesPeloCodigo.add(cliente);
 			}
 		}
@@ -220,7 +226,8 @@ public class Controle {
 		return dependentes;
 	}
 
-	/**sei não 
+	/**
+	 * sei não
 	 * Método para buscar Clientes e Dependentes pelo seu nome
 	 *
 	 * @param nome String contendo o nome da pessoa
@@ -259,109 +266,132 @@ public class Controle {
 		return clientesEncontrados;
 	}
 
-
-
-
-/**
- 	*  PARTE 2
-	 * Métodos balancete
+	/**
+	 * PARTE 2
+	 * Método cadastrar entradas do balancete
+	 * 
 	 * @author João Teixeira
 	 */
 
-public void cadastrarEntrada(String nome,String descricao,Double valor, Data data){
-	
-	Entrada entrada = new Entrada(nome, descricao, valor, data);
-	this.movimentacoes.add(entrada);
+	public void cadastrarEntrada(String nome, String descricao, Double valor, Data data) {
+		int tipo=1;
+		Entrada entrada = new Entrada(nome, descricao, valor, data,tipo);
+		this.movimentacoes.add(entrada);
 
-	
-
-}
-
-public void cadastrarSaida(String nome,String descricao,Double valor, Data data){
-	
-	Saida saida = new Saida(nome, descricao, valor, data);
-	this.movimentacoes.add(saida);
-
-	
-
-}
-
-public ArrayList<Movimentacao> buscarMovimentacoes(String nome){
-	ArrayList<Movimentacao> movimentacoesPeloNome = new ArrayList<>();
-	for (Movimentacao movimentacao : movimentacoes) {
-		if (movimentacao.getNome().equalsIgnoreCase(nome)) {
-			movimentacoesPeloNome.add(movimentacao);
-		}
 	}
-	return movimentacoesPeloNome;
+/**
+	 * PARTE 2
+	 * Método cadastrar saidas do balancete
+	 * 
+	 * @author João Teixeira
+	 */
+	public void cadastrarSaida(String nome, String descricao, Double valor, Data data) {
+		int tipo=0;
+		Saida saida = new Saida(nome, descricao, valor, data,tipo);
+		this.movimentacoes.add(saida);
 
-
-}
-
-public ArrayList<Movimentacao> buscarMovimentacoesPorMes(int mes){
-	ArrayList<Movimentacao> movimentacoesPeloMes = new ArrayList<>();
-	for (Movimentacao movimentacao : movimentacoes) {
-	
-		if ((movimentacao.getDataDaMovimentacao().getMes())== mes) {
-			movimentacoesPeloMes.add(movimentacao);
-		}
 	}
-	return movimentacoesPeloMes;
-
-
-}
-public ArrayList<Movimentacao> buscarMovimentacoesPorAno(int ano){
-	ArrayList<Movimentacao> movimentacoesPeloAno = new ArrayList<>();
-	for (Movimentacao movimentacao : movimentacoes) {
-	
-		if ((movimentacao.getDataDaMovimentacao().getAno())== ano) {
-			movimentacoesPeloAno.add(movimentacao);
+	/**
+	 * PARTE 2
+	 * Método buscar movimentacoes por nome 
+	 * 
+	 * @author João Teixeira
+	 */
+	public ArrayList<Movimentacao> buscarMovimentacoes(String nome) {
+		ArrayList<Movimentacao> movimentacoesPeloNome = new ArrayList<>();
+		for (Movimentacao movimentacao : movimentacoes) {
+			if (movimentacao.getNome().equalsIgnoreCase(nome)) {
+				movimentacoesPeloNome.add(movimentacao);
+			}
 		}
+		return movimentacoesPeloNome;
+
 	}
-	return movimentacoesPeloAno;
+	/**
+	 * PARTE 2
+	 * Método buscar movimentacoes por mes 
+	 * 
+	 * @author João Teixeira
+	 */
+	public ArrayList<Movimentacao> buscarMovimentacoesPorMes(int mes) {
+		ArrayList<Movimentacao> movimentacoesPeloMes = new ArrayList<>();
+		for (Movimentacao movimentacao : movimentacoes) {
 
+			if ((movimentacao.getDataDaMovimentacao().getMes()) == mes) {
+				movimentacoesPeloMes.add(movimentacao);
+			}
+		}
+		return movimentacoesPeloMes;
 
+	}
+	/**
+	 * PARTE 2
+	 * Método buscar movimentacoes por Ano 
+	 * 
+	 * @author João Teixeira
+	 */
+	public ArrayList<Movimentacao> buscarMovimentacoesPorAno(int ano) {
+		ArrayList<Movimentacao> movimentacoesPeloAno = new ArrayList<>();
+		for (Movimentacao movimentacao : movimentacoes) {
+
+			if ((movimentacao.getDataDaMovimentacao().getAno()) == ano) {
+				movimentacoesPeloAno.add(movimentacao);
+			}
+		}
+		return movimentacoesPeloAno;
+
+	}
+	/**
+	 * PARTE 2
+	 * Método editar movimentacao 
+	 * 
+	 * @author João Teixeira
+	 */
+	public int editarMovimentacao(ArrayList<Movimentacao> encontrados, int indice, String novoNome,
+			String novaDescricao, Double novoValor, Data novaData) {
+			int flag=0;
+
+		Movimentacao movimentacaoParaEditar = encontrados.get(indice - 1);
+
+		// Procurar na lista original de movimentações
+		for (Movimentacao movimentacao : movimentacoes) {
+			if (movimentacao.equals(movimentacaoParaEditar)) {
+				// edição dos atributos da movi
+				movimentacao.setNome(novoNome);
+
+				movimentacao.setDescricao(novaDescricao);
+
+				movimentacao.setValor(novoValor);
+
+				movimentacao.setDataDaMovimentacao(novaData);
+				flag=1;
+			}else{
+				flag=0;
+			}
+				
+				
+		}
+		
+	return flag;
+	}
+	/**
+	 * PARTE 2
+	 * Método excluir movimentacao 
+	 * 
+	 * @author João Teixeira
+	 */
+	public int excluirMovimentacao(ArrayList<Movimentacao> encontrados, int indice) {
+		int flag=0;
+
+		Movimentacao movimentacaoParaExcluir = encontrados.get(indice - 1);
+
+		
+		if (movimentacoes.remove(movimentacaoParaExcluir)) {
+			flag=1;
+		} else {
+			flag=0;
+		}
+	
+return flag;
 }
-public void editarMovimentacao(ArrayList<Movimentacao> encontrados, int indice, String novoNome, String novaDescricao, Double novoValor,Data novaData ) {
-   
-    Movimentacao movimentacaoParaEditar = encontrados.get(indice - 1);
-
-    // Procurar na lista original de movimentações
-    for (Movimentacao movimentacao : movimentacoes) {
-        if (movimentacao.equals(movimentacaoParaEditar)) {
-            //edição dos atributos da movi
-            movimentacao.setNome(novoNome);
-
-            
-            movimentacao.setDescricao(novaDescricao);
-
-            
-            movimentacao.setValor(novoValor);
-
-            
-            movimentacao.setDataDaMovimentacao(novaData);
-
-            System.out.println("Movimentação editada com sucesso!");
-            return; // Saímos do método após editar
-        }
-    }
-    System.out.println("Movimentação não encontrada na lista original.");
-}
-
-public void excluirMovimentacao(ArrayList<Movimentacao> encontrados, int indice) {
-    if (indice < 1 || indice > encontrados.size()) {
-        System.out.println("Índice inválido.");
-        return;
-    }
-
-    Movimentacao movimentacaoParaExcluir = encontrados.get(indice - 1);
-
-    // Procurar e remover na lista original de movimentações
-    if (movimentacoes.remove(movimentacaoParaExcluir)) {
-        System.out.println("Movimentação excluída com sucesso!");
-    } else {
-        System.out.println("Movimentação não encontrada na lista original.");
-    }
-}
-
 }
