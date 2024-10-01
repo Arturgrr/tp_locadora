@@ -10,7 +10,6 @@ public class Filme {
     private String genero;
     private int quantDvd, quantBlueRay;
 
-    //Tipo de filme???? <---- Pernilongo
 
 
     /**

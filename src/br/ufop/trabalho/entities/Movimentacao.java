@@ -49,4 +49,13 @@ public Data getDataDaMovimentacao() {
     return dataDaMovimentacao;
 }
 
+public String toString() {
+    return "Movimentacao{\t" +
+           "\tnome='" + nome + '\'' +
+           ", \tdescricao='" + descricao + '\'' +
+           ", \tvalor=" + valor +
+           ", \tdata=" + dataDaMovimentacao +
+           '}';
+}
+
 }

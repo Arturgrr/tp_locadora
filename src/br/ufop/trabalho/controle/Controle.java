@@ -322,5 +322,46 @@ public ArrayList<Movimentacao> buscarMovimentacoesPorAno(int ano){
 
 
 }
+public void editarMovimentacao(ArrayList<Movimentacao> encontrados, int indice, String novoNome, String novaDescricao, Double novoValor,Data novaData ) {
+   
+    Movimentacao movimentacaoParaEditar = encontrados.get(indice - 1);
+
+    // Procurar na lista original de movimentações
+    for (Movimentacao movimentacao : movimentacoes) {
+        if (movimentacao.equals(movimentacaoParaEditar)) {
+            //edição dos atributos da movi
+            movimentacao.setNome(novoNome);
+
+            
+            movimentacao.setDescricao(novaDescricao);
+
+            
+            movimentacao.setValor(novoValor);
+
+            
+            movimentacao.setDataDaMovimentacao(novaData);
+
+            System.out.println("Movimentação editada com sucesso!");
+            return; // Saímos do método após editar
+        }
+    }
+    System.out.println("Movimentação não encontrada na lista original.");
+}
+
+public void excluirMovimentacao(ArrayList<Movimentacao> encontrados, int indice) {
+    if (indice < 1 || indice > encontrados.size()) {
+        System.out.println("Índice inválido.");
+        return;
+    }
+
+    Movimentacao movimentacaoParaExcluir = encontrados.get(indice - 1);
+
+    // Procurar e remover na lista original de movimentações
+    if (movimentacoes.remove(movimentacaoParaExcluir)) {
+        System.out.println("Movimentação excluída com sucesso!");
+    } else {
+        System.out.println("Movimentação não encontrada na lista original.");
+    }
+}
 
 }

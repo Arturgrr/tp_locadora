@@ -26,43 +26,27 @@ public class MenuBalanceteConsole {
         boolean continua = true;
         do {
             System.out.println("""
-                    Digite a opcao:\
+                    Digite a opcao:
 
-                    \t1 - Cadastrar Entrada\
+                    \t1 - Cadastrar entrada
 
-                    \t2 - Cadastrar Saida\
+                    \t2 - Cadastrar saida
 
-                    \t3 - Buscar Movimentacao\
+                    \t3 - Buscar uma movimentacao por nome
 
-                    \t4 - Balancete por Mes\
+                    \t4 - Balancete por mes
 
-                    \t5 - Balancete por Ano\
+                    \t5 - Balancete por ano
 
                     \t0 - Voltar
                     """);
             int op = Util.leInteiroConsole(input);
-            ArrayList<Movimentacao> movimentacoesEncontradas;
-            ArrayList<Movimentacao> balancetePorMesEscolhido;
-            ArrayList<Movimentacao> balancetePorAnoEscolhido;
             switch (op) {
                 case 1 -> cadastrarEntrada();
                 case 2 -> cadastrarSaida();
-                case 3 ->  {
-                System.out.println("Digite o nome para buscar alguma movimentacao:");
-                String nomeMovimentacao = input.nextLine();
-                movimentacoesEncontradas = controle.buscarMovimentacoes(nomeMovimentacao);
-                }
-                case 4 -> {
-                    System.out.println("Digite o numero do Mes (1 a 12) para exibir Balancete:");
-                    int mesBusca = input.nextInt();
-                    balancetePorMesEscolhido = controle.buscarMovimentacoesPorMes (mesBusca);
-                }
-                case 5 -> {
-                    System.out.println("Digite o ano para exibir Balancete:");
-                    int anoBusca = input.nextInt();
-                    balancetePorAnoEscolhido = controle.buscarMovimentacoesPorAno (anoBusca);
-
-                }
+                case 3 -> buscarMovimentacao();
+                case 4 -> balancetePorMes();
+                case 5 -> balancetePorAno();
                 case 0 -> continua = false;
                 default -> System.out.println("Opcao Invalida!");
             }
@@ -74,9 +58,8 @@ public class MenuBalanceteConsole {
      * 
      * @author João Teixeira
      */
-
     public void cadastrarEntrada() {
-        input.nextLine();
+        input.nextLine(); // Consome o '\n' pendente
         System.out.println("Digite o nome da Entrada:");
         String nomeDaEntrada = input.nextLine();
 
@@ -88,37 +71,134 @@ public class MenuBalanceteConsole {
 
         System.out.println("Digite a data da entrada no padrão dd/mm/aaaa:");
         Data dataDaEntrada = Util.lerDataValida(input);
-       
 
         controle.cadastrarEntrada(nomeDaEntrada, descricaoEntrada, valor, dataDaEntrada);
-
+        System.out.println("Entrada adicionada com sucesso!!");
     }
 
+    /**
+     * Método para adicionar saída
+     * 
+     * @author João Teixeira
+     */
     public void cadastrarSaida() {
-        input.nextLine();
+        input.nextLine(); // Consome o '\n' pendente
         System.out.println("Digite o nome da Saida:");
-        String nomeDaEntrada = input.nextLine();
+        String nomeDaSaida = input.nextLine();
 
         System.out.println("Digite a descricao da Saida:");
-        String descricaoEntrada = input.nextLine();
+        String descricaoSaida = input.nextLine();
 
         System.out.println("Digite o valor da Saida:");
         Double valor = input.nextDouble();
 
         System.out.println("Digite a data da saida no padrão dd/mm/aaaa:");
-        Data dataDaEntrada = Util.lerDataValida(input);
-        input.nextLine();
+        Data dataDaSaida = Util.lerDataValida(input);
 
-        controle.cadastrarEntrada(nomeDaEntrada, descricaoEntrada, valor, dataDaEntrada);
-
+        controle.cadastrarSaida(nomeDaSaida, descricaoSaida, valor, dataDaSaida);
+        System.out.println("Saida adicionada com sucesso!!");
     }
 
-   
+    /**
+     * Método para buscar movimentação por nome
+     * 
+     * @author João Teixeira
+     */
+    public void buscarMovimentacao() {
+        input.nextLine(); 
+        System.out.println("Digite o nome para buscar alguma movimentacao:");
+        String nomeMovimentacao = input.nextLine();
+        ArrayList<Movimentacao> movimentacoesEncontradas = controle.buscarMovimentacoes(nomeMovimentacao);
+        int i=1;
+        for (Movimentacao elemento : movimentacoesEncontradas) {
+            
+            System.out.println("movimentacao:  "+ i);
+       
+            System.out.println(elemento.toString());
+            i++;
+        }
+        boolean continua2 = true;
+        do{
+        System.out.println("""
+                    Voce deseja editar ou excluir alguma movimentacao encontrada?:
 
-	
-    
+                    \t1 - Editar
 
+                    \t2 - Excluir
 
+                    \t0 - Voltar
+                    """);
+                    int op2 = Util.leInteiroConsole(input);
+                    switch (op2) {
+                        case 1 -> {
+                            System.out.println("Digite o numero da movimentacao que deseja editar:");
+                            int indice=Util.leInteiroConsole(input);
+                            if (indice < 1 || indice > movimentacoesEncontradas.size()) {
+                                System.out.println("ERRO! Indice invalido");
+                                break;
+                            }
+                            input.nextLine(); 
+                            System.out.println("Digite o novo nome da movimentação:");
+                            String novoNome = input.nextLine();
 
+                            System.out.println("Digite a nova descrição da movimentação:");
+                            String novaDescricao = input.nextLine();
 
+                            System.out.println("Digite o novo valor da movimentação:");
+                            Double novoValor = input.nextDouble();
+                            input.nextLine();
+
+                            System.out.println("Digite a nova data da movimentação no formato dd/mm/aaaa:");
+                            Data novaData = Util.lerDataValida(input);
+
+                            controle.editarMovimentacao(movimentacoesEncontradas, indice, novoNome, novaDescricao, novoValor, novaData);
+                        }
+                        case 2 -> {
+                            System.out.println("Digite o numero da movimentacao que deseja excluir:");
+                            int indice=Util.leInteiroConsole(input);
+                            if (indice < 1 || indice > movimentacoesEncontradas.size()) {
+                                System.out.println("ERRO! Indice invalido");
+                                break;
+                            }
+
+                            controle.excluirMovimentacao(movimentacoesEncontradas, indice);
+
+                        }
+                        case 0 -> continua2 = false;
+                        default -> System.out.println("Opcao Invalida!");
+                    }
+
+     } while (continua2);
+    }
+    /**
+     * Método para buscar balancete por mês
+     * 
+     * @author João Teixeira
+     */
+    public void balancetePorMes() {
+        System.out.println("Digite o numero do Mes (1 a 12) para exibir Balancete:");
+        int mesBusca = input.nextInt();
+        input.nextLine(); // Consome o '\n' pendente
+
+        ArrayList<Movimentacao> balancetePorMesEscolhido = controle.buscarMovimentacoesPorMes(mesBusca);
+        for (Movimentacao elemento : balancetePorMesEscolhido) {
+            System.out.println(elemento.toString());
+        }
+    }
+
+    /**
+     * Método para buscar balancete por ano
+     * 
+     * @author João Teixeira
+     */
+    public void balancetePorAno() {
+        System.out.println("Digite o ano para exibir Balancete:");
+        int anoBusca = input.nextInt();
+        input.nextLine(); // Consome o '\n' pendente
+
+        ArrayList<Movimentacao> balancetePorAnoEscolhido = controle.buscarMovimentacoesPorAno(anoBusca);
+        for (Movimentacao elemento : balancetePorAnoEscolhido) {
+            System.out.println(elemento.toString());
+        }
+    }
 }
