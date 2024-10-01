@@ -64,8 +64,8 @@ public class MenuClienteConsole {
             }
             case 2 ->{
                 System.out.println("Digite o codigo do cliente que deseja buscar"); 
-                String nome = input.nextLine();
-                clientesEncontrados = controle.buscarClientePorCodigo(nome); //feito não testado
+                int codigo = input.nextInt();
+                clientesEncontrados = controle.buscarClientePorCodigo(codigo); //feito não testado
             }
             case 3 -> {
                 System.out.println("Digite o nome do dependente que deseja buscar");

@@ -88,7 +88,7 @@ public class MenuBalanceteConsole {
 
         System.out.println("Digite a data da entrada no padrão dd/mm/aaaa:");
         Data dataDaEntrada = Util.lerDataValida(input);
-        input.nextLine();
+       
 
         controle.cadastrarEntrada(nomeDaEntrada, descricaoEntrada, valor, dataDaEntrada);
 

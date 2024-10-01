@@ -106,7 +106,7 @@ public class Util {
             String[] partes = info.split("/");
 
             if (partes.length != 3) {
-                System.out.println("Formato invalido! Certifique-se de usar dd/mm/aaaa.");
+                System.out.println("Certifique-se de usar dd/mm/aaaa.");
             } else {
                 try {
                     int dia = Integer.parseInt(partes[0]);

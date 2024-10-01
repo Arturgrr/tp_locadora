@@ -56,7 +56,7 @@ public class MenuConsole {
 			case 2 -> menuCliente.exibeMenuClientes();
 			case 3 -> System.out.println("Falta implementar!");
 			case 4 -> System.out.println("Falta implementar!");
-			case 5 -> System.out.println("Falta implementar!");
+			case 5 -> menuBalancete.exibeMenuBalancete();
 			case 0 -> {
 				return false;
 			}
