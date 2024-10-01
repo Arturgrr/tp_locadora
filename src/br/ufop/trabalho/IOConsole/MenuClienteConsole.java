@@ -59,12 +59,12 @@ public class MenuClienteConsole {
         switch (op) {
             case 1 -> {
                 System.out.println("Digite o nome do cliente que deseja buscar");
-                String nome1 = input.nextLine();
+                String nome = input.nextLine();
                 clientesEncontrados = controle.buscarClientePorNome(nome); //feito não testado
             }
             case 2 ->{
                 System.out.println("Digite o codigo do cliente que deseja buscar"); 
-                String nome1 = input.nextLine();
+                String nome = input.nextLine();
                 clientesEncontrados = controle.buscarClientePorCodigo(nome); //feito não testado
             }
             case 3 -> {
