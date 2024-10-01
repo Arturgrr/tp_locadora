@@ -106,8 +106,7 @@ public class MenuFilmeConsole {
                 String genero = input.nextLine();
                 filmesEncontrados = controle.buscarFilmesPorGenero(genero);
             }
-            //não tem busca por ano
-            //õqueeeeeeeee? case 3 -> filmesEncontrados = controle.buscarFilmesDisponiveis();
+            case 3 -> filmesEncontrados = controle.buscarFilmesDisponiveis();
             default -> System.out.println("Opcao invalida");
         }
 
