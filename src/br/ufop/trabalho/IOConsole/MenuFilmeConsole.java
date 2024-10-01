@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 /**
  * @author Artur Guerra
+ * @author Iaggo Rauta
+ * 
  */
 public class MenuFilmeConsole {
     private final Controle controle;
@@ -53,6 +55,35 @@ public class MenuFilmeConsole {
     /**
      * @author Artur Guerra
      */
+    private void cadastrarFilme() {
+        input.nextLine();
+        System.out.println("Digite o nome do filme: ");
+        String nome = input.nextLine();
+
+        System.out.println("Digite o genero do filme: ");
+        String genero = input.nextLine();
+
+        System.out.println("Digite o ano de lancamento do filme (dd/MM/yyyy): ");
+        Data anoDeLancamento = Util.lerDataValida(input);
+
+        System.out.println("Digite a quantidade de dvd: ");
+        int quantidadeDeDvd = Util.leInteiroConsole(input);
+
+        System.out.println("Digite a quantidade de blueray: ");
+        int quantidadeDeBluRay = Util.leInteiroConsole(input);
+
+        int retorno = controle.addFilme(nome, anoDeLancamento, genero, quantidadeDeDvd, quantidadeDeBluRay);
+        String msg = switch (retorno){
+            case Constantes.RESULT_OK -> "Sucesso ao cadastrar filme";
+            case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem estar preenchidos";
+            default -> "";
+        };
+        System.out.println(msg);
+    }
+
+    /**
+     * @author Artur Guerra
+     */
     private void buscarFilme() {
         System.out.println("""
                 Selecione o tipo de busca:
@@ -75,7 +106,8 @@ public class MenuFilmeConsole {
                 String genero = input.nextLine();
                 filmesEncontrados = controle.buscarFilmesPorGenero(genero);
             }
-            case 3 -> filmesEncontrados = controle.buscarFilmesDisponiveis();
+            //não tem busca por ano
+            //õqueeeeeeeee? case 3 -> filmesEncontrados = controle.buscarFilmesDisponiveis();
             default -> System.out.println("Opcao invalida");
         }
 
@@ -99,6 +131,7 @@ public class MenuFilmeConsole {
 
     /**
      * @author Artur Guerra
+     * @author Iaggo Rauta
      */
     private void exibeOpcoesFilme(Filme filmeSelecionado){
         System.out.println("""
@@ -107,7 +140,7 @@ public class MenuFilmeConsole {
                 \t1 - Editar filme
                 \t2 - Excluir filme
                 \t3 - Locar filme
-                \t4 - Voltar
+                \t0 - Voltar
                 """);
         int opcaoEscolhida = Util.leInteiroConsole(input);
 
@@ -115,7 +148,7 @@ public class MenuFilmeConsole {
             case 1 -> editarFilme(filmeSelecionado);
             case 2 -> excluirFilme(filmeSelecionado);
             case 3 -> System.out.println("Locar filme");
-            case 4 -> System.out.println("Voltando...");
+            case 0 -> System.out.println("Voltando...");
             default -> System.out.println("Opcao invalida, voltando ao menu");
         }
     }
@@ -188,32 +221,5 @@ public class MenuFilmeConsole {
 
     }
 
-    /**
-     * @author Artur Guerra
-     */
-    private void cadastrarFilme() {
-        input.nextLine();
-        System.out.println("Digite o nome do filme: ");
-        String nome = input.nextLine();
 
-        System.out.println("Digite o genero do filme: ");
-        String genero = input.nextLine();
-
-        System.out.println("Digite o ano de lancamento do filme (dd/MM/yyyy): ");
-        Data anoDeLancamento = Util.lerDataValida(input);
-
-        System.out.println("Digite a quantidade de dvd: ");
-        int quantidadeDeDvd = Util.leInteiroConsole(input);
-
-        System.out.println("Digite a quantidade de blueray: ");
-        int quantidadeDeBluRay = Util.leInteiroConsole(input);
-
-        int retorno = controle.addFilme(nome, anoDeLancamento, genero, quantidadeDeDvd, quantidadeDeBluRay);
-        String msg = switch (retorno){
-            case Constantes.RESULT_OK -> "Sucesso ao cadastrar filme";
-            case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem estar preenchidos";
-            default -> "";
-        };
-        System.out.println(msg);
-    }
 }

@@ -92,7 +92,7 @@ public class Controle {
 	}
 
 	/**
-	 * Método que retornar a quantidade de filmes cadastrados.
+	 * Método que retorna a quantidade de filmes cadastrados.
 	 *
 	 * @return Inteiro com o número de filmes
 	 * @author Artur Guerra
@@ -179,15 +179,26 @@ public class Controle {
 	 * @param nome String contendo o nome do cliente
 	 * @return Array com todos os clientes encontrados
 	 * @author Artur Guerra
+	 * @author Iaggo Rauta
 	 */
 	public ArrayList<Cliente> buscarClientePorNome(String nome) {
 		ArrayList<Cliente> clientesPeloNome = new ArrayList<>();
 		for (Cliente cliente : clientes) {
 			if (cliente.getNome().equalsIgnoreCase(nome)) {
-				clientes.add(cliente);
+				clientesPeloNome.add(cliente);
 			}
 		}
 		return clientesPeloNome;
+	}
+
+		public ArrayList<Cliente> buscarClientePorCodigo(int codigo) {
+		ArrayList<Cliente> clientesPeloCodigo = new ArrayList<>();
+		for (Cliente cliente : clientes) {
+			if (cliente.getCodigo().equalsIgnoreCase(codigo)) {
+				clientesPeloCodigo.add(cliente);
+			}
+		}
+		return clientesPeloCodigo;
 	}
 
 	/**
@@ -209,7 +220,7 @@ public class Controle {
 		return dependentes;
 	}
 
-	/**
+	/**sei não 
 	 * Método para buscar Clientes e Dependentes pelo seu nome
 	 *
 	 * @param nome String contendo o nome da pessoa
@@ -248,9 +259,6 @@ public class Controle {
 		return clientesEncontrados;
 	}
 
-
-
-
 /**
  	*  PARTE 2
 	 * Métodos balancete
@@ -265,7 +273,7 @@ public void cadastrarEntrada(String nome,String descricao,Double valor, Data dat
 	
 
 }
-
+ 
 
 
 }

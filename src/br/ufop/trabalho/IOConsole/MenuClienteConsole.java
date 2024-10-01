@@ -9,6 +9,7 @@ import br.ufop.trabalho.controle.Controle;
 import br.ufop.trabalho.entities.Cliente;
 import br.ufop.trabalho.entities.Data;
 
+// @author Iaggo Rauta
 public class MenuClienteConsole {
 
     private final Controle controle;
@@ -43,7 +44,7 @@ public class MenuClienteConsole {
             }
         } while(continua);
     }
-
+// @author Iaggo Rauta
     private void buscarCliente() {
         System.out.println("""
                 Selecione o tipo de busca:
@@ -51,30 +52,32 @@ public class MenuClienteConsole {
                 \t1 - Buscar pelo nome
                 \t2 - Buscar pelo código
                 \t3 - Buscar pelo nome do dependente
-                \t10 - Voltar
+                \t0 - Voltar
                 """);
         int op = Util.leInteiroConsole(input);
         ArrayList<Cliente> clientesEncontrados;
         switch (op) {
             case 1 -> {
                 System.out.println("Digite o nome do cliente que deseja buscar");
-                String nome = input.nextLine();
-                clientesEncontrados = controle.buscarClientePorNome(nome);
+                String nome1 = input.nextLine();
+                clientesEncontrados = controle.buscarClientePorNome(nome); //feito não testado
             }
-            case 2 -> System.out.println("Falta implementar");
+            case 2 ->{
+                System.out.println("Digite o codigo do cliente que deseja buscar"); 
+                String nome1 = input.nextLine();
+                clientesEncontrados = controle.buscarClientePorCodigo(nome); //feito não testado
+            }
             case 3 -> {
                 System.out.println("Digite o nome do dependente que deseja buscar");
                 String nome = input.nextLine();
                 clientesEncontrados = controle.buscarClientePeloNomeDoDepentende(nome);
             }
-            case 4 -> System.out.println("Voltando...");
+            case 0 -> System.out.println("Voltando...");
             default -> System.out.println("Opcao Invalida!");
         }
-
-        //TODO: Implementar isso aqui melhor
     }
 
-    private void leDadosCliente() {
+    private void leDadosCliente() { 
         input.nextLine();
         System.out.println("Digite o nome do cliente");
         String nome = input.nextLine();
