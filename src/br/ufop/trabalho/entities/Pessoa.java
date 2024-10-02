@@ -1,6 +1,6 @@
 package br.ufop.trabalho.entities;
-import java.io.Serializable;
 import br.ufop.trabalho.Util;
+import java.io.Serializable;
 
 /**
  * Classe para armazenar os dados de uma Pessoa. Como o sistema deverá controlar clientes e funcionários os dados comuns serão
@@ -58,7 +58,7 @@ public class Pessoa implements Serializable{
 	 */
 	public void setCpf(String cpf) {
 		if (!Util.validarCpf(Util.limparCpf(cpf))) {
-			throw new IllegalArgumentException("O CPF informado é inválido.");
+			System.out.println("O CPF informado é inválido.");
 		}
 		this.cpf = Util.limparCpf(cpf);
 	}

@@ -8,7 +8,6 @@ import br.ufop.trabalho.entities.Data;
 import br.ufop.trabalho.entities.Dependente;
 import br.ufop.trabalho.entities.Filme;
 import br.ufop.trabalho.entities.Locacao;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,7 +48,7 @@ public class MenuClienteConsole {
         String endereco = input.nextLine();
 
         System.out.println("Digite o CPF do cliente:");
-        String cpf = input.nextLine();
+        String cpf =  Util.lerCpfValido(input);
 
         System.out.println("Digite a data de nascimento do cliente (dd/MM/yyyy):");
         Data dataNascimento = Util.lerDataValida(input);
