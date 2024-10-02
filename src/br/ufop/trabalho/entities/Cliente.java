@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * @author Artur Guerra
+ * @author Iaggo Rauta
  */
 public class Cliente extends Pessoa {
 
@@ -15,9 +16,9 @@ public class Cliente extends Pessoa {
     /**
      * Construtor
      *
-     * @param nome String com o Nome do usuário
+     * @param nome     String com o Nome do usuário
      * @param endereco String com o Endereço do usuário
-     * @param codigo Inteiro com o código do usuário
+     * @param codigo   Inteiro com o código do usuário
      * @author Artur Guerra
      */
     public Cliente(String nome, String endereco, String cpf, Data dataDeNascimento, int codigo) {
@@ -57,7 +58,8 @@ public class Cliente extends Pessoa {
      */
     public void addDependentes(Dependente dependente) {
         if (this.dependentes.size() >= 3) {
-            throw new IllegalArgumentException("O cliente já possui 3 dependentes cadastrados. Não é possível adicionar: " + dependente.getNome());
+            throw new IllegalArgumentException(
+                    "O cliente já possui 3 dependentes cadastrados. Não é possível adicionar: " + dependente.getNome());
         }
         this.dependentes.add(dependente);
     }
@@ -78,12 +80,14 @@ public class Cliente extends Pessoa {
 
     /**
      * @author Artur Guerra
+     * @author Iaggo Rauta
      */
     public void setMulta(double multa) {
         if (multa < 0) {
             throw new IllegalArgumentException("Multa não pode ser negativa.");
         }
-        this.multa = multa;    }
+        this.multa = multa;
+    }
 
     public void addMulta(double multa) {
         this.multa += multa;

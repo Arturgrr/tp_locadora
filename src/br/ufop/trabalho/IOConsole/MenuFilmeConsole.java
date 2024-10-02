@@ -35,7 +35,7 @@ public class MenuFilmeConsole {
         do {
             System.out.println("""
                     Digite a opcao:
-                    
+
                     \t1 - Cadastrar filme
                     \t2 - Buscar filme
                     \t10 - Voltar
@@ -73,7 +73,7 @@ public class MenuFilmeConsole {
         int quantidadeDeBluRay = Util.leInteiroConsole(input);
 
         int retorno = controle.addFilme(nome, anoDeLancamento, genero, quantidadeDeDvd, quantidadeDeBluRay);
-        String msg = switch (retorno){
+        String msg = switch (retorno) {
             case Constantes.RESULT_OK -> "Sucesso ao cadastrar filme";
             case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem estar preenchidos";
             default -> "";
@@ -87,7 +87,7 @@ public class MenuFilmeConsole {
     private void buscarFilme() {
         System.out.println("""
                 Selecione o tipo de busca:
-                
+
                 \t1 - Buscar por nome
                 \t2 - Buscar por genero
                 \t3 - Buscar por disponibilidade
@@ -132,10 +132,10 @@ public class MenuFilmeConsole {
      * @author Artur Guerra
      * @author Iaggo Rauta
      */
-    private void exibeOpcoesFilme(Filme filmeSelecionado){
+    private void exibeOpcoesFilme(Filme filmeSelecionado) {
         System.out.println("""
                 Selecione o que voce deseja fazer:
-                
+
                 \t1 - Editar filme
                 \t2 - Excluir filme
                 \t3 - Locar filme
@@ -157,7 +157,6 @@ public class MenuFilmeConsole {
      */
     public void editarFilme(Filme filme) {
         System.out.println("Editar filme: " + filme.getNome());
-
 
         System.out.println("Digite o novo nome do filme (ou enter para manter o atual): ");
         String novoNome = input.nextLine();
@@ -206,19 +205,5 @@ public class MenuFilmeConsole {
             System.out.println("Solicitação cancelada");
         }
     }
-
-    /**
-     * @author Artur Guerra
-     */
-    private void locarFilme(Filme filme, Pessoa pessoa) {
-        // TODO: Implementar aqui depois
-        // TODO: Devo alternar para o caso de ser um depentende?
-
-        System.out.println("Digite o nome do cliente que irá locar o filme");
-        String nome = input.nextLine();
-
-
-    }
-
 
 }
