@@ -65,13 +65,6 @@ public class Filme implements Serializable {
         this.quantDvd += quantDvd;
     }
 
-    public void removeQuantDvd(int quantDvd) {
-        if (this.quantDvd - quantDvd < 0) {
-            throw new IllegalArgumentException("Quantidade de DVDs a remover é maior que o disponível.");
-        }
-        this.quantDvd -= quantDvd;
-    }
-
     public void setQuantDvd(int quantDvd) {
         if (quantDvd < 0) {
             throw new IllegalArgumentException("Quantidade de DVDs não pode ser negativa.");
@@ -88,13 +81,6 @@ public class Filme implements Serializable {
             throw new IllegalArgumentException("Quantidade de Blu-rays a adicionar não pode ser negativa.");
         }
         this.quantBlueRay += quantBlueRay;
-    }
-
-    public void removeQuantBlueRay(int quantBlueRay) {
-        if (this.quantBlueRay - quantBlueRay < 0) {
-            throw new IllegalArgumentException("Quantidade de Blu-rays a remover é maior que o disponível.");
-        }
-        this.quantBlueRay -= quantBlueRay;
     }
 
     public void setQuantBlueRay(int quantBlueRay) {

@@ -29,15 +29,10 @@ public class MenuBalanceteConsole {
                     Digite a opcao:
 
                     \t1 - Cadastrar entrada
-
                     \t2 - Cadastrar saida
-
                     \t3 - Buscar uma movimentacao por nome
-
                     \t4 - Balancete por mes
-
                     \t5 - Balancete por ano
-
                     \t0 - Voltar
                     """);
             int op = Util.leInteiroConsole(input);

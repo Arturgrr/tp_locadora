@@ -1,4 +1,4 @@
-package br.ufop.trabalho.entities;
+package br.ufop.trabalho.controle;
 
 public interface Constantes {
 	int RESULT_OK = 1;

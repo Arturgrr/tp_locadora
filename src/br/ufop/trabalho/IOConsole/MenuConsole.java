@@ -56,7 +56,7 @@ public class MenuConsole {
 		int op = Util.leInteiroConsole(input);
 		switch (op) {
 			case 1 -> menuFilme.exibeMenuFilmes();
-			case 2 -> menuCliente.exibeMenuClientes();
+			case 2 -> menuCliente.exibeMenuCliente();
 			case 3 -> menuRelatorio.exibeMenuRelatorio();
 			case 4 -> {
 				System.out.println("Multa atual por dia: ");

@@ -1,6 +1,5 @@
 package br.ufop.trabalho.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Cliente extends Pessoa {
@@ -62,7 +61,7 @@ public class Cliente extends Pessoa {
 
     @Override
     public String toString() {
-        return getNome() + " - " + getCodigo();
+        return getNome() + " - Código: " + getCodigo();
     }
 
     public ArrayList<Locacao> getFilmesLocados() {

@@ -3,39 +3,21 @@ package br.ufop.trabalho;
 import br.ufop.trabalho.entities.Data;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import br.ufop.trabalho.entities.Filme;
-import br.ufop.trabalho.entities.Movimentacao;
-import br.ufop.trabalho.entities.Cliente;
 
-/**
- * Esta classe tem a função de oferecer métodos úteis que poderão ser utilizados
- * em vários momentos do código. Por isso, os métodos
- * serão estáticos de forma que possam ser acessados sem a necessidade de
- * instanciar um Objeto da classe Util.
- */
+import br.ufop.trabalho.entities.Dependente;
+import br.ufop.trabalho.entities.Filme;
+import br.ufop.trabalho.entities.Cliente;
+import java.time.temporal.ChronoUnit;
+
 public class Util {
 
-    /**
-     * Este método verifica se uma String recebida como parâmetro está preenchida
-     * com algum valor. Caso tenha pelo menos um caractere
-     * retornará true, caso contrário retornará false.
-     *
-     * @param texto String a ser verificada
-     * @return boolean Retorna se a string está ou não preenchida
-     */
     public static boolean verificaStringPreenchida(String texto) {
         return texto != null && !texto.trim().isEmpty();
     }
 
-    /**
-     * Verifica se todas as strings de uma lista estão preenchidas.
-     *
-     * @param strings Lista de strings a ser verificada.
-     * @return boolean Retorna true se todas as strings estiverem preenchidas, false
-     *         se qualquer uma estiver vazia ou nula.
-     */
     public static boolean verificaListaStringPreenchida(String... strings) {
         for (String s : strings) {
             if (!verificaStringPreenchida(s))
@@ -44,13 +26,6 @@ public class Util {
         return true;
     }
 
-    /**
-     * Método que verifica se a senha tem pelo menos um número.
-     *
-     * @param senha String que contenha todos os números da senha a ser verificada
-     * @return boolean
-     * @author Artur Guerra
-     */
     public static boolean senhaComNumero(String senha) {
         for (char c : senha.toCharArray()) {
             if (Character.isDigit(c)) {
@@ -60,12 +35,6 @@ public class Util {
         return false;
     }
 
-    /**
-     * Inicia um scanner que só aceita Inteiros
-     *
-     * @param in Scanner a ser usado
-     * @return number
-     */
     public static int leInteiroConsole(Scanner in) {
         int r = 0;
         do {
@@ -80,13 +49,6 @@ public class Util {
         return r;
     }
 
-    /**
-     * Inicia um scanner que só aceita String com um cpf valido
-     *
-     * @param in Scanner a ser usado
-     * @return String
-     * @author Artur Guerra
-     */
     public static String lerCpfValido(Scanner in) {
         String cpf;
         do {
@@ -98,13 +60,6 @@ public class Util {
         return limparCpf(cpf);
     }
 
-    /**
-     * Inicia um scanner que só aceita uma Data válida
-     *
-     * @param in Scanner a ser usado
-     * @return Data
-     * @author Artur Guerra
-     */
     public static Data lerDataValida(Scanner in) {
         Data data = null;
         boolean valido = false;
@@ -134,25 +89,13 @@ public class Util {
         return data;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public static boolean validarCpf(String cpf) {
         return cpf != null && cpf.length() == 11;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public static String limparCpf(String cpf) {
         return cpf.replaceAll("\\D", "");
     }
-
-    /**
-     * METODOS DE IMPRESSAO DE ARRAYLIST COM INDICES
-     * 
-     * @author João Teixeira
-     */
 
     public static void imprimeArrayListFilme(ArrayList<Filme> filmes) {
         int i = 1;
@@ -170,11 +113,31 @@ public class Util {
         for (Cliente elemento : clientes) {
 
             System.out.println("Cliente:  " + i);
-
             System.out.println(elemento.toString());
             i++;
         }
 
+    }
+
+    public static int calcularDiasAtraso(Data dataLocacao) {
+        LocalDate dataLoc = LocalDate.of(dataLocacao.getAno(), dataLocacao.getMes(), dataLocacao.getDia());
+        LocalDate dataAtual = LocalDate.now();
+        long diasEntre = ChronoUnit.DAYS.between(dataLoc, dataAtual);
+        int diasPermitidos = 7;
+        int diasAtraso = (int) diasEntre - diasPermitidos;
+        return Math.max(diasAtraso, 0);
+    }
+
+    public static Data calcularDataDevolucao(Data dataLocacao) {
+        LocalDate dataLoc = LocalDate.of(dataLocacao.getAno(), dataLocacao.getMes(), dataLocacao.getDia());
+        LocalDate dataDev = dataLoc.plusDays(7);
+        return new Data(dataDev.getDayOfMonth(), dataDev.getMonthValue(), dataDev.getYear());
+    }
+
+    public static void imprimeArrayListDependente(ArrayList<Dependente> dependentes) {
+        for (int i = 0; i < dependentes.size(); i++) {
+            System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
+        }
     }
 
 }

@@ -7,7 +7,6 @@ import java.util.Comparator;
 
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.entities.Cliente;
-import br.ufop.trabalho.entities.Constantes;
 import br.ufop.trabalho.entities.Data;
 import br.ufop.trabalho.entities.Dependente;
 import br.ufop.trabalho.entities.Entrada;
@@ -90,6 +89,11 @@ public class Controle implements Serializable {
 		clientes.add(cliente);
 		salvarDados();
 		return Constantes.RESULT_OK;
+	}
+
+	public void excluirCliente(Cliente cliente) {
+		clientes.remove(cliente);
+		salvarDados();
 	}
 
 	public ArrayList<Cliente> getClientes() {
@@ -313,7 +317,16 @@ public class Controle implements Serializable {
 		return 0;
 	}
 
-	public int editarFilme(ArrayList<Filme> encontrados, int indice, String novoNome, Data novaData, String novoGenero, int novaQuantDvd, int novaQuantBlue) {
+	public int editarFilme(
+			ArrayList<Filme> encontrados,
+			int indice,
+			String novoNome,
+			Data novaData,
+			String novoGenero,
+			int novaQuantDvd,
+			int novaQuantBlue,
+			int novoTipoFilme
+	) {
 		Filme filmeParaEditar = encontrados.get(indice - 1);
 		if (filmes.contains(filmeParaEditar)) {
 			filmeParaEditar.setNome(novoNome);
@@ -321,12 +334,12 @@ public class Controle implements Serializable {
 			filmeParaEditar.setGenero(novoGenero);
 			filmeParaEditar.setQuantDvd(novaQuantDvd);
 			filmeParaEditar.setQuantBlueRay(novaQuantBlue);
+			filmeParaEditar.setTipoDeFilme(novoTipoFilme);
 			salvarDados();
 			return 1;
 		}
 		return 0;
 	}
-
 	public int excluirFilme(ArrayList<Filme> encontrados, int indice) {
 		Filme filmeParaExcluir = encontrados.get(indice - 1);
 		if (filmes.remove(filmeParaExcluir)) {
@@ -355,7 +368,8 @@ public class Controle implements Serializable {
 		}
 
 		Data dataAtual = obterDataAtual();
-		Locacao locacao = new Locacao(filme, dataAtual, formatoMidia, dependente);
+		Data dataDevolucao = Util.calcularDataDevolucao(dataAtual);
+		Locacao locacao = new Locacao(filme, dataAtual, dataDevolucao, formatoMidia, dependente);
 		cliente.getFilmesLocados().add(locacao);
 		salvarDados();
 
@@ -366,16 +380,12 @@ public class Controle implements Serializable {
 	}
 
 	private double calcularValorLocacao(Filme filme) {
-		switch (filme.getTipoDeFilme()) {
-			case Filme.TIPO_LANCAMENTO:
-				return VALOR_LOCACAO_LANCAMENTO;
-			case Filme.TIPO_NOVO:
-				return VALOR_LOCACAO_NOVO;
-			case Filme.TIPO_ANTIGO:
-				return VALOR_LOCACAO_ANTIGO;
-			default:
-				return VALOR_LOC_DIA;
-		}
+		return switch (filme.getTipoDeFilme()) {
+			case Filme.TIPO_LANCAMENTO -> VALOR_LOCACAO_LANCAMENTO;
+			case Filme.TIPO_NOVO -> VALOR_LOCACAO_NOVO;
+			case Filme.TIPO_ANTIGO -> VALOR_LOCACAO_ANTIGO;
+			default -> VALOR_LOC_DIA;
+		};
 	}
 
 	public Filme buscarFilmePorNome(String nomeFilme) {
@@ -387,35 +397,7 @@ public class Controle implements Serializable {
 		return null;
 	}
 
-	public int locarFilme(Cliente cliente, Filme filme) {
-		if (cliente.getFilmesLocados().size() >= QUANT_MAX_FILME_CLIENTE) {
-			return Constantes.RESULT_ERRO_EXCEDE_MAX_FILMES;
-		}
-
-		String formatoMidia = null;
-		if (filme.getQuantDvd() > 0) {
-			filme.decrementarQtdDvd();
-			formatoMidia = "DVD";
-		} else if (filme.getQuantBlueRay() > 0) {
-			filme.decrementarQtdBlueRay();
-			formatoMidia = "Blu-ray";
-		} else {
-			return Constantes.RESULT_ERRO;
-		}
-
-		Data dataAtual = obterDataAtual();
-		Locacao locacao = new Locacao(filme, dataAtual, formatoMidia, null);
-		cliente.getFilmesLocados().add(locacao);
-		salvarDados();
-
-		double valorLocacao = calcularValorLocacao(filme);
-		cadastrarEntrada("Locação de Filme", "Locação do filme " + filme.getNome(), valorLocacao, dataAtual);
-
-		return Constantes.RESULT_OK;
-	}
-
-	public int editarCliente(ArrayList<Cliente> encontrados, int indice, String novoNome, String novoEndereco, String novoCPF, Data novaData, int novoCodigo, Double novaMulta) {
-		Cliente clienteParaEditar = encontrados.get(indice - 1);
+	public int editarCliente(Cliente clienteParaEditar, String novoNome, String novoEndereco, String novoCPF, Data novaData, int novoCodigo, Double novaMulta) {
 		if (clientes.contains(clienteParaEditar)) {
 			clienteParaEditar.setNome(novoNome);
 			clienteParaEditar.setEndereco(novoEndereco);
