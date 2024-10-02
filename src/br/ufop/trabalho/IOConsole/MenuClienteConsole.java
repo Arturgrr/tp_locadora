@@ -120,6 +120,24 @@ public class MenuClienteConsole {
 
         // Buscar cliente pelo código
         Cliente cliente = controle.buscarClientePorCodigo(codigoCliente);
+        //começa
+        if (escolhaCliente == 1) {
+            // Exibir lista de cliente
+            System.out.println("Selecione o Cliente:");
+            for (int i = 0; i < cliente.getDependentes().size(); i++) {
+                System.out.println((i + 1) + " - " + cliente.getDependentes().get(i).getNome());
+            }
+            int opcaoDependente = Util.leInteiroConsole(input) - 1;
+
+            if (opcaoDependente >= 0 && opcaoDependente < cliente.getDependentes().size()) {
+                dependente = controle.getClienteNaPosicao(opcaoDependente);
+                System.out.println("Dependente selecionado: " + dependente.getNome());
+            } else {
+                System.out.println("Opção inválida. Voltando ao cliente principal.");
+            }
+        }
+
+        //acaba
         if (cliente == null) {
             System.out.println("Cliente não encontrado.");
             return;
@@ -141,7 +159,7 @@ public class MenuClienteConsole {
                 int opcaoDependente = Util.leInteiroConsole(input) - 1;
 
                 if (opcaoDependente >= 0 && opcaoDependente < cliente.getDependentes().size()) {
-                    dependente = cliente.getDependentes().get(opcaoDependente);
+                    dependente = controle.getClienteNaPosicao(opcaoDependente);
                     System.out.println("Dependente selecionado: " + dependente.getNome());
                 } else {
                     System.out.println("Opção inválida. Voltando ao cliente principal.");

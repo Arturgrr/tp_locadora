@@ -11,7 +11,8 @@ public class Cliente extends Pessoa {
     private int codigo;
     private double multa;
     private final ArrayList<Filme> filmes;
-    private final ArrayList<Dependente> dependentes;
+    public ArrayList<Dependente> dependentes;
+    private boolean temdependente = false;
     private ArrayList<Filme> filmesLocados; // Lista para armazenar os filmes locados
 
     /**
@@ -59,12 +60,15 @@ public class Cliente extends Pessoa {
      * @author Artur Guerra
      */
     public void addDependentes(Dependente dependente) {
+        this.temdependente = true;
         if (this.dependentes.size() >= 3) {
             throw new IllegalArgumentException(
                     "O cliente já possui 3 dependentes cadastrados. Não é possível adicionar: " + dependente.getNome());
         }
         this.dependentes.add(dependente);
     }
+
+
 
     /**
      * @author Artur Guerra
@@ -79,7 +83,9 @@ public class Cliente extends Pessoa {
     public double getMulta() {
         return multa;
     }
-
+    public boolean temDependentes(){
+        return temdependente;
+    }
     /**
      * @author Artur Guerra
      * @author Iaggo Rauta

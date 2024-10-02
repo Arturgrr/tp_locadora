@@ -66,6 +66,7 @@ public class Controle {
 	 *
 	 * @param pos Inteiro que indica qual posição deseja retornar o cliente
 	 * @return Dados do cliente ou null caso não exista
+	 * @author Iaggo Rauta
 	 */
 	public Cliente getClienteNaPosicao(int pos) {
 		if (pos < 0 || pos >= getQtdClientes()) {
@@ -398,6 +399,15 @@ public class Controle {
 		return flag;
 	}
 
+
+
+
+	/**
+	 * PARTE 2
+	 * Método excluir movimentacao
+	 * 
+	 * @author Iaggo Rauta
+	 */
 	// metodos para locarfilme
 	public boolean filmeDisponivel(String nomeFilme) {
 		Filme filme = buscarFilmePorNome(nomeFilme);

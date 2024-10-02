@@ -43,8 +43,8 @@ public class MenuConsole {
 		System.out.println("""
 				Digite a opcao de Acesso:
 				
-				\t1 - Filme
-				\t2 - Clientes
+				\t1 - Gestao de Filmes
+				\t2 - Gestao de Clientes
 				\t3 - Relatorios
 				\t4 - Configuracoes
 				\t5 - Balancete
