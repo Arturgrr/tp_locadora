@@ -1,15 +1,15 @@
 package br.ufop.trabalho;
 
 import br.ufop.trabalho.entities.Data;
-
-import java.util.ArrayList;
-import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 import br.ufop.trabalho.entities.Dependente;
 import br.ufop.trabalho.entities.Filme;
 import br.ufop.trabalho.entities.Cliente;
+
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import java.time.temporal.ChronoUnit;
 
 public class Util {
@@ -26,26 +26,29 @@ public class Util {
         return true;
     }
 
-    public static boolean senhaComNumero(String senha) {
-        for (char c : senha.toCharArray()) {
-            if (Character.isDigit(c)) {
-                return true;
+    public static int leInteiroConsole(Scanner in) {
+        int r;
+        while (true) {
+            try {
+                r = Integer.parseInt(in.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Erro ao ler número! Digite novamente:");
             }
         }
-        return false;
+        return r;
     }
 
-    public static int leInteiroConsole(Scanner in) {
-        int r = 0;
-        do {
+    public static double leDoubleConsole(Scanner in) {
+        double r;
+        while (true) {
             try {
-                r = in.nextInt();
+                r = Double.parseDouble(in.nextLine());
                 break;
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Erro ao ler número! Digite novamente:");
-                in.nextLine();
             }
-        } while (true);
+        }
         return r;
     }
 
@@ -66,23 +69,13 @@ public class Util {
 
         do {
             String info = in.nextLine();
-            String[] partes = info.split("/");
-
-            if (partes.length != 3) {
-                System.out.println("Certifique-se de usar dd/mm/aaaa.");
-            } else {
-                try {
-                    int dia = Integer.parseInt(partes[0]);
-                    int mes = Integer.parseInt(partes[1]);
-                    int ano = Integer.parseInt(partes[2]);
-
-                    data = new Data(dia, mes, ano);
-                    valido = true;
-                } catch (NumberFormatException e) {
-                    System.out.println("Erro: a data deve conter apenas números válidos.");
-                } catch (Exception e) {
-                    System.out.println("Erro ao criar a data. Verifique se os valores são válidos.");
-                }
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate localDate = LocalDate.parse(info, formatter);
+                data = new Data(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+                valido = true;
+            } catch (Exception e) {
+                System.out.println("Data inválida. Certifique-se de usar o formato dd/MM/yyyy.");
             }
         } while (!valido);
 
@@ -90,7 +83,19 @@ public class Util {
     }
 
     public static boolean validarCpf(String cpf) {
-        return cpf != null && cpf.length() == 11;
+        cpf = limparCpf(cpf);
+        if (cpf == null || cpf.length() != 11) {
+            return false;
+        }
+
+        try {
+            Long.parseLong(cpf);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        // Verificação simplificada apenas para o tamanho
+        return true;
     }
 
     public static String limparCpf(String cpf) {
@@ -98,39 +103,28 @@ public class Util {
     }
 
     public static void imprimeArrayListFilme(ArrayList<Filme> filmes) {
-        int i = 1;
-        for (Filme elemento : filmes) {
-
-            System.out.println("Filme:  " + i);
-
-            System.out.println(elemento.toString());
-            i++;
+        for (int i = 0; i < filmes.size(); i++) {
+            System.out.println((i + 1) + " - " + filmes.get(i).toString());
         }
     }
 
     public static void imprimeArrayListCliente(ArrayList<Cliente> clientes) {
-        int i = 1;
-        for (Cliente elemento : clientes) {
-
-            System.out.println("Cliente:  " + i);
-            System.out.println(elemento.toString());
-            i++;
+        for (int i = 0; i < clientes.size(); i++) {
+            System.out.println((i + 1) + " - " + clientes.get(i).toString());
         }
-
     }
 
-    public static int calcularDiasAtraso(Data dataLocacao) {
+    public static int calcularDiasAtraso(Data dataLocacao, int prazoDevolucao) {
         LocalDate dataLoc = LocalDate.of(dataLocacao.getAno(), dataLocacao.getMes(), dataLocacao.getDia());
         LocalDate dataAtual = LocalDate.now();
         long diasEntre = ChronoUnit.DAYS.between(dataLoc, dataAtual);
-        int diasPermitidos = 7;
-        int diasAtraso = (int) diasEntre - diasPermitidos;
+        int diasAtraso = (int) diasEntre - prazoDevolucao;
         return Math.max(diasAtraso, 0);
     }
 
-    public static Data calcularDataDevolucao(Data dataLocacao) {
+    public static Data calcularDataDevolucao(Data dataLocacao, int prazoDevolucao) {
         LocalDate dataLoc = LocalDate.of(dataLocacao.getAno(), dataLocacao.getMes(), dataLocacao.getDia());
-        LocalDate dataDev = dataLoc.plusDays(7);
+        LocalDate dataDev = dataLoc.plusDays(prazoDevolucao);
         return new Data(dataDev.getDayOfMonth(), dataDev.getMonthValue(), dataDev.getYear());
     }
 
@@ -139,5 +133,4 @@ public class Util {
             System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
         }
     }
-
 }

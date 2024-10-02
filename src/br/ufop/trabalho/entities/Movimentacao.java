@@ -1,5 +1,6 @@
 package br.ufop.trabalho.entities;
 import java.io.Serializable;
+
 public abstract class Movimentacao implements Serializable {
     private static final long serialVersionUID = 1L;
     private String nome;
@@ -15,61 +16,54 @@ public abstract class Movimentacao implements Serializable {
         setDataDaMovimentacao(dataDaMovimentacao);
         setTipoDaMovimentacao(tipoDeMovimentacao);
     }
-    
 
+    public void setTipoDaMovimentacao(int tipoDeMovimentacao){
+        this.tipoDeMovimentacao = tipoDeMovimentacao;
+    }
 
-// sets
-public void setTipoDaMovimentacao(int tipoDeMovimentacao){
-    this.tipoDeMovimentacao = tipoDeMovimentacao;
-}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-public void setNome(String nome) {
-    this.nome = nome;
-}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-public void setDescricao(String descricao) {
-    this.descricao = descricao;
-}
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
 
-public void setValor(Double valor) {
-    this.valor = valor;
-}
+    public void setDataDaMovimentacao(Data dataDaMovimentacao) {
+        this.dataDaMovimentacao = dataDaMovimentacao;
+    }
 
-public void setDataDaMovimentacao(Data dataDaMovimentacao) {
-    this.dataDaMovimentacao = dataDaMovimentacao;
-}
+    public int getTipoDaMovimentacao() {
+        return tipoDeMovimentacao;
+    }
 
-// gets
-public int getTipoDaMovimentacao() {
-    return tipoDeMovimentacao;
-}
+    public String getNome() {
+        return nome;
+    }
 
-public String getNome() {
-    return nome;
-}
+    public String getDescricao() {
+        return descricao;
+    }
 
-public String getDescricao() {
-    return descricao;
-}
+    public Double getValor() {
+        return valor;
+    }
 
-public Double getValor() {
-    return valor;
-}
+    public Data getDataDaMovimentacao() {
+        return dataDaMovimentacao;
+    }
 
-public Data getDataDaMovimentacao() {
-    return dataDaMovimentacao;
-}
+    public String toString() {
 
-public String toString() {
-    
-    return "Movimentacao{\t" +
-           "\tnome='" + nome + '\'' +
-           ", \tdescricao='" + descricao + '\'' +
-           ", \tvalor=" + valor +
-           ", \tdata=" + dataDaMovimentacao +
-           '}';
-    
-    
-}
-
+        return "Movimentacao{\t" +
+               "\tnome='" + nome + '\'' +
+               ", \tdescricao='" + descricao + '\'' +
+               ", \tvalor=" + valor +
+               ", \tdata=" + dataDaMovimentacao +
+               '}';
+    }
 }

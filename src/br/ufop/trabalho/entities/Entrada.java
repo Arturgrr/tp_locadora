@@ -1,9 +1,5 @@
 package br.ufop.trabalho.entities;
-import java.io.Serializable;
 
-/**
- * @author João Teixeira
- */
 public class Entrada extends Movimentacao{
     private static final long serialVersionUID = 1L;
   

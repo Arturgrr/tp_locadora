@@ -8,6 +8,7 @@ import br.ufop.trabalho.entities.Data;
 import br.ufop.trabalho.entities.Dependente;
 import br.ufop.trabalho.entities.Filme;
 import br.ufop.trabalho.entities.Locacao;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,7 +41,6 @@ public class MenuClienteConsole {
     }
 
     private void cadastrarCliente() {
-        input.nextLine();
         System.out.println("Digite o nome do cliente:");
         String nome = input.nextLine();
 
@@ -48,7 +48,7 @@ public class MenuClienteConsole {
         String endereco = input.nextLine();
 
         System.out.println("Digite o CPF do cliente:");
-        String cpf =  Util.lerCpfValido(input);
+        String cpf = Util.lerCpfValido(input);
 
         System.out.println("Digite a data de nascimento do cliente (dd/MM/yyyy):");
         Data dataNascimento = Util.lerDataValida(input);
@@ -82,7 +82,6 @@ public class MenuClienteConsole {
                 break;
             }
 
-            input.nextLine();
             System.out.println("Digite o nome do dependente:");
             String nomeDep = input.nextLine();
 
@@ -90,14 +89,18 @@ public class MenuClienteConsole {
             String enderecoDep = input.nextLine();
 
             System.out.println("Digite o CPF do dependente:");
-            String cpfDep = input.nextLine();
+            String cpfDep = Util.lerCpfValido(input);
 
             System.out.println("Digite a data de nascimento do dependente (dd/MM/yyyy):");
             Data dataNascimentoDep = Util.lerDataValida(input);
 
-            Dependente dependente = new Dependente(nomeDep, enderecoDep, cpfDep, dataNascimentoDep, cliente);
-            cliente.addDependentes(dependente);
-            System.out.println("Dependente adicionado com sucesso!");
+            try {
+                Dependente dependente = new Dependente(nomeDep, enderecoDep, cpfDep, dataNascimentoDep, cliente);
+                cliente.addDependentes(dependente);
+                System.out.println("Dependente adicionado com sucesso!");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erro ao adicionar dependente: " + e.getMessage());
+            }
         }
     }
 
@@ -116,7 +119,6 @@ public class MenuClienteConsole {
             switch (opcaoBusca) {
                 case 1 -> {
                     System.out.println("Digite o nome do cliente:");
-                    input.nextLine();
                     String nome = input.nextLine();
                     clientesEncontrados = controle.buscarClientePorNome(nome);
                     exibirResultadosBusca(clientesEncontrados);
@@ -135,7 +137,6 @@ public class MenuClienteConsole {
                 }
                 case 3 -> {
                     System.out.println("Digite o nome do dependente:");
-                    input.nextLine();
                     String nomeDep = input.nextLine();
                     clientesEncontrados = controle.buscarClientePeloNomeDoDependente(nomeDep);
                     exibirResultadosBusca(clientesEncontrados);
@@ -175,6 +176,7 @@ public class MenuClienteConsole {
                     \t2 - Excluir
                     \t3 - Locar filme
                     \t4 - Devolver filme
+                    \t5 - Pagar multa
                     \t0 - Voltar
                     """);
             int opcaoAcao = Util.leInteiroConsole(input);
@@ -183,6 +185,7 @@ public class MenuClienteConsole {
                 case 2 -> excluirCliente(cliente);
                 case 3 -> locarFilme(cliente);
                 case 4 -> devolverFilme(cliente);
+                case 5 -> pagarMulta(cliente);
                 case 0 -> continuaSubMenu = false;
                 default -> System.out.println("Opção inválida");
             }
@@ -190,7 +193,6 @@ public class MenuClienteConsole {
     }
 
     private void editarCliente(Cliente cliente) {
-        input.nextLine();
         System.out.println("Digite o novo nome do cliente:");
         String novoNome = input.nextLine();
 
@@ -198,7 +200,7 @@ public class MenuClienteConsole {
         String novoEndereco = input.nextLine();
 
         System.out.println("Digite o novo CPF do cliente:");
-        String novoCPF = input.nextLine();
+        String novoCPF = Util.lerCpfValido(input);
 
         System.out.println("Digite a nova data de nascimento do cliente (dd/MM/yyyy):");
         Data novaData = Util.lerDataValida(input);
@@ -256,7 +258,6 @@ public class MenuClienteConsole {
 
     private void locarFilme(Cliente cliente) {
         System.out.println("Digite o nome do filme que deseja locar:");
-        input.nextLine();
         String nomeFilme = input.nextLine();
         ArrayList<Filme> filmesEncontrados = controle.buscarFilmesPorNome(nomeFilme);
 
@@ -310,7 +311,7 @@ public class MenuClienteConsole {
         } else if (resultado == Constantes.RESULT_ERRO_EXCEDE_MAX_FILMES) {
             System.out.println("O cliente já atingiu o limite máximo de filmes locados.");
         } else {
-            System.out.println("Erro ao locar filme.");
+            System.out.println("Erro ao locar filme. Verifique a disponibilidade do filme no formato selecionado.");
         }
     }
 
@@ -334,13 +335,22 @@ public class MenuClienteConsole {
             System.out.println("Filme devolvido com sucesso.");
 
             // Verificar atraso e aplicar multa se necessário
-            int diasAtraso = Util.calcularDiasAtraso(locacaoParaDevolver.getDataLocacao());
+            int diasAtraso = Util.calcularDiasAtraso(locacaoParaDevolver.getDataLocacao(), controle.PRAZO_DEVOLUCAO);
             if (diasAtraso > 0) {
                 controle.multarCliente(cliente, diasAtraso);
                 System.out.println("Cliente recebeu multa por atraso de " + diasAtraso + " dias.");
             }
         } else {
             System.out.println("Opção inválida.");
+        }
+    }
+
+    private void pagarMulta(Cliente cliente) {
+        if (cliente.getMulta() > 0) {
+            controle.pagarMulta(cliente);
+            System.out.println("Multa paga com sucesso. O saldo de multas agora é R$ " + cliente.getMulta());
+        } else {
+            System.out.println("O cliente não possui multas pendentes.");
         }
     }
 }

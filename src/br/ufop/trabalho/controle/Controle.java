@@ -30,6 +30,7 @@ public class Controle implements Serializable {
 	public double VALOR_LOCACAO_LANCAMENTO = 10.0;
 	public double VALOR_LOCACAO_NOVO = 7.0;
 	public double VALOR_LOCACAO_ANTIGO = 5.0;
+	public int PRAZO_DEVOLUCAO = 7;
 
 	public Controle() {
 		clientes = new ArrayList<>();
@@ -128,17 +129,6 @@ public class Controle implements Serializable {
 		return filmesOrdenados;
 	}
 
-	public int getQtdClientes() {
-		return clientes.size();
-	}
-
-	public Cliente getClienteNaPosicao(int pos) {
-		if (pos < 0 || pos >= getQtdClientes()) {
-			throw new IndexOutOfBoundsException("Posição inválida: " + pos);
-		}
-		return clientes.get(pos);
-	}
-
 	public int addFilme(String nome, Data dataDeLancamento, String genero, int quantDvd, int quantBR, int tipoDeFilme) {
 		if (!Util.verificaListaStringPreenchida(nome, genero)) {
 			return Constantes.ERRO_CAMPO_VAZIO;
@@ -154,17 +144,6 @@ public class Controle implements Serializable {
 		filmes.add(filme);
 		salvarDados();
 		return Constantes.RESULT_OK;
-	}
-
-	public int getQtdFilmes() {
-		return filmes.size();
-	}
-
-	public Filme getFilmeNaPosicao(int pos) {
-		if (pos < 0 || pos >= getQtdFilmes()) {
-			throw new IndexOutOfBoundsException("Posição inválida: " + pos);
-		}
-		return filmes.get(pos);
 	}
 
 	public ArrayList<Filme> buscarFilmesPorNome(String nome) {
@@ -340,6 +319,7 @@ public class Controle implements Serializable {
 		}
 		return 0;
 	}
+
 	public int excluirFilme(ArrayList<Filme> encontrados, int indice) {
 		Filme filmeParaExcluir = encontrados.get(indice - 1);
 		if (filmes.remove(filmeParaExcluir)) {
@@ -347,11 +327,6 @@ public class Controle implements Serializable {
 			return 1;
 		}
 		return 0;
-	}
-
-	public boolean filmeDisponivel(String nomeFilme) {
-		Filme filme = buscarFilmePorNome(nomeFilme);
-		return filme != null && (filme.getQuantDvd() > 0 || filme.getQuantBlueRay() > 0);
 	}
 
 	public int locarFilmeParaCliente(Cliente cliente, Filme filme, String formatoMidia, Dependente dependente) {
@@ -368,7 +343,7 @@ public class Controle implements Serializable {
 		}
 
 		Data dataAtual = obterDataAtual();
-		Data dataDevolucao = Util.calcularDataDevolucao(dataAtual);
+		Data dataDevolucao = Util.calcularDataDevolucao(dataAtual, PRAZO_DEVOLUCAO);
 		Locacao locacao = new Locacao(filme, dataAtual, dataDevolucao, formatoMidia, dependente);
 		cliente.getFilmesLocados().add(locacao);
 		salvarDados();
