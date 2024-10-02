@@ -1,33 +1,33 @@
 package br.ufop.trabalho.entities;
+
 import java.io.Serializable;
-/**
- * @author Artur Guerra
- */
+
 public class Filme implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final int TIPO_LANCAMENTO = 1;
+    public static final int TIPO_NOVO = 2;
+    public static final int TIPO_ANTIGO = 3;
+
     private String nome;
     private Data anoDeLancamento;
     private String genero;
     private int quantDvd, quantBlueRay;
-    //private String tipoDoFilme;
-    /**
-     * @author Artur Guerra
-     */
-    public Filme(String nome, Data anoDeLancamento, String genero, int quantDvd, int quantBlueRay) {
+    private int tipoDeFilme;
+
+    public Filme(String nome, Data anoDeLancamento, String genero, int quantDvd, int quantBlueRay, int tipoDeFilme) {
         setNome(nome);
         setAnoDeLancamento(anoDeLancamento);
         setGenero(genero);
         setQuantDvd(quantDvd);
         setQuantBlueRay(quantBlueRay);
+        setTipoDeFilme(tipoDeFilme);
     }
 
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void setNome(String nome) {
         if (nome == null || nome.isEmpty()) {
             throw new IllegalArgumentException("Nome do filme não pode ser vazio.");
@@ -47,9 +47,6 @@ public class Filme implements Serializable {
         return genero;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void setGenero(String genero) {
         if (genero == null || genero.isEmpty()) {
             throw new IllegalArgumentException("Gênero do filme não pode ser vazio.");
@@ -61,29 +58,20 @@ public class Filme implements Serializable {
         return quantDvd;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void addQuantDvd(int quantDvd) {
         if (quantDvd < 0) {
-            throw new IllegalArgumentException("A quantidade de DVDs a adicionar não pode ser negativa.");
+            throw new IllegalArgumentException("Quantidade de DVDs a adicionar não pode ser negativa.");
         }
         this.quantDvd += quantDvd;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void removeQuantDvd(int quantDvd) {
         if (this.quantDvd - quantDvd < 0) {
-            throw new IllegalArgumentException("A quantidade de DVDs a remover é maior que o disponível.");
+            throw new IllegalArgumentException("Quantidade de DVDs a remover é maior que o disponível.");
         }
         this.quantDvd -= quantDvd;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void setQuantDvd(int quantDvd) {
         if (quantDvd < 0) {
             throw new IllegalArgumentException("Quantidade de DVDs não pode ser negativa.");
@@ -95,29 +83,20 @@ public class Filme implements Serializable {
         return quantBlueRay;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void addQuantBlueRay(int quantBlueRay) {
         if (quantBlueRay < 0) {
-            throw new IllegalArgumentException("A quantidade de Blu-rays a adicionar não pode ser negativa.");
+            throw new IllegalArgumentException("Quantidade de Blu-rays a adicionar não pode ser negativa.");
         }
         this.quantBlueRay += quantBlueRay;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void removeQuantBlueRay(int quantBlueRay) {
         if (this.quantBlueRay - quantBlueRay < 0) {
-            throw new IllegalArgumentException("A quantidade de Blu-rays a remover é maior que o disponível.");
+            throw new IllegalArgumentException("Quantidade de Blu-rays a remover é maior que o disponível.");
         }
         this.quantBlueRay -= quantBlueRay;
     }
 
-    /**
-     * @author Artur Guerra
-     */
     public void setQuantBlueRay(int quantBlueRay) {
         if (quantBlueRay < 0) {
             throw new IllegalArgumentException("Quantidade de Blu-rays não pode ser negativa.");
@@ -125,15 +104,15 @@ public class Filme implements Serializable {
         this.quantBlueRay = quantBlueRay;
     }
 
-    /**
-     * Método para formatar o string
-     *
-     * @author Artur Guerra
-     */
-    @Override
-    public String toString() {
-        return String.format("%s (%d/%d/%d) - DVDs: %d, Blu-rays: %d", nome, anoDeLancamento.getDia(),
-                anoDeLancamento.getMes(), anoDeLancamento.getAno(), quantDvd, quantBlueRay);
+    public int getTipoDeFilme() {
+        return tipoDeFilme;
+    }
+
+    public void setTipoDeFilme(int tipoDeFilme) {
+        if (tipoDeFilme != TIPO_LANCAMENTO && tipoDeFilme != TIPO_NOVO && tipoDeFilme != TIPO_ANTIGO) {
+            throw new IllegalArgumentException("Tipo de filme inválido.");
+        }
+        this.tipoDeFilme = tipoDeFilme;
     }
 
     public void decrementarQtdDvd() {
@@ -146,5 +125,11 @@ public class Filme implements Serializable {
         if (quantBlueRay > 0) {
             quantBlueRay--;
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d/%d/%d) - DVDs: %d, Blu-rays: %d", nome, anoDeLancamento.getDia(),
+                anoDeLancamento.getMes(), anoDeLancamento.getAno(), quantDvd, quantBlueRay);
     }
 }

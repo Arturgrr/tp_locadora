@@ -71,7 +71,10 @@ public class MenuFilmeConsole {
         System.out.println("Digite a quantidade de blueray: ");
         int quantidadeDeBluRay = Util.leInteiroConsole(input);
 
-        int retorno = controle.addFilme(nome, anoDeLancamento, genero, quantidadeDeDvd, quantidadeDeBluRay);
+        System.out.println("Digite o tipo de filme");
+        int tipo = Util.leInteiroConsole(input);
+
+        int retorno = controle.addFilme(nome, anoDeLancamento, genero, quantidadeDeDvd, quantidadeDeBluRay, tipo);
         String msg = switch (retorno) {
             case Constantes.RESULT_OK -> "Sucesso ao cadastrar filme";
             case Constantes.ERRO_CAMPO_VAZIO -> "Todos os campos devem estar preenchidos";

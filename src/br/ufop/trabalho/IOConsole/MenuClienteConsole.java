@@ -145,11 +145,8 @@ public class MenuClienteConsole {
         System.out.println("Digite o código do cliente que deseja locar um filme:");
         int codigoCliente = Util.leInteiroConsole(input);
 
-        // Buscar cliente pelo código
         Cliente cliente = controle.buscarClientePorCodigo(codigoCliente);
-        // começa
         if (escolhaCliente == 1) {
-            // Exibir lista de cliente
             System.out.println("Selecione o Cliente:");
             for (int i = 0; i < cliente.getDependentes().size(); i++) {
                 System.out.println((i + 1) + " - " + cliente.getDependentes().get(i).getNome());
@@ -164,13 +161,11 @@ public class MenuClienteConsole {
             }
         }
 
-        // acaba
         if (cliente == null) {
             System.out.println("Cliente não encontrado.");
             return;
         }
 
-        // Exibir lista de dependentes (se houver)
         Cliente dependente = null;
         if (cliente.temDependentes()) {
             System.out.println("Esse cliente possui dependentes. Deseja locar o filme em nome de algum dependente?");
@@ -178,7 +173,6 @@ public class MenuClienteConsole {
             int escolhaDependente = Util.leInteiroConsole(input);
 
             if (escolhaDependente == 1) {
-                // Exibir lista de dependentes
                 System.out.println("Selecione o dependente:");
                 for (int i = 0; i < cliente.getDependentes().size(); i++) {
                     System.out.println((i + 1) + " - " + cliente.getDependentes().get(i).getNome());
@@ -194,17 +188,14 @@ public class MenuClienteConsole {
             }
         }
 
-        // Solicitar o nome do filme
         System.out.println("Digite o nome do filme que deseja locar:");
         String nomeFilme = input.nextLine();
 
-        // Verificar se o filme está disponível para locação
         if (!controle.filmeDisponivel(nomeFilme)) {
             System.out.println("Filme não disponível para locação.");
             return;
         }
 
-        // Escolher o formato da mídia: DVD ou Blu-ray
         System.out.println("""
                 Selecione o formato da mídia:
 
@@ -222,7 +213,6 @@ public class MenuClienteConsole {
             }
         }
 
-        // Delegar a lógica da locação para a classe Controle
         boolean sucessoLocacao = controle.locarFilmeParaCliente(cliente, nomeFilme, formatoMidia, dependente);
         if (sucessoLocacao) {
             System.out.println("Filme " + nomeFilme + " locado com sucesso no formato " + formatoMidia + "!");
@@ -271,40 +261,6 @@ public class MenuClienteConsole {
 
                     System.out.println("Digite o novo valor de multa:");
                     Double novaMulta = input.nextDouble();
-
-                    /*
-                     * System.out.
-                     * println("O cliente tem dependentes? digite 1 para sim e 0 para nao:");
-                     * int temDependente = input.nextInt();
-                     * if (temDependente == 1){
-                     * ArrayList<Dependente> dependentesAdd = new ArrayList<>();
-                     * 
-                     * System.out.println("O cliente tem quantos dependentes? (ate 3)");
-                     * int quantDependentes = input.nextInt();
-                     * System.out.println("Digite as novas informacoes dos dependentes:");
-                     * for (int i=0; i < quantDependentes; i++) {
-                     * input.nextLine(); // Limpa o buffer do scanner
-                     * System.out.println("Digite o nome do dependente " + (i + 1) + ":");
-                     * String nome = input.nextLine();
-                     * 
-                     * System.out.println("Digite o endereço do dependente " + (i + 1) + ":");
-                     * String endereco = input.nextLine();
-                     * 
-                     * System.out.println("Digite o CPF do dependente " + (i + 1) + ":");
-                     * String cpf = input.nextLine();
-                     * 
-                     * System.out.println("Digite a data de nascimento do dependente " + (i + 1) +
-                     * ":");
-                     * String dataNascimento = input.nextLine();
-                     * 
-                     * // Adiciona o dependente à lista
-                     * Dependente dependente = new Dependente(nome, endereco, cpf, dataNascimento);
-                     * dependentesAdd.add(dependente);
-                     * 
-                     * 
-                     * }
-                     * 
-                     */
 
                     int flagOp = controle.editarCliente(clientesEnc, indiceEnc, novoNome, novoEndereco, novoCPF,
                             novaData, novoCodigo, novaMulta);
@@ -358,12 +314,9 @@ public class MenuClienteConsole {
                     int tipoDoFilme = input.nextInt();
                     controle.devolverFilme(filmeEncontrado, tipoDoFilme);
                     controle.cadastrarEntrada("Locação de Filme", "Devolução", controle.VALOR_LOC_DIA, null);
-                        
-
                 }
                 case 4->{
                     controle.pagarMulta(clientesEnc.get(indiceEnc - 1));
-
                 }
                 case 0 -> {
                     System.out.println("Voltando...");

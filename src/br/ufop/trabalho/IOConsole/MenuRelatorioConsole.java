@@ -19,8 +19,6 @@ public class MenuRelatorioConsole {
     }
 
     public void exibeMenuRelatorio() {
-      
-
         System.out.println("Escolha o relatório desejado:");
         System.out.println("1. Relatório de Clientes");
         System.out.println("2. Relatório de Filmes por Gênero");
@@ -28,7 +26,7 @@ public class MenuRelatorioConsole {
         System.out.println("4. Relatório de Filmes por Nome (Ordem Alfabética)");
 
         int opcao = input.nextInt();
-        input.nextLine(); // Limpar o buffer
+        input.nextLine();
 
         switch (opcao) {
             case 1:
