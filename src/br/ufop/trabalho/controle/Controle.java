@@ -399,12 +399,61 @@ public class Controle {
 		return flag;
 	}
 
+	/**
+	 * PARTE 2
+	 * Método editar filme
+	 * 
+	 * @author João Teixeira
+	 */
+	public int editarFilme(ArrayList<Filme> encontrados, int indice, String novoNome, Data novaData, String novoGenero, int novaQuantDvd, int novaQuantBlue) {
+		int flag = 0;
+
+		Filme filmeParaEditar = encontrados.get(indice - 1);
+
+		// Procurar na lista original
+		for (Filme filme : filmes) {
+			if (filme.equals(filmeParaEditar)) {
+				// edição dos atributos da movi
+				filme.setNome(novoNome);
+				filme.setAnoDeLancamento(novaData);
+				filme.setGenero(novoGenero);
+				filme.setQuantDvd(novaQuantDvd);
+				filme.setQuantBlueRay(novaQuantBlue);
+				flag = 1;
+			} else {
+				flag = 0;
+			}
+
+		}
+
+		return flag;
+	}
+	/**
+	 * PARTE 2
+	 * Método excluir Filme
+	 * 
+	 * @author João Teixeira
+	 */
+	public int excluirFilme(ArrayList<Filme> encontrados, int indice) {
+		int flag = 0;
+
+		Filme filmeParaExcluir = encontrados.get(indice - 1);
+
+		if (filmes.remove(filmeParaExcluir)) {
+			flag = 1;
+		} else {
+			flag = 0;
+		}
+
+		return flag;
+	}
+
+
 
 
 
 	/**
-	 * PARTE 2
-	 * Método excluir movimentacao
+	 * 
 	 * 
 	 * @author Iaggo Rauta
 	 */
@@ -446,4 +495,21 @@ public class Controle {
 		}
 		return null; // Se não encontrar o filme, retorna null
 	}
+
+
+
+	public int locarFilme(Cliente cliente, Filme filme) {
+        if (filme.getQuantDvd() > 0) {
+            filme.setQuantDvd(filme.getQuantDvd() - 1);
+            cliente.addFilme(filme);
+            return Constantes.RESULT_OK;
+        } else if (filme.getQuantBlueRay() > 0) {
+            filme.setQuantBlueRay((filme.getQuantBlueRay() - 1));
+            cliente.addFilme(filme);
+            return Constantes.RESULT_OK;
+        } else {
+            return Constantes.RESULT_ERRO;
+        }
+    }
+
 }

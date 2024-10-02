@@ -21,6 +21,7 @@ package br.ufop.trabalho.controle;
 public interface Constantes {
 	
 	int RESULT_OK = 1;
+	int RESULT_ERRO = 0;
 	
 	int ERRO_CAMPO_VAZIO = 2;
 	

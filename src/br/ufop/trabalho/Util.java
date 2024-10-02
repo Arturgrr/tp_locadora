@@ -2,17 +2,24 @@ package br.ufop.trabalho;
 
 import br.ufop.trabalho.entities.Data;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import br.ufop.trabalho.entities.Filme;
+import br.ufop.trabalho.entities.Movimentacao;
+import br.ufop.trabalho.entities.Cliente;
 
 /**
- * Esta classe tem a função de oferecer métodos úteis que poderão ser utilizados em vários momentos do código. Por isso, os métodos
- * serão estáticos de forma que possam ser acessados sem a necessidade de instanciar um Objeto da classe Util.
+ * Esta classe tem a função de oferecer métodos úteis que poderão ser utilizados
+ * em vários momentos do código. Por isso, os métodos
+ * serão estáticos de forma que possam ser acessados sem a necessidade de
+ * instanciar um Objeto da classe Util.
  */
 public class Util {
 
     /**
-     * Este método verifica se uma String recebida como parâmetro está preenchida com algum valor. Caso tenha pelo menos um caractere
+     * Este método verifica se uma String recebida como parâmetro está preenchida
+     * com algum valor. Caso tenha pelo menos um caractere
      * retornará true, caso contrário retornará false.
      *
      * @param texto String a ser verificada
@@ -26,7 +33,8 @@ public class Util {
      * Verifica se todas as strings de uma lista estão preenchidas.
      *
      * @param strings Lista de strings a ser verificada.
-     * @return boolean Retorna true se todas as strings estiverem preenchidas, false se qualquer uma estiver vazia ou nula.
+     * @return boolean Retorna true se todas as strings estiverem preenchidas, false
+     *         se qualquer uma estiver vazia ou nula.
      */
     public static boolean verificaListaStringPreenchida(String... strings) {
         for (String s : strings) {
@@ -139,4 +147,34 @@ public class Util {
     public static String limparCpf(String cpf) {
         return cpf.replaceAll("\\D", "");
     }
+
+    /**
+     * METODOS DE IMPRESSAO DE ARRAYLIST COM INDICES
+     * 
+     * @author João Teixeira
+     */
+
+    public static void imprimeArrayListFilme(ArrayList<Filme> filmes) {
+        int i = 1;
+        for (Filme elemento : filmes) {
+
+            System.out.println("Filme:  " + i);
+
+            System.out.println(elemento.toString());
+            i++;
+        }
+    }
+
+    public static void imprimeArrayListCliente(ArrayList<Cliente> clientes) {
+        int i = 1;
+        for (Cliente elemento : clientes) {
+
+            System.out.println("Cliente:  " + i);
+
+            System.out.println(elemento.toString());
+            i++;
+        }
+
+    }
+
 }

@@ -60,6 +60,7 @@ public class MenuClienteConsole {
         switch (op) {
             case 1 -> {
                 System.out.println("Digite o nome do cliente que deseja buscar");
+                input.nextLine();
                 String nome = input.nextLine();
                 clientesEncontrados = controle.buscarClientePorNome(nome); // feito não testado
             }
