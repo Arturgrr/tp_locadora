@@ -1,6 +1,7 @@
 package br.ufop.trabalho.controle;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import br.ufop.trabalho.Util;
 import br.ufop.trabalho.entities.*;
@@ -48,6 +49,44 @@ public class Controle {
 		this.clientes.add(cliente);
 
 		return Constantes.RESULT_OK;
+	}
+
+	// @author iaggo rauta
+	// metodos para a classe relatorio
+	public ArrayList<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public ArrayList<Filme> getFilmes() {
+		return filmes;
+	}
+
+	// Relatório de todos os clientes cadastrados
+	public ArrayList<Cliente> relatorioClientes() {
+		return new ArrayList<>(clientes); // Retorna uma cópia da lista de clientes
+	}
+
+	// Relatório de filmes por gênero
+	public ArrayList<Filme> relatorioFilmesPorGenero(String genero) {
+		return buscarFilmesPorGenero(genero); // Usa o método existente para buscar por gênero
+	}
+
+	// Relatório de filmes por ano de lançamento
+	public ArrayList<Filme> relatorioFilmesPorAno(int ano) {
+		ArrayList<Filme> filmesPorAno = new ArrayList<>();
+		for (Filme filme : filmes) {
+			if (filme.getDataDaMovimentacao.getAno() == ano) { // Supondo que Data tenha um método getAno()
+				filmesPorAno.add(filme);
+			}
+		}
+		return filmesPorAno;
+	}
+
+	// Relatório de filmes por nome (ordem alfabética)
+	public ArrayList<Filme> relatorioFilmesPorNome() {
+		ArrayList<Filme> filmesOrdenados = new ArrayList<>(filmes);
+		filmesOrdenados.sort(Comparator.comparing(Filme::getNome)); // Ordena pela comparação de nomes
+		return filmesOrdenados;
 	}
 
 	/**
@@ -398,9 +437,6 @@ public class Controle {
 
 		return flag;
 	}
-
-
-
 
 	/**
 	 * PARTE 2
