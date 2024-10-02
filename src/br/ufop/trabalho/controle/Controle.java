@@ -227,7 +227,6 @@ public class Controle {
 	}
 
 	/**
-	 * sei não
 	 * Método para buscar Clientes e Dependentes pelo seu nome
 	 *
 	 * @param nome String contendo o nome da pessoa
@@ -274,26 +273,28 @@ public class Controle {
 	 */
 
 	public void cadastrarEntrada(String nome, String descricao, Double valor, Data data) {
-		int tipo=1;
-		Entrada entrada = new Entrada(nome, descricao, valor, data,tipo);
+		int tipo = 1;
+		Entrada entrada = new Entrada(nome, descricao, valor, data, tipo);
 		this.movimentacoes.add(entrada);
 
 	}
-/**
+
+	/**
 	 * PARTE 2
 	 * Método cadastrar saidas do balancete
 	 * 
 	 * @author João Teixeira
 	 */
 	public void cadastrarSaida(String nome, String descricao, Double valor, Data data) {
-		int tipo=0;
-		Saida saida = new Saida(nome, descricao, valor, data,tipo);
+		int tipo = 0;
+		Saida saida = new Saida(nome, descricao, valor, data, tipo);
 		this.movimentacoes.add(saida);
 
 	}
+
 	/**
 	 * PARTE 2
-	 * Método buscar movimentacoes por nome 
+	 * Método buscar movimentacoes por nome
 	 * 
 	 * @author João Teixeira
 	 */
@@ -307,9 +308,10 @@ public class Controle {
 		return movimentacoesPeloNome;
 
 	}
+
 	/**
 	 * PARTE 2
-	 * Método buscar movimentacoes por mes 
+	 * Método buscar movimentacoes por mes
 	 * 
 	 * @author João Teixeira
 	 */
@@ -324,9 +326,10 @@ public class Controle {
 		return movimentacoesPeloMes;
 
 	}
+
 	/**
 	 * PARTE 2
-	 * Método buscar movimentacoes por Ano 
+	 * Método buscar movimentacoes por Ano
 	 * 
 	 * @author João Teixeira
 	 */
@@ -341,15 +344,16 @@ public class Controle {
 		return movimentacoesPeloAno;
 
 	}
+
 	/**
 	 * PARTE 2
-	 * Método editar movimentacao 
+	 * Método editar movimentacao
 	 * 
 	 * @author João Teixeira
 	 */
 	public int editarMovimentacao(ArrayList<Movimentacao> encontrados, int indice, String novoNome,
 			String novaDescricao, Double novoValor, Data novaData) {
-			int flag=0;
+		int flag = 0;
 
 		Movimentacao movimentacaoParaEditar = encontrados.get(indice - 1);
 
@@ -364,34 +368,72 @@ public class Controle {
 				movimentacao.setValor(novoValor);
 
 				movimentacao.setDataDaMovimentacao(novaData);
-				flag=1;
-			}else{
-				flag=0;
+				flag = 1;
+			} else {
+				flag = 0;
 			}
-				
-				
+
 		}
-		
-	return flag;
+
+		return flag;
 	}
+
 	/**
 	 * PARTE 2
-	 * Método excluir movimentacao 
+	 * Método excluir movimentacao
 	 * 
 	 * @author João Teixeira
 	 */
 	public int excluirMovimentacao(ArrayList<Movimentacao> encontrados, int indice) {
-		int flag=0;
+		int flag = 0;
 
 		Movimentacao movimentacaoParaExcluir = encontrados.get(indice - 1);
 
-		
 		if (movimentacoes.remove(movimentacaoParaExcluir)) {
-			flag=1;
+			flag = 1;
 		} else {
-			flag=0;
+			flag = 0;
 		}
-	
-return flag;
-}
+
+		return flag;
+	}
+
+	// metodos para locarfilme
+	public boolean filmeDisponivel(String nomeFilme) {
+		Filme filme = buscarFilmePorNome(nomeFilme);
+		return filme != null && filme.getDisponibilidade() > 0;
+	}
+
+	// Método para locar o filme para o cliente ou dependente
+	public boolean locarFilmeParaCliente(Cliente cliente, String nomeFilme, String formatoMidia, Cliente dependente) {
+		Filme filme = buscarFilmePorNome(nomeFilme);
+		if (filme == null)
+			return false; // Se o filme não for encontrado, retorna falso
+
+		// Verificar disponibilidade no formato escolhido
+		if (formatoMidia.equalsIgnoreCase("DVD") && filme.getQuantDvd() > 0) {
+			filme.decrementarQtdDvd(); // Decrementa a quantidade de DVDs disponíveis
+		} else if (formatoMidia.equalsIgnoreCase("Blu-ray") && filme.getQuantBlueRay() > 0) {
+			filme.decrementarQtdBlueRay(); // Decrementa a quantidade de Blu-rays disponíveis
+		} else {
+			return false; // Formato não disponível
+		}
+
+		// Registrar a locação na conta do cliente ou dependente
+		if (dependente != null) {
+			cliente.adicionarFilmeLocado(filme, dependente); // Locação feita pelo dependente
+		} else {
+			cliente.adicionarFilmeLocado(filme, cliente); // Locação feita pelo cliente principal
+		}
+		return true; // Filme locado com sucesso
+	}
+
+	public Filme buscarFilmePorNome(String nomeFilme) {
+		for (Filme filme : filmes) {
+			if (filme.getNome().equalsIgnoreCase(nomeFilme)) {
+				return filme;
+			}
+		}
+		return null; // Se não encontrar o filme, retorna null
+	}
 }

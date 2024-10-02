@@ -12,6 +12,7 @@ public class Cliente extends Pessoa {
     private double multa;
     private final ArrayList<Filme> filmes;
     private final ArrayList<Dependente> dependentes;
+    private ArrayList<Filme> filmesLocados; // Lista para armazenar os filmes locados
 
     /**
      * Construtor
@@ -27,6 +28,7 @@ public class Cliente extends Pessoa {
         this.multa = 0.0;
         this.filmes = new ArrayList<Filme>();
         this.dependentes = new ArrayList<Dependente>(3);
+        this.filmesLocados = new ArrayList<>(); // Inicializa a lista
     }
 
     public int getCodigo() {
@@ -103,4 +105,13 @@ public class Cliente extends Pessoa {
     public String toString() {
         return getNome() + " - " + getCodigo();
     }
+
+    public ArrayList<Filme> getFilmesLocados() {
+        return filmesLocados; // Retorna a lista de filmes locados
+    }
+
+    public void adicionarFilmeLocado(Filme filme, Cliente cliente) {
+        this.filmesLocados.add(filme); // Adiciona o filme à lista de filmes locados
+    }
+
 }

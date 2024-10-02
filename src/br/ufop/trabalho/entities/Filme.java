@@ -10,8 +10,6 @@ public class Filme {
     private String genero;
     private int quantDvd, quantBlueRay;
 
-
-
     /**
      * @author Artur Guerra
      */
@@ -134,6 +132,19 @@ public class Filme {
      */
     @Override
     public String toString() {
-        return String.format("%s (%d/%d/%d) - DVDs: %d, Blu-rays: %d", nome, anoDeLancamento.getDia(), anoDeLancamento.getMes(), anoDeLancamento.getAno(), quantDvd, quantBlueRay);
+        return String.format("%s (%d/%d/%d) - DVDs: %d, Blu-rays: %d", nome, anoDeLancamento.getDia(),
+                anoDeLancamento.getMes(), anoDeLancamento.getAno(), quantDvd, quantBlueRay);
+    }
+
+    public void decrementarQtdDvd() {
+        if (quantDvd > 0) {
+            quantDvd--;
+        }
+    }
+
+    public void decrementarQtdBlueRay() {
+        if (quantBlueRay > 0) {
+            quantBlueRay--;
+        }
     }
 }
