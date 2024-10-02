@@ -3,6 +3,7 @@ package br.ufop.trabalho.IOConsole;
 import java.util.Scanner;
 
 import br.ufop.trabalho.Util;
+import br.ufop.trabalho.controle.Constantes;
 import br.ufop.trabalho.controle.Controle;
 
 public class MenuConsole {
@@ -21,6 +22,7 @@ public class MenuConsole {
 	private final MenuClienteConsole menuCliente;
 	private final MenuFilmeConsole menuFilme;
 	private final MenuBalanceteConsole menuBalancete;
+	private final MenuRelatorioConsole menuRelatorio;
 
 	public MenuConsole(){
 		controle = new Controle();
@@ -29,6 +31,7 @@ public class MenuConsole {
 		menuCliente = new MenuClienteConsole(controle, input);
 		menuFilme = new MenuFilmeConsole(controle, input);
 		menuBalancete = new MenuBalanceteConsole (controle, input);
+		menuRelatorio = new MenuRelatorioConsole(controle, input);
 	}
 	
 	public void inicioExecucao() {
@@ -54,10 +57,24 @@ public class MenuConsole {
 		switch (op) {
 			case 1 -> menuFilme.exibeMenuFilmes();
 			case 2 -> menuCliente.exibeMenuClientes();
-			case 3 -> System.out.println("Falta implementar!");
-			case 4 -> System.out.println("Falta implementar!");
+			case 3 -> menuRelatorio.exibeMenuRelatorio();
+			case 4 -> {
+				System.out.println("Multa atual por dia: ");
+				System.out.println(controle.VALOR_MULTA_DIA);
+				System.out.println("Quantidade maxima de filmes por Cliente atual: ");
+				System.out.println(controle.QUANT_MAX_FILME_CLIENTE);
+				System.out.println("Deseja alterar os valores atuais? Digite 1 para sim, 0 para voltar: ");
+				int escolhaConf = input.nextInt();
+				if (escolhaConf==1) {
+					System.out.println("Defina o valor da multa: ");
+					controle.VALOR_MULTA_DIA = input.nextDouble();
+					System.out.println("Defina o valor da quantidade max de filmes: ");
+					controle.QUANT_MAX_FILME_CLIENTE = input.nextInt();
+				}
+			}
 			case 5 -> menuBalancete.exibeMenuBalancete();
 			case 0 -> {
+				System.exit(0);
 				return false;
 			}
 			default -> System.out.println("Opção Invalida");

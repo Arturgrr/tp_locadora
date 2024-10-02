@@ -1,15 +1,15 @@
 package br.ufop.trabalho.entities;
-
+import java.io.Serializable;
 /**
  * @author Artur Guerra
  */
-public class Filme {
-
+public class Filme implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nome;
     private Data anoDeLancamento;
     private String genero;
     private int quantDvd, quantBlueRay;
-
+    //private String tipoDoFilme;
     /**
      * @author Artur Guerra
      */

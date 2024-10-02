@@ -1,6 +1,9 @@
 package br.ufop.trabalho.entities;
 
-public class Data {
+import java.io.Serializable;
+
+public class Data implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int mes;
 	private int dia;
 	private int ano;
@@ -12,10 +15,10 @@ public class Data {
 	}
 
 	/**
-	 * Método para validar o mês
+	 * Mï¿½todo para validar o mï¿½s
 	 *
-	 * @param mesTeste Inteiro do mês a ser verificado.
-	 * @return Inteiro com o mês validado ou corrigido para janeiro.
+	 * @param mesTeste Inteiro do mï¿½s a ser verificado.
+	 * @return Inteiro com o mï¿½s validado ou corrigido para janeiro.
 	 */
 	private int checarMes(int mesTeste) {
 		if (mesTeste > 0 && mesTeste <= 12)
@@ -27,10 +30,10 @@ public class Data {
 	}
 
 	/**
-	 * Método para validar o dia
+	 * Mï¿½todo para validar o dia
 	 *
 	 * @param diaTeste Inteiro do dia a ser verificado.
-	 * @return Inteiro com o mês validado ou corrigido para dia primeiro.
+	 * @return Inteiro com o mï¿½s validado ou corrigido para dia primeiro.
 	 */
 	private int checarDia(int diaTeste) {
 		int[] diasNoMes = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };

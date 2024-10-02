@@ -1,5 +1,5 @@
 package br.ufop.trabalho.entities;
-
+import java.io.Serializable;
 import br.ufop.trabalho.Util;
 
 /**
@@ -8,8 +8,8 @@ import br.ufop.trabalho.Util;
  *
  * @author Filipe
  */
-public class Pessoa {
-	
+public class Pessoa implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String endereco;
 	private String cpf;

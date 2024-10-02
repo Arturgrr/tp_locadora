@@ -9,14 +9,17 @@ import java.util.Scanner;
 
 public class MenuRelatorioConsole {
 
-    private Controle controle;
+    private final Controle controle;
+    private final Scanner input;
 
-    public MenuRelatorioConsole(Controle controle) {
+    
+    public MenuRelatorioConsole(Controle controle, Scanner input) {
         this.controle = controle;
+        this.input = input;
     }
 
-    public void exibirRelatorios() {
-        Scanner scanner = new Scanner(System.in);
+    public void exibeMenuRelatorio() {
+      
 
         System.out.println("Escolha o relatório desejado:");
         System.out.println("1. Relatório de Clientes");
@@ -24,8 +27,8 @@ public class MenuRelatorioConsole {
         System.out.println("3. Relatório de Filmes por Ano de Lançamento");
         System.out.println("4. Relatório de Filmes por Nome (Ordem Alfabética)");
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer
+        int opcao = input.nextInt();
+        input.nextLine(); // Limpar o buffer
 
         switch (opcao) {
             case 1:
@@ -33,12 +36,12 @@ public class MenuRelatorioConsole {
                 break;
             case 2:
                 System.out.print("Digite o gênero: ");
-                String genero = scanner.nextLine();
+                String genero = input.nextLine();
                 exibirRelatorioFilmesPorGenero(genero);
                 break;
             case 3:
                 System.out.print("Digite o ano de lançamento: ");
-                int ano = scanner.nextInt();
+                int ano = input.nextInt();
                 exibirRelatorioFilmesPorAno(ano);
                 break;
             case 4:

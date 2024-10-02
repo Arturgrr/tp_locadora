@@ -37,13 +37,13 @@ public class MenuFilmeConsole {
                     Digite a opcao:
                     \t1 - Cadastrar filme
                     \t2 - Buscar filme
-                    \t10 - Voltar
+                    \t0 - Voltar
                     """);
             int opcaoEscolhida = Util.leInteiroConsole(input);
             switch (opcaoEscolhida) {
                 case 1 -> cadastrarFilme();
                 case 2 -> buscarFilme();
-                case 10 -> {
+                case 0 -> {
                     continua = false;
                 }
                 default -> System.out.println("Opcao invalida");
@@ -226,6 +226,11 @@ public class MenuFilmeConsole {
 
                 }
                 case 2 -> {
+
+
+
+
+                    
                     int flagOp = controle.excluirFilme(filmesEnc, indiceEnc);
                     if (flagOp == 1) {
                         System.out.println("Filme excluido com sucesso");

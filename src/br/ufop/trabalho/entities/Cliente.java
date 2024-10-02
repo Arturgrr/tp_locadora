@@ -1,4 +1,5 @@
 package br.ufop.trabalho.entities;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 
@@ -7,7 +8,8 @@ import java.util.ArrayList;
  * @author Iaggo Rauta
  */
 public class Cliente extends Pessoa {
-
+    private static final long serialVersionUID = 1L;
+    
     private int codigo;
     private double multa;
     private final ArrayList<Filme> filmes;

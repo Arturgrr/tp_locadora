@@ -1,5 +1,12 @@
 package br.ufop.trabalho.controle;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -17,17 +24,56 @@ import br.ufop.trabalho.entities.*;
  * ser utilizada para qualquer tipo de interface gráfica inclusive com janelas.
  * IMPORTANTE: ESTA CLASSE NAO DEVE TER ENTRADA E SAÍDA DE DADOS PARA O USUÁRIO
  */
-public class Controle {
+public class Controle implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static final String FILE_PATH = "/Users/joaov/OneDrive/Documentos/ArquivosDataTrabalhoProg/saida.dat";
 
 	private final ArrayList<Cliente> clientes;
 	private final ArrayList<Filme> filmes;
 	private final ArrayList<Movimentacao> movimentacoes;
+	public Double VALOR_MULTA_DIA = 10.0;
+	public int QUANT_MAX_FILME_CLIENTE = 5;
+	public Double VALOR_LOC_DIA = 5.0;
 
 	public Controle() {
 		clientes = new ArrayList<Cliente>();
 		filmes = new ArrayList<Filme>();
 		movimentacoes = new ArrayList<Movimentacao>();
+		carregarDados();
+	}
 
+	// Método para salvar os dados no arquivo
+	public void salvarDados() {
+		try (FileOutputStream arquivoGrav = new FileOutputStream(FILE_PATH);
+				ObjectOutputStream objGravar = new ObjectOutputStream(arquivoGrav)) {
+
+			// Grava os objetos no arquivo
+			objGravar.writeObject(clientes);
+			objGravar.writeObject(filmes);
+			objGravar.writeObject(movimentacoes);
+			System.out.println("Dados salvos com sucesso!");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Método para carregar os dados do arquivo
+	@SuppressWarnings("unchecked")
+	private void carregarDados() {
+		try (FileInputStream arquivoLeitura = new FileInputStream(FILE_PATH);
+				ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura)) {
+
+			clientes.addAll((ArrayList<Cliente>) objLeitura.readObject());
+			filmes.addAll((ArrayList<Filme>) objLeitura.readObject());
+			movimentacoes.addAll((ArrayList<Movimentacao>) objLeitura.readObject());
+			System.out.println("Dados carregados com sucesso!");
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Arquivo de dados não encontrado, iniciando com dados vazios.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -47,7 +93,7 @@ public class Controle {
 
 		Cliente cliente = new Cliente(nome, end, cpf, dataDN, codigo);
 		this.clientes.add(cliente);
-
+		salvarDados();
 		return Constantes.RESULT_OK;
 	}
 
@@ -75,7 +121,7 @@ public class Controle {
 	public ArrayList<Filme> relatorioFilmesPorAno(int ano) {
 		ArrayList<Filme> filmesPorAno = new ArrayList<>();
 		for (Filme filme : filmes) {
-			if (filme.getDataDaMovimentacao.getAno() == ano) { // Supondo que Data tenha um método getAno()
+			if (filme.getAnoDeLancamento().getAno() == ano) { // Supondo que Data tenha um método getAno()
 				filmesPorAno.add(filme);
 			}
 		}
@@ -132,6 +178,7 @@ public class Controle {
 
 		Filme filme = new Filme(nome, dataDeLancamento, genero, quantDvd, quantBR);
 		this.filmes.add(filme);
+		salvarDados();
 		return Constantes.RESULT_OK;
 	}
 
@@ -216,6 +263,7 @@ public class Controle {
 	 */
 	public void excluirFilme(Filme filme) {
 		filmes.remove(filme);
+		salvarDados();
 	}
 
 	/**
@@ -311,11 +359,11 @@ public class Controle {
 	 * 
 	 * @author João Teixeira
 	 */
-
 	public void cadastrarEntrada(String nome, String descricao, Double valor, Data data) {
 		int tipo = 1;
 		Entrada entrada = new Entrada(nome, descricao, valor, data, tipo);
 		this.movimentacoes.add(entrada);
+		salvarDados();
 
 	}
 
@@ -329,6 +377,7 @@ public class Controle {
 		int tipo = 0;
 		Saida saida = new Saida(nome, descricao, valor, data, tipo);
 		this.movimentacoes.add(saida);
+		salvarDados();
 
 	}
 
@@ -414,7 +463,7 @@ public class Controle {
 			}
 
 		}
-
+		salvarDados();
 		return flag;
 	}
 
@@ -434,17 +483,18 @@ public class Controle {
 		} else {
 			flag = 0;
 		}
-
+		salvarDados();
 		return flag;
 	}
 
 	/**
-	 * PARTE 2
+	 * 
 	 * Método editar filme
 	 * 
 	 * @author João Teixeira
 	 */
-	public int editarFilme(ArrayList<Filme> encontrados, int indice, String novoNome, Data novaData, String novoGenero, int novaQuantDvd, int novaQuantBlue) {
+	public int editarFilme(ArrayList<Filme> encontrados, int indice, String novoNome, Data novaData, String novoGenero,
+			int novaQuantDvd, int novaQuantBlue) {
 		int flag = 0;
 
 		Filme filmeParaEditar = encontrados.get(indice - 1);
@@ -452,7 +502,7 @@ public class Controle {
 		// Procurar na lista original
 		for (Filme filme : filmes) {
 			if (filme.equals(filmeParaEditar)) {
-				// edição dos atributos da movi
+				// edição dos atributos
 				filme.setNome(novoNome);
 				filme.setAnoDeLancamento(novaData);
 				filme.setGenero(novoGenero);
@@ -464,11 +514,12 @@ public class Controle {
 			}
 
 		}
-
+		salvarDados();
 		return flag;
 	}
+
 	/**
-	 * PARTE 2
+	 * 
 	 * Método excluir Filme
 	 * 
 	 * @author João Teixeira
@@ -483,13 +534,9 @@ public class Controle {
 		} else {
 			flag = 0;
 		}
-
+		salvarDados();
 		return flag;
 	}
-
-
-
-
 
 	/**
 	 * 
@@ -535,20 +582,120 @@ public class Controle {
 		return null; // Se não encontrar o filme, retorna null
 	}
 
-
-
+	/**
+	 * 
+	 * Método locar filme para cliente pela busca direta
+	 * 
+	 * @author João Teixeira
+	 */
 	public int locarFilme(Cliente cliente, Filme filme) {
-        if (filme.getQuantDvd() > 0) {
-            filme.setQuantDvd(filme.getQuantDvd() - 1);
-            cliente.addFilme(filme);
-            return Constantes.RESULT_OK;
-        } else if (filme.getQuantBlueRay() > 0) {
-            filme.setQuantBlueRay((filme.getQuantBlueRay() - 1));
-            cliente.addFilme(filme);
-            return Constantes.RESULT_OK;
-        } else {
-            return Constantes.RESULT_ERRO;
-        }
-    }
+		if (filme.getQuantDvd() > 0) {
+			filme.setQuantDvd(filme.getQuantDvd() - 1);
+			cliente.addFilme(filme);
+			salvarDados();
+			return Constantes.RESULT_OK;
+		} else if (filme.getQuantBlueRay() > 0) {
+			filme.setQuantBlueRay((filme.getQuantBlueRay() - 1));
+			cliente.addFilme(filme);
+			salvarDados();
+			return Constantes.RESULT_OK;
+		} else {
+			return Constantes.RESULT_ERRO;
+		}
+	}
+
+	/**
+	 * METODO PARA EDITAR CLIENTE EXISTENTE
+	 * usado no submenu de cliente (opcao editar)
+	 * 
+	 * @author João Teixeira
+	 */
+	public int editarCliente(ArrayList<Cliente> encontrados, int indice, String novoNome, String novoEndereco,
+			String novoCPF, Data novaData, int novoCodigo, Double novaMulta) {
+		int flag = 0;
+
+		Cliente clienteParaEditar = encontrados.get(indice - 1);
+
+		// Procurar na lista original
+		for (Cliente cliente : clientes) {
+			if (cliente.equals(clienteParaEditar)) {
+				// edição dos atributos
+				cliente.setNome(novoNome);
+				cliente.setEndereco(novoEndereco);
+				cliente.setCpf(novoCPF);
+				cliente.setDataNascimento(novaData);
+				cliente.setCodigo(novoCodigo);
+				cliente.setMulta(novaMulta);
+				flag = 1;
+			} else {
+				flag = 0;
+			}
+
+		}
+		salvarDados();
+		return flag;
+	}
+
+	/**
+	 * METODO PARA MULTAR CLIENTE CASO HOUVER ATRASO
+	 * usado no submenu de cliente (opcao devolver filme)
+	 * 
+	 * @author João Teixeira
+	 */
+	public void multarCliente(Cliente cliente, int diasAtraso) {
+		Double multaTotal = (diasAtraso * VALOR_MULTA_DIA);
+		// Procurar na lista original
+		for (Cliente clienteMultar : clientes) {
+			if (clienteMultar.equals(cliente)) {
+				// edição dos atributos
+				clienteMultar.setMulta(multaTotal);
+
+			}
+		}
+		salvarDados();
+	}
+
+	/**
+	 * METODO PARA DEVOLVER FILMES PARA OS DADOS
+	 * usado no submenu de cliente (opcao devolver filme)
+	 * 
+	 * @author João Teixeira
+	 */
+	public void devolverFilme(Filme filme, int tipoFilme) {
+
+		// Procurar na lista original
+		for (Filme filmeDevolver : filmes) {
+			if (filmeDevolver.equals(filme)) {
+				if (tipoFilme == 1) { // testa se vamos acrescentar DVD ou BlueRay
+					filmeDevolver.addQuantDvd(1);
+
+				} else {
+					filmeDevolver.addQuantBlueRay(1);
+				}
+
+			}
+		}
+		salvarDados();
+
+	}
+
+	/**
+	 * METODO PARA PAGAR MULTA
+	 * usado no submenu de busca de clientes (opcao pagar multa)
+	 * 
+	 * @author João Teixeira
+	 */
+	public void pagarMulta(Cliente cliente) {
+		Double multaZero = 0.0;
+
+		for (Cliente clienteMulta : clientes) {// percorre original
+			if (clienteMulta.equals(cliente)) {
+				// edição dos atributos
+				clienteMulta.setMulta(multaZero);
+
+			}
+		}
+
+	}
 
 }

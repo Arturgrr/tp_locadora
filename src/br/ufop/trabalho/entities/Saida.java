@@ -1,10 +1,10 @@
 package br.ufop.trabalho.entities;
-
+import java.io.Serializable;
 /**
  * @author João Teixeira
  */
 public class Saida extends Movimentacao {
-   
+    private static final long serialVersionUID = 1L;
 
 
 
