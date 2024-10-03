@@ -1,5 +1,6 @@
 package br.ufop.trabalho.IOConsole;
 
+import br.ufop.trabalho.Util;
 import br.ufop.trabalho.controle.Controle;
 import br.ufop.trabalho.entities.Cliente;
 import br.ufop.trabalho.entities.Filme;
@@ -19,34 +20,38 @@ public class MenuRelatorioConsole {
     }
 
     public void exibeMenuRelatorio() {
-        System.out.println("Escolha o relatório desejado:");
-        System.out.println("1. Relatório de Clientes");
-        System.out.println("2. Relatório de Filmes por Gênero");
-        System.out.println("3. Relatório de Filmes por Ano de Lançamento");
-        System.out.println("4. Relatório de Filmes por Nome (Ordem Alfabética)");
+        boolean continua = true;
+        while (continua) {
+            System.out.println("""
+                Escolha o relatório desejado:
+                1. Relatório de Clientes
+                2. Relatório de Filmes por Gênero
+                3. Relatório de Filmes por Ano de Lançamento
+                4. Relatório de Filmes por Nome (Ordem Alfabética)
+                0. Voltar
+                """);
 
-        int opcao = input.nextInt();
-        input.nextLine();
+            int opcao = Util.leInteiroConsole(input);
 
-        switch (opcao) {
-            case 1:
-                exibirRelatorioClientes();
-                break;
-            case 2:
-                System.out.print("Digite o gênero: ");
-                String genero = input.nextLine();
-                exibirRelatorioFilmesPorGenero(genero);
-                break;
-            case 3:
-                System.out.print("Digite o ano de lançamento: ");
-                int ano = input.nextInt();
-                exibirRelatorioFilmesPorAno(ano);
-                break;
-            case 4:
-                exibirRelatorioFilmesPorNome();
-                break;
-            default:
-                System.out.println("Opção inválida!");
+            switch (opcao) {
+                case 1 -> exibirRelatorioClientes();
+                case 2 -> {
+                    System.out.print("Digite o gênero: ");
+                    String genero = input.nextLine();
+                    exibirRelatorioFilmesPorGenero(genero);
+                }
+                case 3 -> {
+                    System.out.print("Digite o ano de lançamento: ");
+                    int ano = Util.leInteiroConsole(input);
+                    exibirRelatorioFilmesPorAno(ano);
+                }
+                case 4 -> exibirRelatorioFilmesPorNome();
+                case 0 -> {
+                    System.out.println("Voltando ao menu principal...");
+                    continua = false;
+                }
+                default -> System.out.println("Opção inválida!");
+            }
         }
     }
 

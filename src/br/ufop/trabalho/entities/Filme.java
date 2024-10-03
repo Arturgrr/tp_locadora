@@ -1,8 +1,10 @@
 package br.ufop.trabalho.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Filme implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final int TIPO_LANCAMENTO = 1;

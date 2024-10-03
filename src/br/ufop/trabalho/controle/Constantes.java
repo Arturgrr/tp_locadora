@@ -9,4 +9,5 @@ public interface Constantes {
 	int ERRO_CLIENTE_EXISTENTE_CPF = 4;
 	int ERRO_FILME_EXISTENTE = 5;
 	int RESULT_ERRO_EXCEDE_MAX_FILMES = 6;
+	int RESULT_ERRO_CLIENTE_COM_MULTA = 7;
 }

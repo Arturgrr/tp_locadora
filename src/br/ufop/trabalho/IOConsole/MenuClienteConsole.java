@@ -76,12 +76,6 @@ public class MenuClienteConsole {
 
     private void adicionarDependentes(Cliente cliente) {
         while (cliente.getDependentes().size() < 3) {
-            System.out.println("Deseja adicionar um dependente? (1 - Sim, 2 - Não)");
-            int opcao = Util.leInteiroConsole(input);
-            if (opcao != 1) {
-                break;
-            }
-
             System.out.println("Digite o nome do dependente:");
             String nomeDep = input.nextLine();
 
@@ -101,8 +95,20 @@ public class MenuClienteConsole {
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro ao adicionar dependente: " + e.getMessage());
             }
+
+            if (cliente.getDependentes().size() >= 3) {
+                System.out.println("O cliente atingiu o número máximo de dependentes.");
+                break;
+            }
+
+            System.out.println("Deseja adicionar outro dependente? (1 - Sim, 2 - Não)");
+            int opcao = Util.leInteiroConsole(input);
+            if (opcao != 1) {
+                break;
+            }
         }
     }
+
 
     private void buscarCliente() {
         boolean continuaBusca = true;
@@ -171,14 +177,17 @@ public class MenuClienteConsole {
         boolean continuaSubMenu = true;
         do {
             System.out.println("""
-                    Você deseja realizar alguma ação com o cliente selecionado?
-                    \t1 - Editar
-                    \t2 - Excluir
-                    \t3 - Locar filme
-                    \t4 - Devolver filme
-                    \t5 - Pagar multa
-                    \t0 - Voltar
-                    """);
+                Você deseja realizar alguma ação com o cliente selecionado?
+                \t1 - Editar Cliente
+                \t2 - Excluir Cliente
+                \t3 - Locar Filme
+                \t4 - Devolver Filme
+                \t5 - Pagar Multa
+                \t6 - Consultar Multa
+                \t7 - Listar Filmes Locados
+                \t8 - Gerenciar Dependentes
+                \t0 - Voltar
+                """);
             int opcaoAcao = Util.leInteiroConsole(input);
             switch (opcaoAcao) {
                 case 1 -> editarCliente(cliente);
@@ -186,10 +195,101 @@ public class MenuClienteConsole {
                 case 3 -> locarFilme(cliente);
                 case 4 -> devolverFilme(cliente);
                 case 5 -> pagarMulta(cliente);
+                case 6 -> consultarMulta(cliente);
+                case 7 -> listarFilmesLocados(cliente);
+                case 8 -> gerenciarDependentes(cliente);
                 case 0 -> continuaSubMenu = false;
                 default -> System.out.println("Opção inválida");
             }
         } while (continuaSubMenu);
+    }
+
+    private void gerenciarDependentes(Cliente cliente) {
+        boolean continua = true;
+        while (continua) {
+            ArrayList<Dependente> dependentes = cliente.getDependentes();
+            if (dependentes.isEmpty()) {
+                System.out.println("O cliente não possui dependentes.");
+                System.out.println("Deseja adicionar um dependente? (1 - Sim, 2 - Não)");
+                int opcao = Util.leInteiroConsole(input);
+                if (opcao == 1) {
+                    adicionarDependentes(cliente);
+                } else {
+                    continua = false;
+                }
+            } else {
+                System.out.println("Dependentes do cliente:");
+                for (int i = 0; i < dependentes.size(); i++) {
+                    System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
+                }
+                System.out.println("""
+                    Escolha uma opção:
+                    \t1 - Editar Dependente
+                    \t2 - Excluir Dependente
+                    \t3 - Adicionar Dependente
+                    \t0 - Voltar
+                    """);
+                int opcao = Util.leInteiroConsole(input);
+                switch (opcao) {
+                    case 1 -> editarDependente(cliente);
+                    case 2 -> excluirDependente(cliente);
+                    case 3 -> adicionarDependentes(cliente);
+                    case 0 -> continua = false;
+                    default -> System.out.println("Opção inválida.");
+                }
+            }
+        }
+    }
+
+    private void editarDependente(Cliente cliente) {
+        ArrayList<Dependente> dependentes = cliente.getDependentes();
+        System.out.println("Selecione o dependente que deseja editar:");
+        for (int i = 0; i < dependentes.size(); i++) {
+            System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
+        }
+        int indice = Util.leInteiroConsole(input) - 1;
+        if (indice >= 0 && indice < dependentes.size()) {
+            Dependente dependente = dependentes.get(indice);
+            System.out.println("Digite o novo nome do dependente:");
+            String novoNome = input.nextLine();
+
+            System.out.println("Digite o novo endereço do dependente:");
+            String novoEndereco = input.nextLine();
+
+            System.out.println("Digite o novo CPF do dependente:");
+            String novoCPF = Util.lerCpfValido(input);
+
+            System.out.println("Digite a nova data de nascimento do dependente (dd/MM/yyyy):");
+            Data novaData = Util.lerDataValida(input);
+
+            try {
+                dependente.setNome(novoNome);
+                dependente.setEndereco(novoEndereco);
+                dependente.setCpf(novoCPF);
+                dependente.setDataNascimento(novaData);
+                System.out.println("Dependente editado com sucesso.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erro ao editar dependente: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
+    private void excluirDependente(Cliente cliente) {
+        ArrayList<Dependente> dependentes = cliente.getDependentes();
+        System.out.println("Selecione o dependente que deseja excluir:");
+        for (int i = 0; i < dependentes.size(); i++) {
+            System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
+        }
+        int indice = Util.leInteiroConsole(input) - 1;
+        if (indice >= 0 && indice < dependentes.size()) {
+            Dependente dependente = dependentes.get(indice);
+            cliente.removeDependentes(dependente);
+            System.out.println("Dependente excluído com sucesso.");
+        } else {
+            System.out.println("Índice inválido.");
+        }
     }
 
     private void editarCliente(Cliente cliente) {
@@ -310,6 +410,8 @@ public class MenuClienteConsole {
             System.out.println("Filme locado com sucesso!");
         } else if (resultado == Constantes.RESULT_ERRO_EXCEDE_MAX_FILMES) {
             System.out.println("O cliente já atingiu o limite máximo de filmes locados.");
+        } else if (resultado == Constantes.RESULT_ERRO_CLIENTE_COM_MULTA) {
+            System.out.println("O cliente possui multa em aberto. Não é possível locar filmes até que a multa seja paga.");
         } else {
             System.out.println("Erro ao locar filme. Verifique a disponibilidade do filme no formato selecionado.");
         }
@@ -331,26 +433,82 @@ public class MenuClienteConsole {
         int indiceLocacao = Util.leInteiroConsole(input);
         if (indiceLocacao >= 1 && indiceLocacao <= locacoes.size()) {
             Locacao locacaoParaDevolver = locacoes.get(indiceLocacao - 1);
-            controle.devolverFilme(cliente, locacaoParaDevolver.getFilme(), locacaoParaDevolver.getFormatoMidia());
-            System.out.println("Filme devolvido com sucesso.");
 
-            // Verificar atraso e aplicar multa se necessário
-            int diasAtraso = Util.calcularDiasAtraso(locacaoParaDevolver.getDataLocacao(), controle.PRAZO_DEVOLUCAO);
+            // Solicitar a data real de devolução
+            System.out.println("Digite a data de devolução (dd/MM/yyyy):");
+            Data dataDevolucaoReal = Util.lerDataValida(input);
+
+            // Calcular dias de atraso
+            int diasAtraso = Util.calcularDiasAtraso(locacaoParaDevolver.getDataDevolucaoPrevista(), dataDevolucaoReal);
+
+            // Atualizar estoque do filme
+            controle.devolverFilme(cliente, locacaoParaDevolver.getFilme(), locacaoParaDevolver.getFormatoMidia());
+
+            // Aplicar multa se houver atraso
             if (diasAtraso > 0) {
-                controle.multarCliente(cliente, diasAtraso);
-                System.out.println("Cliente recebeu multa por atraso de " + diasAtraso + " dias.");
+                double multaTotal = diasAtraso * controle.VALOR_MULTA_DIA;
+                cliente.addMulta(multaTotal);
+                // Registrar entrada financeira pela multa
+                controle.cadastrarEntrada("Multa por Atraso", "Multa aplicada ao cliente " + cliente.getNome(), multaTotal, dataDevolucaoReal);
+                System.out.println("Cliente recebeu multa por atraso de " + diasAtraso + " dias. Multa total: R$ " + multaTotal);
+            } else {
+                System.out.println("Devolução dentro do prazo. Nenhuma multa aplicada.");
             }
+
+            // Remover locação da lista
+            cliente.getFilmesLocados().remove(locacaoParaDevolver);
+            controle.salvarDados();
+
+            System.out.println("Filme devolvido com sucesso.");
         } else {
             System.out.println("Opção inválida.");
         }
     }
 
     private void pagarMulta(Cliente cliente) {
-        if (cliente.getMulta() > 0) {
-            controle.pagarMulta(cliente);
-            System.out.println("Multa paga com sucesso. O saldo de multas agora é R$ " + cliente.getMulta());
+        double multa = cliente.getMulta();
+        if (multa > 0) {
+            System.out.printf("O cliente possui multa de R$ %.2f\n", multa);
+            System.out.println("Deseja pagar a multa? (1 - Sim, 2 - Não)");
+            int opcao = Util.leInteiroConsole(input);
+            if (opcao == 1) {
+                controle.pagarMulta(cliente);
+                System.out.println("Multa paga com sucesso. O saldo de multas agora é R$ 0.00");
+            } else {
+                System.out.println("Multa não foi paga.");
+            }
         } else {
             System.out.println("O cliente não possui multas pendentes.");
         }
     }
+
+
+    private void consultarMulta(Cliente cliente) {
+        double multa = cliente.getMulta();
+        if (multa > 0) {
+            System.out.printf("O cliente possui multa de R$ %.2f\n", multa);
+        } else {
+            System.out.println("O cliente não possui multas em aberto.");
+        }
+    }
+
+    private void listarFilmesLocados(Cliente cliente) {
+        if (cliente.getFilmesLocados().isEmpty()) {
+            System.out.println("O cliente e seus dependentes não possuem filmes locados.");
+            return;
+        }
+
+        System.out.println("Filmes locados pelo cliente e seus dependentes:");
+        ArrayList<Locacao> locacoes = cliente.getFilmesLocados();
+        for (Locacao locacao : locacoes) {
+            String locatario = locacao.getDependente() != null ? locacao.getDependente().getNome() : cliente.getNome();
+            System.out.printf("Filme: %s | Formato: %s | Locatário: %s | Data de Locação: %s\n",
+                    locacao.getFilme().getNome(),
+                    locacao.getFormatoMidia(),
+                    locatario,
+                    locacao.getDataLocacao().toString());
+        }
+    }
+
+
 }

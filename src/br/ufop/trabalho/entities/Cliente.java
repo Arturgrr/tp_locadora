@@ -1,14 +1,16 @@
 package br.ufop.trabalho.entities;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class Cliente extends Pessoa {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int codigo;
     private double multa;
-    private ArrayList<Locacao> filmesLocados;
-    private ArrayList<Dependente> dependentes;
+    private final ArrayList<Locacao> filmesLocados;
+    private final ArrayList<Dependente> dependentes;
 
     public Cliente(String nome, String endereco, String cpf, Data dataDeNascimento, int codigo) {
         super(nome, endereco, cpf, dataDeNascimento);

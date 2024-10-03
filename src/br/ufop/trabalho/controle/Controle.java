@@ -17,7 +17,9 @@ import br.ufop.trabalho.entities.Pessoa;
 import br.ufop.trabalho.entities.Saida;
 
 public class Controle implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
+
 	private static final String FILE_PATH = "dados.dat";
 
 	private final ArrayList<Cliente> clientes;
@@ -334,6 +336,10 @@ public class Controle implements Serializable {
 			return Constantes.RESULT_ERRO_EXCEDE_MAX_FILMES;
 		}
 
+		if (cliente.getMulta()>0){
+			return Constantes.RESULT_ERRO_CLIENTE_COM_MULTA;
+		}
+
 		if (formatoMidia.equalsIgnoreCase("DVD") && filme.getQuantDvd() > 0) {
 			filme.decrementarQtdDvd();
 		} else if (formatoMidia.equalsIgnoreCase("Blu-ray") && filme.getQuantBlueRay() > 0) {
@@ -363,15 +369,6 @@ public class Controle implements Serializable {
 		};
 	}
 
-	public Filme buscarFilmePorNome(String nomeFilme) {
-		for (Filme filme : filmes) {
-			if (filme.getNome().equalsIgnoreCase(nomeFilme)) {
-				return filme;
-			}
-		}
-		return null;
-	}
-
 	public int editarCliente(Cliente clienteParaEditar, String novoNome, String novoEndereco, String novoCPF, Data novaData, int novoCodigo, Double novaMulta) {
 		if (clientes.contains(clienteParaEditar)) {
 			clienteParaEditar.setNome(novoNome);
@@ -384,12 +381,6 @@ public class Controle implements Serializable {
 			return 1;
 		}
 		return 0;
-	}
-
-	public void multarCliente(Cliente cliente, int diasAtraso) {
-		double multaTotal = diasAtraso * VALOR_MULTA_DIA;
-		cliente.addMulta(multaTotal);
-		salvarDados();
 	}
 
 	public void devolverFilme(Cliente cliente, Filme filme, String formatoMidia) {
@@ -412,10 +403,26 @@ public class Controle implements Serializable {
 		salvarDados();
 	}
 
-	public void pagarMulta(Cliente cliente) {
-		cliente.setMulta(0.0);
+	public void multarCliente(Cliente cliente, int diasAtraso) {
+		double multaTotal = diasAtraso * VALOR_MULTA_DIA;
+		cliente.addMulta(multaTotal);
 		salvarDados();
+
+		Data dataAtual = Util.obterDataAtual();
+		cadastrarEntrada("Multa por Atraso", "Multa aplicada ao cliente " + cliente.getNome(), multaTotal, dataAtual);
 	}
+
+	public void pagarMulta(Cliente cliente) {
+		double valorMulta = cliente.getMulta();
+		if (valorMulta > 0) {
+			cliente.setMulta(0.0);
+			salvarDados();
+			// Registrar a entrada financeira pelo pagamento da multa com descrição "Multa Paga"
+			Data dataAtual = Util.obterDataAtual();
+			cadastrarEntrada("Multa Paga", "Multa paga pelo cliente " + cliente.getNome(), valorMulta, dataAtual);
+		}
+	}
+
 
 	public static Data obterDataAtual() {
 		LocalDate hoje = LocalDate.now();

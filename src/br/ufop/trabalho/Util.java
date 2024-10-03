@@ -8,7 +8,6 @@ import br.ufop.trabalho.entities.Cliente;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.temporal.ChronoUnit;
 
@@ -114,11 +113,11 @@ public class Util {
         }
     }
 
-    public static int calcularDiasAtraso(Data dataLocacao, int prazoDevolucao) {
-        LocalDate dataLoc = LocalDate.of(dataLocacao.getAno(), dataLocacao.getMes(), dataLocacao.getDia());
-        LocalDate dataAtual = LocalDate.now();
-        long diasEntre = ChronoUnit.DAYS.between(dataLoc, dataAtual);
-        int diasAtraso = (int) diasEntre - prazoDevolucao;
+    public static int calcularDiasAtraso(Data dataDevolucaoPrevista, Data dataDevolucaoReal) {
+        LocalDate dataPrevista = LocalDate.of(dataDevolucaoPrevista.getAno(), dataDevolucaoPrevista.getMes(), dataDevolucaoPrevista.getDia());
+        LocalDate dataReal = LocalDate.of(dataDevolucaoReal.getAno(), dataDevolucaoReal.getMes(), dataDevolucaoReal.getDia());
+        long diasEntre = ChronoUnit.DAYS.between(dataPrevista, dataReal);
+        int diasAtraso = (int) diasEntre;
         return Math.max(diasAtraso, 0);
     }
 
@@ -133,4 +132,10 @@ public class Util {
             System.out.println((i + 1) + " - " + dependentes.get(i).getNome());
         }
     }
+
+    public static Data obterDataAtual() {
+        LocalDate hoje = LocalDate.now();
+        return new Data(hoje.getDayOfMonth(), hoje.getMonthValue(), hoje.getYear());
+    }
+
 }

@@ -1,10 +1,12 @@
 package br.ufop.trabalho.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Data implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private int dia, mes, ano;
 
@@ -54,4 +56,10 @@ public class Data implements Serializable {
 		LocalDate dataComparar = LocalDate.of(outraData.getAno(), outraData.getMes(), outraData.getDia());
 		return dataAtual.isAfter(dataComparar);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%02d/%02d/%04d", dia, mes, ano);
+	}
+
 }

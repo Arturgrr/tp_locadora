@@ -1,9 +1,11 @@
 package br.ufop.trabalho.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import br.ufop.trabalho.Util;
 
 public class Pessoa implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String endereco;

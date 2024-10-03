@@ -1,8 +1,12 @@
 package br.ufop.trabalho.entities;
+import java.io.Serial;
 import java.io.Serializable;
 
 public abstract class Movimentacao implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
+
     private String nome;
     private String descricao;
     double valor;
@@ -43,10 +47,6 @@ public abstract class Movimentacao implements Serializable {
 
     public String getNome() {
         return nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
     }
 
     public Double getValor() {
