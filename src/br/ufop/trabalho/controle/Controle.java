@@ -348,7 +348,7 @@ public class Controle implements Serializable {
 			return Constantes.RESULT_ERRO;
 		}
 
-		Data dataAtual = obterDataAtual();
+		Data dataAtual = Util.obterDataAtual();
 		Data dataDevolucao = Util.calcularDataDevolucao(dataAtual, PRAZO_DEVOLUCAO);
 		Locacao locacao = new Locacao(filme, dataAtual, dataDevolucao, formatoMidia, dependente);
 		cliente.getFilmesLocados().add(locacao);
